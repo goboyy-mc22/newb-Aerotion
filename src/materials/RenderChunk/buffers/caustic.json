@@ -9,7 +9,7 @@
   "default_texture": "",
   "unordered_access": false,
   "slot_count": 1,
-  "texture_path": "textures/newb/caustic",
+  "texture_path": "textures/environment/caustic",
   "unknown": 0,
    "sampler_state": {
     "filter": "Bilinear",
