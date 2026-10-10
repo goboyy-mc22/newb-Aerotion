@@ -142,6 +142,32 @@ vec4 renderClouds(vec2 p, float t, float rain, vec3 horizonCol, vec3 zenithCol, 
   return col;
 }
 
+// fast vanilla clouds (type 4)
+// note: vcRand is named to avoid clash with rand() in noise.h
+float vcRand(highp vec2 n) {
+  return fract(sin(dot(n, vec2(12.9898, 4.1414))) * 43758.5453);
+}
+
+// returns cloud color (rgb) and coverage (a), alpha-blended over the sky
+vec4 renderFastVanillaClouds(vec2 uv, highp float t, float fade) {
+  float a = 0.0;
+  highp float isTime = t * NL_VCLOUD_SPEED * 0.1; // 0.1 * 0.1 = 0.01
+  uv *= NL_VCLOUD_SIZE;
+
+  // layers
+  for (int i = 0; i < NL_VCLOUD_STEPS; i++) {
+    uv /= 1.007;
+    float c = step(0.7, vcRand(floor(uv + isTime)));
+    a = mix(a, 1.0, c);
+  }
+
+  // cloud coloring (side / bottom)
+  float b = step(0.7, vcRand(floor(uv + isTime)));
+  vec3 ccol = mix(NL_VCLOUD_SIDECOL, NL_VCLOUD_BOTTOMCOL, b);
+
+  return vec4(ccol, a * fade * NL_VCLOUD_VISIBLE);
+}
+
 // aurora is rendered on clouds layer
 #ifdef NL_AURORA
 vec4 renderAurora(vec3 p, float t, float rain, float dayFactor) {

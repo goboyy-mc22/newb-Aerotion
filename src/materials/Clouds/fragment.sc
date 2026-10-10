@@ -35,7 +35,7 @@ void main() {
       #endif
 
       color.a *= v_color0.a;
-    #else
+    #elif NL_CLOUD_TYPE == 3
       vDir.xz *= 0.3 + v_color0.w; // height parallax
 
       vec2 p = (vDir.xz)/(0.015 + 0.035*abs(vDir.y));
@@ -50,6 +50,11 @@ void main() {
       #endif
 
       color.a *= smoothstep(0.0, 0.7, vDir.y);
+    #else
+      // type 4: fast vanilla clouds (plane projection from view elevation)
+      vec2 cp = vDir.xz / max(vDir.y, 0.001);
+      float fade = smoothstep(NL_VCLOUD_FADE.x, NL_VCLOUD_FADE.y, vDir.y);
+      color = renderFastVanillaClouds(cp, v_color2.w, fade);
     #endif
 
     color.rgb = colorCorrection(color.rgb);
