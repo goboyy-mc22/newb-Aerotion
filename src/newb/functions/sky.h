@@ -143,27 +143,33 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   return sky;
 }
 
-vec3 renderEndSky(vec3 horizonCol, vec3 zenithCol, vec3 viewDir, float t) {
-  t *= 0.1;
-  float a = atan2(viewDir.x, viewDir.z);
+vec3 renderEndSky(vec3 horizonCol,vec3 zenithCol,vec3 viewDir,float t) {
+  vec3 dir = normalize(viewDir);
+  float grad = 0.5+0.5*dir.y;
+  vec3 sky = mix(zenithCol,horizonCol,pow(1.0-grad,1.35));
 
-  float n1 = 0.5 + 0.5*sin(3.0*a + t + 10.0*viewDir.x*viewDir.y);
-  float n2 = 0.5 + 0.5*sin(5.0*a + 0.5*t + 5.0*n1 + 0.1*sin(40.0*a -4.0*t));
+  vec3 starCell = floor(dir*185.0);
+  vec3 rnd = hash33(starCell);
 
-  float waves = 0.7*n2*n1 + 0.3*n1;
+  float starChance = step(0.980,rnd.x);
+  float starDist = length(fract(dir*185.0)-0.5);
+  float starRadius = mix(0.105,0.18,rnd.y);
+  float starPoint = 1.0-smoothstep(starRadius,starRadius*1.45,starDist);
 
-  float grad = 0.5 + 0.5*viewDir.y;
-  float streaks = waves*(1.0 - grad*grad*grad);
-  streaks += (1.0-streaks)*smoothstep(1.0-waves, -1.0, viewDir.y);
+  vec3 starColor = vec3(1.0,0.93,0.82);
 
-  float f = 0.3*streaks + 0.7*smoothstep(1.0, -0.5, viewDir.y);
-  float h = streaks*streaks;
-  float g = h*h;
-  g *= g;
-
-  vec3 sky = mix(zenithCol, horizonCol, f*f);
-  sky += (0.1*streaks + 2.0*g*g*g + h*h*h)*vec3(2.0,0.5,0.0);
-  sky += 0.25*streaks*spectrum(sin(2.0*viewDir.x*viewDir.y+t));
+  if (rnd.x > 0.978) {
+      starColor = vec3(0.55,0.72,1.0);
+  }
+  if (rnd.x > 0.988) {
+      starColor = vec3(0.72,0.55,1.0);
+  }
+  if (rnd.x > 0.995) {
+      starColor = vec3(0.55,0.9,1.0);
+  }
+    
+  float star = starPoint*starChance;
+  sky += starColor*star*1.35;
 
   return sky;
 }
@@ -323,6 +329,47 @@ vec4 renderBlackhole(vec3 viewdir,float t) {
     vec3 col = light * mix(NL_BH_COL_LOW,NL_BH_COL_HIGH,colorMix);
     
     return vec4(col,hole);
+}
+
+vec3 endstreaks(vec3 horizonCol,vec3 zenithCol,vec3 viewDir,float t) {
+  float skyTime = t*0.2;
+
+  float a = atan2(viewDir.x,viewDir.z);
+  float y = viewDir.y;
+
+  float n1 = 1.0+1.0*sin(14.0*a+skyTime+0.0*viewDir.x*y);
+  float n2 = 1.0+0.5*sin(8.0*a+0.0*skyTime+0.0*n1+0.5*sin(50.0*a-4.0*skyTime));
+  float n3 = 1.0+1.0*sin(10.0*a-0.5*skyTime+5.0*n2+10.0*viewDir.z*y);
+
+  float waves = 0.1*n2*n1+0.5*n1+0.1*n3;
+  waves = smoothstep(-1.0,1.0,waves);
+
+  float grad = 0.7+0.3*y;
+
+  float streaks = waves*(1.0-grad*grad*grad);
+  streaks += (1.0-streaks)*smoothstep(1.0-waves,-1.0,y);
+
+  float f = 0.3*streaks+0.3*smoothstep(1.0,0.0,y);
+  float h = streaks*streaks*streaks;
+  float g = h*h;
+  g *= g;
+
+  vec3 sky = mix(zenithCol,horizonCol,f*f);
+
+  float body = streaks*(1.0-2.0*streaks);
+  sky += (0.2*body+0.0*g*g+h*h)*vec3(1.0,0.3,1.0);
+
+  float bloom = smoothstep(0.0,1.0,streaks);
+  bloom = pow(bloom,1.65);
+
+  sky += vec3(0.35,0.05,0.45)*bloom*0.35;
+
+  float light = smoothstep(0.0,1.0,streaks);
+  sky += vec3(0.5,0.5,0.5)*light*0.2;
+
+  sky += 0.1*body*spectrum(sin(1.0*viewDir.x*viewDir.y+skyTime));
+
+  return sky;
 }
 
 #endif
