@@ -357,7 +357,7 @@ vec3 endstreaks(vec3 horizonCol,vec3 zenithCol,vec3 viewDir,float t) {
   vec3 sky = mix(zenithCol,horizonCol,f*f);
 
   float body = streaks*(1.0-2.0*streaks);
-  sky += (0.2*body+0.0*g*g+h*h)*vec3(1.0,0.3,1.0);
+  sky += (0.2*body+0.0*g*g+h*h)*vec3(0.6,0.15,0.7);
 
   float bloom = smoothstep(0.0,1.0,streaks);
   bloom = pow(bloom,1.65);
