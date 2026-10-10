@@ -149,7 +149,7 @@ float vcRand(highp vec2 n) {
 }
 
 // returns cloud color (rgb) and coverage (a), alpha-blended over the sky
-vec4 renderFastVanillaClouds(vec2 uv, highp float t, float fade) {
+vec4 renderFastVanillaClouds(vec2 uv, highp float t, float fade, vec3 zenith, vec3 horizon, float rain) {
   float a = 0.0;
   highp float isTime = t * NL_VCLOUD_SPEED * 0.1; // 0.1 * 0.1 = 0.01
   uv *= NL_VCLOUD_SIZE;
@@ -163,7 +163,11 @@ vec4 renderFastVanillaClouds(vec2 uv, highp float t, float fade) {
 
   // cloud coloring (side / bottom)
   float b = step(0.7, vcRand(floor(uv + isTime)));
-  vec3 ccol = mix(NL_VCLOUD_SIDECOL, NL_VCLOUD_BOTTOMCOL, b);
+  // tinted by the sky so day/night and reduced opacity blend toward the sky color
+  vec3 base = zenith + horizon;
+  base += dot(base, vec3(0.3, 0.4, 0.3)); // lit, slightly brighter than the sky
+  base *= 1.0 - 0.6*rain;
+  vec3 ccol = base * mix(NL_VCLOUD_SIDECOL, NL_VCLOUD_BOTTOMCOL, b);
 
   return vec4(ccol, a * fade * NL_VCLOUD_VISIBLE);
 }
