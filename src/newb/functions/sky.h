@@ -94,14 +94,15 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   vh2 = mix(vh2, 1.0, mg8);
   float vh4 = vh2*vh2;
 
+  float rainMask = 1.0 - 0.5*env.rainFactor;
   float gradient1 = vh4*vh4;
   float gradient2 = 0.8*gradient1 + 0.2*vh2;
   gradient1 *= gradient1;
-  gradient1 = mix(gradient1*gradient1, 1.0, mg8);
-  gradient2 = mix(gradient2, 1.0, mg8);
+  gradient1 = mix(gradient1*gradient1, 1.0, mg8)*rainMask;
+  gradient2 = mix(gradient2, 1.0, mg8)*rainMask;
 
   float dawnFactor = 1.0-env.dayFactor*env.dayFactor;
-
+  
   // dawn spread: same weight as the dawn color blend in nlOverworldSkyColors
   float dw = dawnFactor*dawnFactor*dawnFactor;
   dw *= mix(1.0, dw*dw, step(env.dayFactor, 0.0));
@@ -119,7 +120,7 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   vec3 sky = mix(skyCol.horizon, skyCol.horizonEdge, dawnGradient1*df*df);
   sky = mix(skyCol.zenith, sky, dawnGradient2*df);
 
-  sky *= 0.5+0.5*gradient2;
+  sky *= 0.7+0.7*gradient2;
   sky *= (1.0 + (2.0*mg8 + 7.0*mg8*mg8)*mask)*mix(1.0, mask, NL_SKY_VOID_DARKNESS);
 
   if (!isSkyPlane) {
