@@ -1,32 +1,6 @@
 #ifndef NL_CONFIG_H
 #define NL_CONFIG_H
 
-/*
-  NEWB SHADER MAIN CONFIG
-  This part contains base configuration options for the shader.
-
-  TOGGLES
-  - If [toggle] is mentioned, then
-    options can be commented to disable (by adding '//')
-  - eg: #define PLANTS_WAVE    -> this is ON
-        //#define PLANTS_WAVE  -> this is OFF
-
-  COLOR VALUES
-  - Color format: vec3(red,green,blue)
-  - 1.0 means 100%, 0.0 means 0%
-  - eg: vec3(1.0,1.0,0.0) = yellow
-
-  VALUES
-  - Values must be decimal
-  - eg. 32 is wrong, 32.0 is correct
-
-  TYPES
-  - Should be integer. options to choose will be mentioned there
-  - eg: #define NL_CLOUD_TYPE 2
-
-  Remember to rebuild the shader after making changes.
-*/
-
 /* Color correction */
 #define NL_TONEMAP_TYPE 3              // 1:Exponential, 2:Reinhard, 3:Extended Reinhard, 4:ACES
 #define NL_GAMMA 1.33                  // 0.3 low ~ 2.0 high
@@ -67,29 +41,31 @@
 
 /* Sky */
 #define NL_SKY_VOID_FACTOR     0.5
-#define NL_SKY_VOID_DARKNESS   0.3
-#define NL_SKY_RAIN_MIX_FACTOR 0.9
+#define NL_SKY_VOID_DARKNESS   0.0
+#define NL_SKY_RAIN_MIX_FACTOR 1.0
 
 /* Sky colors - zenith=top, horizon=bottom */
 #define NL_DAWN_ZENITH_COL   vec3(0.12,0.38,0.90)  // blue at the top
 #define NL_DAWN_HORIZON_COL  vec3(3.4,0.70,0.12)   // orange-red band at the horizon
 #define NL_DAWN_EDGE_COL     vec3(3.0,1.9,0.35)    // yellow-orange core near the sun
 #define NL_DAWN_SPREAD 1.0       // 0.0 off ~ 1.0 full spread
-#define NL_DAWN_EDGE_SPREAD 0.6  // 0.0 zenith stays blue ~ 1.0 whole sky tinted
-#define NL_DAWN_WIDTH 0.6        // sideways reach: 2.0 tight ~ 0.4 very wide
-#define NL_DAWN_HEIGHT 1.0       // upward reach: 2.0 low ~ 0.7 very high
+#define NL_DAWN_EDGE_SPREAD 0.7  // 0.0 zenith stays blue ~ 1.0 whole sky tinted
+#define NL_DAWN_WIDTH 1.0       // sideways reach: 2.0 tight ~ 0.4 very wide
+#define NL_DAWN_HEIGHT 0.7      // upward reach: 2.0 low ~ 0.7 very high
+
 #define NL_DAY_ZENITH_COL    vec3(0.3,0.9,2.0)
 #define NL_DAY_HORIZON_COL   vec3(1.0,1.6,1.8)
 #define NL_DAY_EDGE_COL      vec3(1.44,1.56,1.62)
+
 #define NL_NIGHT_ZENITH_COL  vec3(0.008,0.048,0.08)
 #define NL_NIGHT_HORIZON_COL vec3(0.02,0.06,0.1)
 #define NL_NIGHT_EDGE_COL    vec3(0.04,0.08,0.1)
-#define NL_RAIN_ZENITH_COL   vec3(0.47,0.51,0.56)
-#define NL_RAIN_HORIZON_COL  vec3(0.6,0.6,0.6)
+
+#define NL_RAIN_ZENITH_COL   vec3(0.25,0.25,0.25)
+#define NL_RAIN_HORIZON_COL  vec3(0.5,0.5,0.5)
 
 #define NL_END_ZENITH_COL    vec3(0.08,0.001,0.1)
 #define NL_END_HORIZON_COL   vec3(0.6,0.02,0.6)
-
 
 /* Rainbow */
 #define NL_RAINBOW           // [toggle] enable rainbow in sky
@@ -229,69 +205,5 @@
 #define NL_LAVA_NOISE            // [toggle] darken lava in certain regions
 //#define NL_LAVA_NOISE_BUMP 0.2 // [toggle] 0.1 subtle ~ 0.8 massive waves
 #define NL_LAVA_NOISE_SPEED 0.2  // 0.0 still ~ 0.8 fast
-
-/*
-  NEWB SHADER SUBPACK CONFIG
-  This part contains custom configuration options for each subpack.
-
-  If a value is already defined,
-  then you must undefine it before modifying:
-  eg: #undef OPTION_NAME
-
-  Subpack names and flags are inside `pack_config.toml`.
-  Build tool will enable corresponding flags when compiling.
-*/
-
-#ifdef LITE
-  #define NO_WAVE
-  #undef NL_GLOW_SHIMMER
-  #undef NL_LAVA_NOISE
-  #undef NL_WEATHER_SPECK
-  #undef NL_SHOOTING_STAR
-  #undef NL_CLOUD_AURORA_REFLECTION
-  #undef NL_UNDERWATER_STREAKS
-  #undef NL_RAIN_MIST_OPACITY
-  #undef NL_CLOUDY_FOG
-  #undef NL_ENTITY_EDGE_HIGHLIGHT
-#endif
-
-#ifdef NO_WAVE_NO_FOG
-  #define NO_WAVE
-  #define NO_FOG
-#endif
-
-#ifdef NO_FOG
-  #undef NL_FOG
-#endif
-
-#ifdef NO_WAVE
-  #undef NL_PLANTS_WAVE
-  #undef NL_LANTERN_WAVE
-  #undef NL_UNDERWATER_WAVE
-  #undef NL_WATER_WAVE
-  #undef NL_RAIN_MIST_OPACITY
-#endif
-
-#ifdef CHUNK_ANIM
-  #define NL_CHUNK_LOAD_ANIM 100.0
-#endif
-
-#ifdef ROUNDED_CLOUDS
-  #undef NL_CLOUD_TYPE
-  #define NL_CLOUD_TYPE 2
-  #undef NL_CLOUD_SHADOW // TODO: Cloud shadow for rounded, realistic clouds
-#endif
-
-#ifdef BOX_CLOUDS
-  #undef NL_CLOUD_TYPE
-  #define NL_CLOUD_TYPE 0
-  #undef NL_CLOUD_SHADOW
-#endif
-
-#ifdef REALISTIC_CLOUDS
-  #undef NL_CLOUD_TYPE
-  #define NL_CLOUD_TYPE 3
-  #undef NL_CLOUD_SHADOW
-#endif
 
 #endif
