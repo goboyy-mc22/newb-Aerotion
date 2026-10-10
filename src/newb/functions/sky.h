@@ -101,9 +101,23 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   gradient2 = mix(gradient2, 1.0, mg8);
 
   float dawnFactor = 1.0-env.dayFactor*env.dayFactor;
-  float df = mix(1.0, g2.x, dawnFactor*dawnFactor);
-  vec3 sky = mix(skyCol.horizon, skyCol.horizonEdge, gradient1*df*df);
-  sky = mix(skyCol.zenith, sky, gradient2*df);
+
+  // dawn spread: same weight as the dawn color blend in nlOverworldSkyColors
+  float dw = dawnFactor*dawnFactor*dawnFactor;
+  dw *= mix(1.0, dw*dw, step(env.dayFactor, 0.0));
+  float sw = clamp(NL_DAWN_SPREAD*dw, 0.0, 1.0);
+  float ew = clamp(NL_DAWN_EDGE_SPREAD*dw, 0.0, 1.0);
+
+  // angular falloff around the sun: exponent 2.0 = original, lower = wider
+  float sunFall = mix(g2.x, pow(g1.x, NL_DAWN_WIDTH), sw);
+  float df = mix(1.0, sunFall, dawnFactor*dawnFactor);
+
+  // height falloff: exponent on (1 - y^2), 2.0 = tight, lower = reaches higher
+  float dawnGradient1 = mix(gradient1, pow(vh, NL_DAWN_HEIGHT), sw);
+  float dawnGradient2 = mix(gradient2, vh, ew);
+
+  vec3 sky = mix(skyCol.horizon, skyCol.horizonEdge, dawnGradient1*df*df);
+  sky = mix(skyCol.zenith, sky, dawnGradient2*df);
 
   sky *= 0.5+0.5*gradient2;
   sky *= (1.0 + (2.0*mg8 + 7.0*mg8*mg8)*mask)*mix(1.0, mask, NL_SKY_VOID_DARKNESS);

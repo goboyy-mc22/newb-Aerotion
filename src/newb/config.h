@@ -71,9 +71,13 @@
 #define NL_SKY_RAIN_MIX_FACTOR 0.9
 
 /* Sky colors - zenith=top, horizon=bottom */
-#define NL_DAWN_ZENITH_COL   vec3(0.1,0.4,0.7)
-#define NL_DAWN_HORIZON_COL  vec3(3.0,0.4,0.4)
-#define NL_DAWN_EDGE_COL     vec3(2.0,0.8,0.8)
+#define NL_DAWN_ZENITH_COL   vec3(0.12,0.38,0.90)  // blue at the top
+#define NL_DAWN_HORIZON_COL  vec3(3.4,0.70,0.12)   // orange-red band at the horizon
+#define NL_DAWN_EDGE_COL     vec3(3.0,1.9,0.35)    // yellow-orange core near the sun
+#define NL_DAWN_SPREAD 1.0       // 0.0 off ~ 1.0 full spread
+#define NL_DAWN_EDGE_SPREAD 0.6  // 0.0 zenith stays blue ~ 1.0 whole sky tinted
+#define NL_DAWN_WIDTH 0.6        // sideways reach: 2.0 tight ~ 0.4 very wide
+#define NL_DAWN_HEIGHT 1.0       // upward reach: 2.0 low ~ 0.7 very high
 #define NL_DAY_ZENITH_COL    vec3(0.3,0.9,2.0)
 #define NL_DAY_HORIZON_COL   vec3(1.0,1.6,1.8)
 #define NL_DAY_EDGE_COL      vec3(1.44,1.56,1.62)
