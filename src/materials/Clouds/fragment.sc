@@ -54,7 +54,7 @@ void main() {
       // type 4: fast vanilla clouds (plane projection from view elevation)
       vec2 cp = vDir.xz / max(vDir.y, 0.001);
       float fade = smoothstep(NL_VCLOUD_FADE.x, NL_VCLOUD_FADE.y, vDir.y);
-      color = renderFastVanillaClouds(cp, v_color2.w, fade);
+      color = renderFastVanillaClouds(cp, v_color2.w, fade, v_color1.rgb, v_color2.rgb, v_color1.w);
     #endif
 
     color.rgb = colorCorrection(color.rgb);
