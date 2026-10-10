@@ -271,5 +271,58 @@ vec3 nlRenderGalaxy(vec3 vdir, vec3 fogColor, nl_environment env, float t) {
   return stars*(1.0-env.rainFactor);
 }
 
+vec4 renderBlackhole(vec3 viewdir,float t) {
+    t *= NL_BH_SPEED;
+    
+    float r = 2.4;
+    
+    vec3 vr = viewdir;
+    vr.xy = vec2(vr.x * cos(r) - vr.y * sin(r),vr.x * sin(r) + vr.y * cos(r));
+    vec3 viewd = vr - vec3(0.0,-1.0,0.0);
+    
+    float nl = sin(15.0 * viewd.x + t) * sin(15.0 * viewd.y - t) * sin(15.0 * viewd.z + t);
+    float a = atan2(viewd.x,viewd.z);
+    float d = NL_BH_DIST * length(viewd + 0.003 * nl);
+    float d0 = (0.6 - d) / 0.6;
+    float dm0 = 1.0 - max(d0,0.0);
+    float gl = 1.0 - clamp(-0.3 * d0,0.0,1.0);
+    float gla = pow(1.0 - min(abs(d0),1.0),8.0);
+    float gl8 = pow(gl,8.0);
+    float hole = 0.9 * pow(dm0,32.0) + 0.1 * pow(dm0,3.0);
+    float bh = (gla + 0.8 * gl8 + 0.2 * gl8 * gl8) * hole;
+    float spiralPhase = 3.0 * a - 4.0 * d + 24.0 * pow(max(1.4 - d,0.0),4.0) + t;
+    float df = sin(spiralPhase);
+    
+    df *= 1.2 + 0.05 * sin(4.0 * a + d + 4.0 * t - 4.0 * df);
+    
+    float df2 = sin(7.0 * a - 8.0 * d + 16.0 * pow(max(1.25 - d,0.0),3.0) - t * 1.35);
+ 
+    df += 0.08 * df2;
+    bh *= 1.0 + pow(df,4.0) * hole * max(1.0 - bh,0.0);
+    
+    float spiralWave = 0.4 + 0.35 * sin(spiralPhase);
+    float spiralShape = pow(spiralWave,2.0);
+    float innerSpiral = smoothstep(0.18,0.62,d) * spiralShape;
+    float innerBreakup = 0.72 + 0.28 * spiralShape;
+    float detail = 0.8 + 0.04 * sin(12.0 * a - 15.0 * d + t * 1.5);
+    
+    bh *= innerBreakup * detail;
+    
+    float edge = pow(max(1.0 - smoothstep(0.34,0.62,d),0.0),3.0);
+    float halo = pow(max(1.0 - smoothstep(0.45,1.15,d),0.0),4.0);
+    float spiralLight = 0.72 + 0.28 * spiralShape;
+    float light = bh * 4.0;
+    
+    light += edge * bh * 0.20;
+    light += innerSpiral * bh * 0.16;
+    light += halo * bh * 0.10;
+    light *= spiralLight;
+    
+    float colorMix = clamp(bh * (0.72 + 0.28 * spiralShape),0.0,1.0);
+    
+    vec3 col = light * mix(NL_BH_COL_LOW,NL_BH_COL_HIGH,colorMix);
+    
+    return vec4(col,hole);
+}
 
 #endif
