@@ -24,3 +24,10 @@ Contact (Discord Server): https://discord.gg/newb-community-844591537430069279
 ''' # %a = authors
 credits = '''
 '''
+
+[[subpack]]
+define = "DEFAULT"
+materials = []
+description = '''
+Default
+'''
