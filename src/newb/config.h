@@ -67,6 +67,13 @@
 #define NL_END_ZENITH_COL    vec3(0.12,0.002,0.28)
 #define NL_END_HORIZON_COL   vec3(0.85,0.015,0.75)
 
+/* blackhole at the end */
+#define NL_BLACKHOLE                         // [toggle] enable blackhole in endsky
+#define NL_BH_COL_LOW vec3(0.0,0.0,0.0)      // hole color
+#define NL_BH_COL_HIGH vec3(0.2,0.2,0.3)   // spiral ring color
+#define NL_BH_DIST 2.0                      // blackhole size: 5.0 tiny - 0.5 massive
+#define NL_BH_SPEED 0.6                      // spiral rotation speed
+
 /* Rainbow */
 //#define NL_RAINBOW           // [toggle] enable rainbow in sky
 #define NL_RAINBOW_CLEAR 0.0 // 0.3 subtle ~ 1.0 bright during clear weather
