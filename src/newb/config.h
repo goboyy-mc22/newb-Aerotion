@@ -58,9 +58,9 @@
 #define NL_DAY_HORIZON_COL   vec3(0.25,1.6,2.4)
 #define NL_DAY_EDGE_COL      vec3(1.2,2.0,2.5)
 
-#define NL_NIGHT_ZENITH_COL  vec3(0.025,0.075,0.16)
-#define NL_NIGHT_HORIZON_COL vec3(0.045,0.13,0.23)
-#define NL_NIGHT_EDGE_COL    vec3(0.08,0.19,0.30)
+#define NL_NIGHT_ZENITH_COL  vec3(0.004,0.040,0.250)
+#define NL_NIGHT_HORIZON_COL vec3(0.004,0.095,0.340)
+#define NL_NIGHT_EDGE_COL    vec3(0.006,0.160,0.520)
 
 #define NL_RAIN_ZENITH_COL   vec3(0.25,0.25,0.25)
 #define NL_RAIN_HORIZON_COL  vec3(0.5,0.5,0.5)
