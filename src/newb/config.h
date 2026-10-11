@@ -11,10 +11,10 @@
 #define NL_TINT_HIGH vec3(1.0,1.0,1.0) // color tint for light tone
 
 /* Lighting */
-#define NL_SUNLIGHT_INTENSITY   3.8  // 1.0 weak ~ 5.0 bright
+#define NL_SUNLIGHT_INTENSITY   4.0  // 1.0 weak ~ 5.0 bright
 #define NL_TORCHLIGHT_INTENSITY 1.25 // 0.5 weak ~ 3.0 bright
 #define NL_SHADOW_INTENSITY     1.0  // 0.0 no shadow ~ 1.0 strong shadow
-#define NL_MIN_LIGHTING_BOOST   0.55  // 1.0 minimal lighting boost for dark areas ~ 3.0 brighter dark areas
+#define NL_MIN_LIGHTING_BOOST   0.5  // 1.0 minimal lighting boost for dark areas ~ 3.0 brighter dark areas
 //#define NL_BLINKING_TORCH  // [toggle] flickering light
 //#define NL_CLOUD_SHADOW      // [toggle] cloud shadow (simple clouds only)
 
@@ -24,7 +24,7 @@
 
 /* Sun/moon light color */
 #define NL_DAWN_SUNLIGHT_COL   vec3(1.0,0.6,0.2)
-#define NL_NOON_SUNLIGHT_COL   vec3(1.0,0.75,0.65)
+#define NL_NOON_SUNLIGHT_COL   vec3(1.0,0.75,0.75)
 #define NL_NIGHT_MOONLIGHT_COL vec3(0.01,0.03,0.2)
 
 /* Torch colors */
@@ -35,9 +35,9 @@
 
 /* Fog */
 #define NL_FOG 1.0                // [toggle] 0.1 subtle ~ 1.0 blend with sky completely
-#define NL_MIST_DENSITY 0.9      // 0.0 no mist ~ 1.0 misty
-#define NL_RAIN_MIST_OPACITY 0.9 // [toggle] 0.04 very subtle ~ 0.5 thick rain mist blow
-#define NL_CLOUDY_FOG 0.25         // [toggle] 0.0 subtle - 0.8 dense fog clouds
+#define NL_MIST_DENSITY 1.0      // 0.0 no mist ~ 1.0 misty
+#define NL_RAIN_MIST_OPACITY 1.0 // [toggle] 0.04 very subtle ~ 0.5 thick rain mist blow
+#define NL_CLOUDY_FOG 0.3         // [toggle] 0.0 subtle - 0.8 dense fog clouds
 
 /* Sky */
 #define NL_SKY_VOID_FACTOR     0.5
@@ -93,8 +93,8 @@
 #define NL_WAVE_RANGE 16.0     // 6.0 upto 6 blocks ~ 32.0 upto 32 blocks away (slower)
 
 /* Water */
-#define NL_WATER_TRANSPARENCY 0.9 // 0.0 transparent ~ 1.0 normal
-#define NL_WATER_BUMP 0.1        // 0.001 plain ~ 0.2 bumpy water
+#define NL_WATER_TRANSPARENCY 0.75 // 0.0 transparent ~ 1.0 normal
+#define NL_WATER_BUMP 0.08        // 0.001 plain ~ 0.2 bumpy water
 #define NL_WATER_WAVE_SPEED  0.55  // 0.2 calm ~ 2.0 turbulent
 #define NL_WATER_TEX_OPACITY 0.0  // 0.0 plain water ~ 1.0 vanilla water texture
 #define NL_WATER_WAVE             // [toggle] wave effect
@@ -112,7 +112,7 @@
 #define NL_CLOUD_TYPE 4 // 0:vanilla, 1:soft, 2:rounded, 3:realistic, 4:fast vanilla (blocky)
 
 /* Fast vanilla cloud settings (type 4) */
-#define NL_VCLOUD_STEPS 5                        // layers
+#define NL_VCLOUD_STEPS 6                        // layers
 #define NL_VCLOUD_SIDECOL vec3(1.0,1.0,1.0)      // side color
 #define NL_VCLOUD_BOTTOMCOL vec3(0.75,0.75,0.75) // bottom color
 #define NL_VCLOUD_SPEED 0.35                     // 0.0 static ~ 1.0 fast
@@ -188,8 +188,8 @@
 #define NL_MOON_PATH_YAW   17.0 //
 #define NL_SUN_PATH_TILT   31.0 //
 #define NL_MOON_PATH_TILT -28.0 //
-#define NL_SUN_TILT        45.0 // 0.0 no tilt ~ 90.0 tilt of 90 degrees
-#define NL_MOON_TILT       45.0 // 0.0 no tilt ~ 90.0 tilt of 90 degrees
+#define NL_SUN_TILT        0.0 // 0.0 no tilt ~ 90.0 tilt of 90 degrees
+#define NL_MOON_TILT       0.0 // 0.0 no tilt ~ 90.0 tilt of 90 degrees
 
 /* Fake godrays during sunrise/sunset */
 #define NL_GODRAY 1.0          // [toggle] 0.1 faint ~ 1.0 full strength of the shafts
