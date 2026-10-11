@@ -61,8 +61,8 @@
 #define NL_NIGHT_HORIZON_COL vec3(0.004,0.095,0.340)
 #define NL_NIGHT_EDGE_COL    vec3(0.006,0.160,0.520)
 
-#define NL_RAIN_ZENITH_COL   vec3(0.25,0.25,0.25)
-#define NL_RAIN_HORIZON_COL  vec3(0.5,0.5,0.5)
+#define NL_RAIN_ZENITH_COL   vec3(0.25,0.25,0.25)*0.75
+#define NL_RAIN_HORIZON_COL  vec3(0.5,0.5,0.5)*0.75
 
 #define NL_END_ZENITH_COL    vec3(0.005,0.000,0.005)
 #define NL_END_HORIZON_COL   vec3(0.0,0.0,0.0)
@@ -71,7 +71,7 @@
 #define NL_BLACKHOLE                         // [toggle] enable blackhole in endsky
 #define NL_BH_COL_LOW vec3(0.0,0.0,0.0)      // hole color
 #define NL_BH_COL_HIGH vec3(0.2,0.2,0.3)   // spiral ring color
-#define NL_BH_DIST 2.0                      // blackhole size: 5.0 tiny - 0.5 massive
+#define NL_BH_DIST 1.9                     // blackhole size: 5.0 tiny - 0.5 massive
 #define NL_BH_SPEED 0.6                      // spiral rotation speed
 
 /* Rainbow */
@@ -93,20 +93,20 @@
 #define NL_WAVE_RANGE 13.0     // 6.0 upto 6 blocks ~ 32.0 upto 32 blocks away (slower)
 
 /* Water */
-#define NL_WATER_TRANSPARENCY 0.75 // 0.0 transparent ~ 1.0 normal
+#define NL_WATER_TRANSPARENCY 0.7 // 0.0 transparent ~ 1.0 normal
 #define NL_WATER_BUMP 0.05        // 0.001 plain ~ 0.2 bumpy water
 #define NL_WATER_WAVE_SPEED  0.5  // 0.2 calm ~ 2.0 turbulent
 #define NL_WATER_TEX_OPACITY 0.0  // 0.0 plain water ~ 1.0 vanilla water texture
 #define NL_WATER_WAVE             // [toggle] wave effect
 //#define NL_WATER_REFL_MASK      // [toggle] fake water reflection mask
-#define NL_WATER_TINT vec3(0.0,0.05,0.7)
+#define NL_WATER_TINT vec3(0.0,0.1,0.7)
 
 /* Underwater */
 #define NL_UNDERWATER_BRIGHTNESS 1.8        // 0.0 dark ~ 3.0 bright
 #define NL_CAUSTIC_INTENSITY 1.9             // 0.5 weak ~ 5.0 bright
 #define NL_UNDERWATER_WAVE 0.05               // [toggle] 0.02 subtle ~ 0.6 trippy
 #define NL_UNDERWATER_STREAKS 1.5            // [toggle] 0.8 subtle - 2.0 bright streaks from top
-#define NL_UNDERWATER_TINT vec3(0.2,1.0,0.9) // fog tint color when underwater
+#define NL_UNDERWATER_TINT vec3(0.4,0.8,1.0) // fog tint color when underwater
 
 /* Cloud type */
 #define NL_CLOUD_TYPE 4 // 0:vanilla, 1:soft, 2:rounded, 3:realistic, 4:fast vanilla (blocky)
