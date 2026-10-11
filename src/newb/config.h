@@ -80,9 +80,9 @@
 #define NL_RAINBOW_RAIN  0.4 // 0.3 subtle ~ 1.0 bright during rain weather
 
 /* Ore glow intensity */
-#define NL_GLOW_TEX 2.5           // 0.4 weak ~ 8.0 bright
+#define NL_GLOW_TEX 3.5          // 0.4 weak ~ 8.0 bright
 #define NL_GLOW_SHIMMER 1.0      // [toggle] 0.1 subtle ~ 1.0 100% shimmer
-#define NL_GLOW_SHIMMER_SPEED 1.2 // 0.5 slow - 2.0 fast
+#define NL_GLOW_SHIMMER_SPEED 1.0 // 0.5 slow - 2.0 fast
 //#define NL_GLOW_LEAK 0.6        // [toggle] 0.08 subtle ~ 1.0 100% brightness of NL_GLOW_TEX
 
 /* Waving */
@@ -90,12 +90,12 @@
 #define NL_LANTERN_WAVE 0.16   // [toggle] 0.05 subtle ~ 0.4 large swing
 #define NL_WAVE_SPEED 2.8      // 0.5 slow wave ~ 5.0 very fast wave
 //#define NL_EXTRA_PLANTS_WAVE // [toggle] !dont use! wave using texture coords (1.21.0 vanilla 2048x1024)
-#define NL_WAVE_RANGE 16.0     // 6.0 upto 6 blocks ~ 32.0 upto 32 blocks away (slower)
+#define NL_WAVE_RANGE 13.0     // 6.0 upto 6 blocks ~ 32.0 upto 32 blocks away (slower)
 
 /* Water */
 #define NL_WATER_TRANSPARENCY 0.75 // 0.0 transparent ~ 1.0 normal
-#define NL_WATER_BUMP 0.08        // 0.001 plain ~ 0.2 bumpy water
-#define NL_WATER_WAVE_SPEED  0.55  // 0.2 calm ~ 2.0 turbulent
+#define NL_WATER_BUMP 0.05        // 0.001 plain ~ 0.2 bumpy water
+#define NL_WATER_WAVE_SPEED  0.5  // 0.2 calm ~ 2.0 turbulent
 #define NL_WATER_TEX_OPACITY 0.0  // 0.0 plain water ~ 1.0 vanilla water texture
 #define NL_WATER_WAVE             // [toggle] wave effect
 //#define NL_WATER_REFL_MASK      // [toggle] fake water reflection mask
@@ -182,8 +182,8 @@
 //#define NL_CHUNK_LOAD_ANIM 100.0 // [toggle] -600.0 fall from top ~ 600.0 rise from bottom
 
 /* Sun/Moon */
-#define NL_SUN_SIZE  3.2          // 0.3 tiny ~ 4.0 massive
-#define NL_MOON_SIZE 3.2          // 0.3 tiny ~ 4.0 massive
+#define NL_SUN_SIZE  3.0          // 0.3 tiny ~ 4.0 massive
+#define NL_MOON_SIZE 3.0          // 0.3 tiny ~ 4.0 massive
 #define NL_SUN_PATH_YAW    15.0 //
 #define NL_MOON_PATH_YAW   17.0 //
 #define NL_SUN_PATH_TILT   31.0 //
@@ -192,11 +192,7 @@
 #define NL_MOON_TILT       0.0 // 0.0 no tilt ~ 90.0 tilt of 90 degrees
 
 /* Fake godrays during sunrise/sunset */
-#define NL_GODRAY 1.0          // [toggle] 0.1 faint ~ 1.0 full strength of the shafts
-#define NL_GODRAY_SPACING 13.0 // shafts around the sun (per full turn): 8.0 few wide ~ 24.0 many
-#define NL_GODRAY_EDGE 0.05    // 0.0 wide shafts ~ 0.6 thin shafts
-#define NL_GODRAY_SPREAD 0.10  // how far from the sun the shafts reach: -0.2 almost everywhere ~ 0.8 narrow fan
-#define NL_GODRAY_DARK 0.45    // 0.4 very dark shafts ~ 1.0 invisible
+#define NL_GODRAY 1.5     // [toggle] 0.1 faint ~ 1.0 full strength of the shafts
 
 /* Sky reflection */
 //#define NL_GROUND_REFL 0.4       // [toggle] 0.2 slightly reflective ~ 1.0 fully reflect sky
