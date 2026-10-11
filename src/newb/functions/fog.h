@@ -40,24 +40,26 @@ float nlRenderGodRayIntensity(vec3 cPos, vec3 worldPos, float t, vec2 uv1, float
   return vol;
 }
 
-// Soft, wide, dark shafts that radiate from the sun (screen-space straight lines through the point under the sun).
+// Soft, wide, dark shafts radiating from the sun's position (straight lines through the sun on screen).
 // Returns shaft strength 0..1. viewDir must be normalized.
 float nlRenderGodRayShafts(vec3 viewDir, vec3 sunDir, float t, float relativeDist, vec3 FOG_COLOR) {
-  vec2 sd = normalize(sunDir.xz);
-  vec2 hv = viewDir.xz;
-  float toward = smoothstep(0.0, 0.5, dot(hv, sd)/max(length(hv), 0.001));
-  float below = smoothstep(0.06, 0.20, -viewDir.y);
+  float sd = dot(viewDir, sunDir);
+  float toward = smoothstep(NL_GODRAY_SPREAD, NL_GODRAY_SPREAD + 0.5, sd);
 
-  // u = lateral offset / height: constant along a view ray, so shafts are straight lines converging under the sun
-  float u = dot(hv, vec2(-sd.y, sd.x))/max(-viewDir.y, 0.015);
-  float spread = 1.0 - smoothstep(NL_GODRAY_SPREAD, NL_GODRAY_SPREAD + 1.3, abs(u)); // strongest near the sun
-  float p = 6.2832*NL_GODRAY_SPACING*u;
+  // angle around the sun axis: constant angle = straight line through the sun on screen
+  vec3 rt = normalize(cross(vec3(0.0, 1.0, 0.0), sunDir));
+  vec3 tp = cross(sunDir, rt);
+  vec3 q = viewDir - sunDir*sd;
+  float a = atan2(dot(q, tp), dot(q, rt));
+
+  float p = NL_GODRAY_SPACING*a;
   float v = 0.75*cos(p + 0.01*t) + 0.25*cos(0.37*p + 1.3 - 0.007*t);
   float shaft = smoothstep(NL_GODRAY_EDGE, NL_GODRAY_EDGE + 0.5, v);
 
+  float nearSun = smoothstep(0.02, 0.2, length(q)); // melt into the glow at the sun itself
   float far = 1.0 - smoothstep(0.88, 1.0, relativeDist);
   float dawn = clamp(3.0*(FOG_COLOR.r - FOG_COLOR.b), 0.0, 1.0);
-  return shaft*spread*toward*below*far*dawn;
+  return shaft*toward*nearSun*far*dawn;
 }
 
 // multiplier applied to the final color inside a shaft: darkens and saturates the fog/dawn color
