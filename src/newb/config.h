@@ -12,6 +12,7 @@
 
 /* Lighting */
 #define NL_SUNLIGHT_INTENSITY   4.0  // 1.0 weak ~ 5.0 bright
+#define NL_SUN_GLOW_FALLOFF 0.35 // sun/moon glow size: 0.5 = old (big) ~ 0.2 = tiny glow
 #define NL_TORCHLIGHT_INTENSITY 1.5 // 0.5 weak ~ 3.0 bright
 #define NL_SHADOW_INTENSITY     1.0  // 0.0 no shadow ~ 1.0 strong shadow
 #define NL_MIN_LIGHTING_BOOST   0.5  // 1.0 minimal lighting boost for dark areas ~ 3.0 brighter dark areas
@@ -51,7 +52,6 @@
 #define NL_DAWN_ZENITH_COL   vec3(0.12,0.38,0.90)  // blue at the top
 #define NL_DAWN_HORIZON_COL  vec3(3.4,0.70,0.12)   // orange-red band at the horizon
 #define NL_DAWN_EDGE_COL     vec3(3.0,1.9,0.35)    // yellow-orange core near the sun
-#define NL_SUN_GLOW_FALLOFF 0.35 // sun/moon glow size: 0.5 = old (big) ~ 0.2 = tiny glow
 #define NL_DAWN_SPREAD 1.0       // 0.0 off ~ 1.0 full spread
 #define NL_DAWN_EDGE_SPREAD 0.7  // 0.0 zenith stays blue ~ 1.0 whole sky tinted
 #define NL_DAWN_WIDTH 1.0       // sideways reach: 2.0 tight ~ 0.4 very wide
