@@ -11,10 +11,10 @@
 #define NL_TINT_HIGH vec3(1.0,1.0,1.0) // color tint for light tone
 
 /* Lighting */
-#define NL_SUNLIGHT_INTENSITY   3.5  // 1.0 weak ~ 5.0 bright
-#define NL_TORCHLIGHT_INTENSITY 1.0  // 0.5 weak ~ 3.0 bright
+#define NL_SUNLIGHT_INTENSITY   3.8  // 1.0 weak ~ 5.0 bright
+#define NL_TORCHLIGHT_INTENSITY 1.25 // 0.5 weak ~ 3.0 bright
 #define NL_SHADOW_INTENSITY     1.0  // 0.0 no shadow ~ 1.0 strong shadow
-#define NL_MIN_LIGHTING_BOOST   0.8 // 1.0 minimal lighting boost for dark areas ~ 3.0 brighter dark areas
+#define NL_MIN_LIGHTING_BOOST   0.5  // 1.0 minimal lighting boost for dark areas ~ 3.0 brighter dark areas
 //#define NL_BLINKING_TORCH  // [toggle] flickering light
 //#define NL_CLOUD_SHADOW      // [toggle] cloud shadow (simple clouds only)
 
@@ -28,10 +28,10 @@
 #define NL_NIGHT_MOONLIGHT_COL vec3(0.01,0.03,0.2)
 
 /* Torch colors */
-#define NL_OVERWORLD_TORCH_COL  vec3(1.0,0.6,0.35)
-#define NL_UNDERWATER_TORCH_COL vec3(1.0,0.6,0.35)
-#define NL_NETHER_TORCH_COL     vec3(1.0,0.6,0.35)
-#define NL_END_TORCH_COL        vec3(1.0,0.6,0.35)
+#define NL_OVERWORLD_TORCH_COL  vec3(1.0,0.65,0.38)
+#define NL_UNDERWATER_TORCH_COL vec3(1.0,0.65,0.38)
+#define NL_NETHER_TORCH_COL     vec3(1.0,0.65,0.38)
+#define NL_END_TORCH_COL        vec3(1.0,0.65,0.38)
 
 /* Fog */
 #define NL_FOG 1.0                // [toggle] 0.1 subtle ~ 1.0 blend with sky completely
