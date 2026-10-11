@@ -87,7 +87,9 @@ void main() {
   float wcPos = v_wpos.y + CameraPosition.y;
   float dy_w = abs(dFdy(v_wpos.y));
 
-  bool isOneBlockUnderwater = ((wcPos <= 62.89 && wcPos > 62.0) || (wcPos <= -60.11 && wcPos > -61.0)) 
+  // water foam only exists in the overworld (in the End/Nether it shows up as white specks)
+  bool isOneBlockUnderwater = !env.end && !env.nether
+    && ((wcPos <= 62.89 && wcPos > 62.0) || (wcPos <= -60.11 && wcPos > -61.0)) 
     && v_extra.b < 0.9 
     && !(dy_w < 0.0002) 
     && step(0.85, v_lightmapUV.y) * step(v_lightmapUV.y, 0.927) == 1.0; 
