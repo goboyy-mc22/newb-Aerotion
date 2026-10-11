@@ -202,8 +202,8 @@
 #define NL_GROUND_RAIN_PUDDLES 1.0 // 0.0 no puddles ~ 1.0 puddles
 
 /* Entity (Actor, ItemInHand) */
-#define NL_ENTITY_BRIGHTNESS     0.5 // 0.1 dark ~ 1.6 bright
-#define NL_ENTITY_EDGE_HIGHLIGHT 0.3 // [toggle] 0.0 no highlight ~ 1.6 bright highlight
+#define NL_ENTITY_BRIGHTNESS     0.1 // 0.1 dark ~ 1.6 bright
+//#define NL_ENTITY_EDGE_HIGHLIGHT 0.3 // [toggle] 0.0 no highlight ~ 1.6 bright highlight
 
 /* Weather particles */
 //#define NL_WEATHER_SPECK 0.6         // [toggle] 0.0 vanilla texture ~ 1.0 soft speck
