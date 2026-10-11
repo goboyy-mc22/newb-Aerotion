@@ -171,7 +171,7 @@
 //#define NL_CHUNK_LOAD_ANIM 100.0 // [toggle] -600.0 fall from top ~ 600.0 rise from bottom
 
 /* Sun/Moon */
-#define NL_SUN_SIZE  3.0          // 0.3 tiny ~ 4.0 massive
+#define NL_SUN_SIZE  3.2          // 0.3 tiny ~ 4.0 massive
 #define NL_MOON_SIZE 3.0          // 0.3 tiny ~ 4.0 massive
 #define NL_SUN_PATH_YAW    15.0 //
 #define NL_MOON_PATH_YAW   17.0 //
@@ -194,8 +194,8 @@
 
 /* Weather particles */
 //#define NL_WEATHER_SPECK 0.6         // [toggle] 0.0 vanilla texture ~ 1.0 soft speck
-#define NL_WEATHER_RAIN_SLANT 4.0    // 1.0 minimal ~ 8.0 violent
-#define NL_WEATHER_PARTICLE_SIZE 1.0 // 0.5 tiny ~ 4.0 large
+#define NL_WEATHER_RAIN_SLANT 1.0      // 1.0 minimal ~ 8.0 violent
+#define NL_WEATHER_PARTICLE_SIZE 0.5   // 0.5 tiny ~ 4.0 large
 
 /* Lava effects */
 //#define NL_LAVA_NOISE            // [toggle] darken lava in certain regions
