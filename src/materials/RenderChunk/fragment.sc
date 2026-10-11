@@ -74,11 +74,11 @@ void main() {
 
   float shadow = smoothstep(0.875, 0.860, pow(v_lightmapUV.y, 2.0));
   shadow = mix(shadow, 0.0, pow(v_lightmapUV.x * 1.2, 6.0));
-  diffuse.rgb *= 1.0 - 0.5 * shadow;
+  diffuse.rgb *= 1.0 - 0.8 * shadow;
 
   if (v_extra.b <= 0.9) {
     float sideshadow = smoothstep(0.64, 0.62, v_color1.g);
-    diffuse.rgb *= 1.0 - 0.5 * sideshadow;
+    diffuse.rgb *= 1.0 - 0.8 * sideshadow;
   }
 
   diffuse.rgb += glow;
@@ -131,14 +131,6 @@ void main() {
   }
 
   diffuse.rgb = mix(diffuse.rgb, v_fog.rgb, v_fog.a);
-
-  #ifdef NL_GODRAY
-    if (!env.underwater) {
-      // dark dawn-tinted shafts radiating from the sun
-      float gr = nlRenderGodRayShafts(normalize(v_wpos), env.sunDir, ViewPositionAndTime.w, FogColor.rgb);
-      diffuse.rgb *= mix(vec3(1.0, 1.0, 1.0), nlGodRayTint(v_fog.rgb), min(NL_GODRAY*gr, 1.0));
-    }
-  #endif
 
   diffuse.rgb = colorCorrection(diffuse.rgb);
 
