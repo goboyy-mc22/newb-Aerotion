@@ -149,20 +149,31 @@ float vcRand(highp vec2 n) {
 }
 
 // returns cloud color (rgb) and coverage (a), alpha-blended over the sky
-vec4 renderFastVanillaClouds(vec2 uv, highp float t, float fade, vec3 zenith, vec3 horizon, float rain) {
-  float a = 0.0;
-  highp float isTime = t * NL_VCLOUD_SPEED * 0.1; // 0.1 * 0.1 = 0.01
-  uv *= NL_VCLOUD_SIZE;
+// clouds are anchored in the world: the view ray is intersected with horizontal
+// slices at a fixed world height, so they stay put and get closer when approached.
+// vDir: normalized camera-relative view direction, camPos: world camera position
+float vcCell(highp vec3 vDir, highp vec3 camPos, highp float slice, highp float drift) {
+  highp float h = slice - camPos.y;   // slice height relative to camera
+  highp float tt = h / vDir.y;        // distance along ray to that slice
+  if (tt <= 0.0) { return 0.0; }      // slice is behind the view ray
+  highp vec2 uv = (camPos.xz + vDir.xz*tt) / NL_VCLOUD_CELL;
+  return step(0.7, vcRand(floor(uv + drift)));
+}
 
-  // layers
+vec4 renderFastVanillaClouds(highp vec3 vDir, highp vec3 camPos, highp float t, float fade, vec3 zenith, vec3 horizon, float rain) {
+  float a = 0.0;
+  highp float drift = t * NL_VCLOUD_SPEED * 0.01;
+  highp vec3 d = vDir;
+  d.y = (d.y >= 0.0 ? 1.0 : -1.0) * max(abs(d.y), 0.001);
+  highp float dh = NL_VCLOUD_THICKNESS / float(NL_VCLOUD_STEPS);
+
+  // layers (vertical slices through the cloud slab)
   for (int i = 0; i < NL_VCLOUD_STEPS; i++) {
-    uv /= 1.007;
-    float c = step(0.7, vcRand(floor(uv + isTime)));
-    a = mix(a, 1.0, c);
+    a = mix(a, 1.0, vcCell(d, camPos, NL_VCLOUD_HEIGHT + dh*float(i), drift));
   }
 
   // cloud coloring (side / bottom)
-  float b = step(0.7, vcRand(floor(uv + isTime)));
+  float b = vcCell(d, camPos, NL_VCLOUD_HEIGHT, drift);
   // tinted by the sky so day/night and reduced opacity blend toward the sky color
   vec3 base = zenith + horizon;
   base += dot(base, vec3(0.3, 0.4, 0.3)); // lit, slightly brighter than the sky
