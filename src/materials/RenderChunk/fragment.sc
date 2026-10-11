@@ -132,6 +132,15 @@ void main() {
 
   diffuse.rgb = mix(diffuse.rgb, v_fog.rgb, v_fog.a);
 
+  #ifdef NL_GODRAY
+    if (!env.underwater) {
+      // laser-like godray shafts, tinted by the dawn/sunlight color
+      float gr = nlRenderGodRayShafts(v_wpos, env.sunDir, ViewPositionAndTime.w, length(v_wpos)/FogAndDistanceControl.z, FogColor.rgb);
+      vec3 beam = 0.5*v_fog.rgb + NL_GODRAY_BRIGHT*sunLightTint(env.dayFactor, env.rainFactor);
+      diffuse.rgb = mix(diffuse.rgb, beam, min(NL_GODRAY*gr, 1.0));
+    }
+  #endif
+
   diffuse.rgb = colorCorrection(diffuse.rgb);
 
   gl_FragColor = diffuse;

@@ -117,9 +117,6 @@ void main() {
   vec4 fogColor;
   fogColor.rgb = nlRenderSky(skycol, env, viewDir, t, true);
   fogColor.a = nlRenderFogFade(relativeDist, FogColor.rgb, FogAndDistanceControl.xy);
-  #if defined(NL_GODRAY) && defined(NL_FOG)
-    fogColor.a = mix(fogColor.a, 1.0, min(NL_GODRAY*nlRenderGodRayIntensity(cPos, worldPos, t, uv1, relativeDist, FogColor.rgb), 1.0));
-  #endif
 
   if (env.nether) {
     // blend fog with void color

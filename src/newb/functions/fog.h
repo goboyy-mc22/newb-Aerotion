@@ -40,4 +40,26 @@ float nlRenderGodRayIntensity(vec3 cPos, vec3 worldPos, float t, vec2 uv1, float
   return vol;
 }
 
+float nlRenderGodRayShafts(vec3 worldPos, vec3 sunDir, float t, float relativeDist, vec3 FOG_COLOR) {
+  // parallel shafts along the sun's azimuth; in perspective they converge exactly at the sun
+  vec2 sd = normalize(sunDir.xz);
+  vec2 perp = vec2(-sd.y, sd.x);
+  float horizLen = max(length(worldPos.xz), 0.001);
+  float s = dot(worldPos.xz, perp);
+  float toward = smoothstep(0.0, 0.5, dot(worldPos.xz, sd)/horizLen);
+
+  float a = sin(NL_GODRAY_SPACING*s + 0.35*sin(0.7*NL_GODRAY_SPACING*s + 0.02*t));
+  float b = sin(2.3*NL_GODRAY_SPACING*s + 1.7 + 0.03*t);
+  float v = a*0.7 + b*0.3 + 0.15;
+
+  // bright core + soft glow
+  float core = smoothstep(NL_GODRAY_WIDTH, NL_GODRAY_WIDTH + 0.06, v);
+  float glow = 0.35*smoothstep(NL_GODRAY_WIDTH - 0.30, NL_GODRAY_WIDTH, v);
+  float ray = clamp(core + glow, 0.0, 1.0)*toward*smoothstep(0.02, 0.25, relativeDist);
+
+  // dawn/dusk mask
+  ray *= clamp(3.0*(FOG_COLOR.r - FOG_COLOR.b), 0.0, 1.0);
+  return ray;
+}
+
 #endif
