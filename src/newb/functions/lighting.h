@@ -97,6 +97,10 @@ vec3 nlLighting(
     lum = luminance(light);
     light += (skycol.horizon + skycol.zenith)*(uv1.y*NL_SKY_AMBIENT/(1.0+lum));
 
+    // darken outdoor shade (tree/overhang shadows) without touching caves
+    float outdoorShade = smoothstep(0.35, 0.9, uv1.y) * (1.0 - step(0.93, uv1.y));
+    light *= 1.0 - NL_SHADOW_DARKNESS*outdoorShade;
+
   }
 
   // torch light
