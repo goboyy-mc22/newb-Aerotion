@@ -93,7 +93,7 @@
 #define NL_WAVE_RANGE 13.0     // 6.0 upto 6 blocks ~ 32.0 upto 32 blocks away (slower)
 
 /* Water */
-#define NL_WATER_TRANSPARENCY 0.7 // 0.0 transparent ~ 1.0 normal
+#define NL_WATER_TRANSPARENCY 0.5 // 0.0 transparent ~ 1.0 normal
 #define NL_WATER_BUMP 0.05        // 0.001 plain ~ 0.2 bumpy water
 #define NL_WATER_WAVE_SPEED  0.5  // 0.2 calm ~ 2.0 turbulent
 #define NL_WATER_TEX_OPACITY 0.0  // 0.0 plain water ~ 1.0 vanilla water texture
