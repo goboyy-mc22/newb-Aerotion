@@ -54,7 +54,7 @@ void main() {
   }
 
   float sideshadow = smoothstep(0.64, 0.62, v_color1.g) * max(v_lightmapUV.x, v_lightmapUV.y);
-  diffuse.rgb *= 1.0-0.3*sideshadow;
+  diffuse.rgb *= 1.0-0.1*sideshadow;
 
   #if defined(SEASONS) && (defined(OPAQUE) || defined(ALPHA_TEST))
     diffuse.rgb *= mix(vec3(1.0,1.0,1.0), texture2D(s_SeasonsTexture, v_color1.xy).rgb * 2.0, v_color1.z);
