@@ -12,7 +12,6 @@ $output v_texcoord0
 
 void main() {
   v_texcoord0 = a_texcoord0;
-  v_isSun = 1.0;
   #ifndef INSTANCING
     vec3 pos = a_position;
     pos.x = -pos.x;
