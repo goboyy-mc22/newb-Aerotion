@@ -165,7 +165,7 @@ vec4 renderFastVanillaClouds(highp vec3 vDir, highp vec3 camPos, highp float t, 
   highp float drift = t * NL_VCLOUD_SPEED * 0.01;
   highp vec3 d = vDir;
   d.y = (d.y >= 0.0 ? 1.0 : -1.0) * max(abs(d.y), 0.001);
-  highp float dh = NL_VCLOUD_THICKNESS / float(NL_VCLOUD_STEPS);
+  highp float dh = 4.0 / float(NL_VCLOUD_STEPS); // cloud thickness 4 blocks (like vanilla)
 
   // layers (vertical slices through the cloud slab)
   for (int i = 0; i < NL_VCLOUD_STEPS; i++) {

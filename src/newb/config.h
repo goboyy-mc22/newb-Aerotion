@@ -118,7 +118,6 @@
 #define NL_VCLOUD_SPEED 0.35                     // 0.0 static ~ 1.0 fast
 #define NL_VCLOUD_CELL 12.0                      // size of one cloud block (blocks), bigger = larger clouds
 #define NL_VCLOUD_HEIGHT 192.0                   // world height (y) of the cloud base
-#define NL_VCLOUD_THICKNESS 4.0                  // cloud thickness in blocks
 #define NL_VCLOUD_VISIBLE 0.5                   // 0.0 - 1.0 visibility of cloud
 #define NL_VCLOUD_FADE vec2(0.2, 0.9)            // horizon fade (start, end): 0.0 horizon ~ 1.0 zenith
 
