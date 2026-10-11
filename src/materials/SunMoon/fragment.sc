@@ -1,4 +1,4 @@
-$input v_texcoord0
+$input v_texcoord0, v_isSun
 
 #include <bgfx_shader.sh>
 
@@ -16,6 +16,7 @@ void main() {
     vec4 color = texture2D(s_SunMoonTexture, v_texcoord0);
     color.rgb *= SunMoonColor.rgb;
     color.rgb *= 4.4*color.rgb;
+    color.rgb *= mix(NL_MOON_BRIGHTNESS, 1.0, v_isSun); // only the moon is dimmed
     float tr = 1.0 - SunMoonColor.a;
     color.a *= 1.0 - tr*tr;
     color.rgb = colorCorrection(color.rgb);

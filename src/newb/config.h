@@ -176,6 +176,7 @@
 /* Sun/Moon */
 #define NL_SUN_SIZE  3.2          // 0.3 tiny ~ 4.0 massive
 #define NL_MOON_SIZE 3.0          // 0.3 tiny ~ 4.0 massive
+#define NL_MOON_BRIGHTNESS 0.35   // 0.0 dark ~ 1.0 same as before
 #define NL_SUN_PATH_YAW    15.0 //
 #define NL_MOON_PATH_YAW   17.0 //
 #define NL_SUN_PATH_TILT   31.0 //
