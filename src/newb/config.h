@@ -12,7 +12,8 @@
 
 /* Lighting */
 #define NL_SUNLIGHT_INTENSITY   4.0  // 1.0 weak ~ 5.0 bright
-#define NL_TORCHLIGHT_INTENSITY 1.25 // 0.5 weak ~ 3.0 bright
+#define NL_MOON_BRIGHTNESS 0.3   // 0.0 dark ~ 1.0 same as before
+#define NL_TORCHLIGHT_INTENSITY 1.5 // 0.5 weak ~ 3.0 bright
 #define NL_SHADOW_INTENSITY     1.0  // 0.0 no shadow ~ 1.0 strong shadow
 #define NL_MIN_LIGHTING_BOOST   0.5  // 1.0 minimal lighting boost for dark areas ~ 3.0 brighter dark areas
 //#define NL_BLINKING_TORCH  // [toggle] flickering light
@@ -28,13 +29,13 @@
 /* Sun/moon light color */
 #define NL_DAWN_SUNLIGHT_COL   vec3(1.0,0.6,0.2)
 #define NL_NOON_SUNLIGHT_COL   vec3(1.0,0.75,0.75)
-#define NL_NIGHT_MOONLIGHT_COL vec3(0.01,0.03,0.2)
+#define NL_NIGHT_MOONLIGHT_COL vec3(0.004,0.009,0.055)
 
 /* Torch colors */
-#define NL_OVERWORLD_TORCH_COL  vec3(1.0,0.62,0.35)
-#define NL_UNDERWATER_TORCH_COL vec3(1.0,0.62,0.35)
-#define NL_NETHER_TORCH_COL     vec3(1.0,0.62,0.35)
-#define NL_END_TORCH_COL        vec3(1.0,0.62,0.35)
+#define NL_OVERWORLD_TORCH_COL  vec3(1.0,0.58,0.35)
+#define NL_UNDERWATER_TORCH_COL vec3(1.0,0.58,0.35)
+#define NL_NETHER_TORCH_COL     vec3(1.0,0.58,0.35)
+#define NL_END_TORCH_COL        vec3(1.0,0.58,0.35)
 
 /* Fog */
 #define NL_FOG 1.0                // [toggle] 0.1 subtle ~ 1.0 blend with sky completely
@@ -176,7 +177,6 @@
 /* Sun/Moon */
 #define NL_SUN_SIZE  3.2          // 0.3 tiny ~ 4.0 massive
 #define NL_MOON_SIZE 3.0          // 0.3 tiny ~ 4.0 massive
-#define NL_MOON_BRIGHTNESS 0.35   // 0.0 dark ~ 1.0 same as before
 #define NL_SUN_PATH_YAW    15.0 //
 #define NL_MOON_PATH_YAW   17.0 //
 #define NL_SUN_PATH_TILT   31.0 //
