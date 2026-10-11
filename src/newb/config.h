@@ -192,7 +192,7 @@
 #define NL_MOON_TILT       0.0 // 0.0 no tilt ~ 90.0 tilt of 90 degrees
 
 /* Fake godrays during sunrise/sunset */
-#define NL_GODRAY 1.5     // [toggle] 0.1 faint ~ 1.0 full strength of the shafts
+//#define NL_GODRAY 1.5     // [toggle] 0.1 faint ~ 1.0 full strength of the shafts
 
 /* Sky reflection */
 //#define NL_GROUND_REFL 0.4       // [toggle] 0.2 slightly reflective ~ 1.0 fully reflect sky
