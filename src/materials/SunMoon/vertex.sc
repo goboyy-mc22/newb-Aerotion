@@ -37,7 +37,7 @@ void main() {
       tilt = degToRad( NL_MOON_PATH_TILT);
       yaw = degToRad(NL_MOON_PATH_YAW);
     }
-    pos.xz = mul(rmat2(angle + 0.5*st), pos.xz);
+    pos.xz = mul(rmat2(angle), pos.xz);
 
     vec4 wpos = vec4(dist, 70.0*pos.xz, 1.0);
 
