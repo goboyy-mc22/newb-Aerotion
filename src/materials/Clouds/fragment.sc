@@ -50,10 +50,6 @@ void main() {
       #endif
 
       color.a *= smoothstep(0.0, 0.7, vDir.y);
-    #else
-      // type 4: fast vanilla clouds, anchored to the real cloud layer height (v_color0.w)
-      float fade = smoothstep(NL_VCLOUD_FADE.x, NL_VCLOUD_FADE.y, abs(vDir.y));
-      color = renderFastVanillaClouds(vDir, CameraPosition.xz, v_color0.w, v_color2.w, fade, v_color1.rgb, v_color2.rgb, v_color1.w);
     #endif
 
     color.rgb = colorCorrection(color.rgb);
