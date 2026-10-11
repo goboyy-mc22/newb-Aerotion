@@ -66,8 +66,8 @@
 #define NL_RAIN_ZENITH_COL   vec3(0.25,0.25,0.25)
 #define NL_RAIN_HORIZON_COL  vec3(0.5,0.5,0.5)
 
-#define NL_END_ZENITH_COL    vec3(0.030,0.000,0.075)
-#define NL_END_HORIZON_COL   vec3(0.045,0.005,0.095)
+#define NL_END_ZENITH_COL    vec3(0.005,0.000,0.005)
+#define NL_END_HORIZON_COL   vec3(0.0,0.0,0.0)
 
 /* blackhole at the end */
 #define NL_BLACKHOLE                         // [toggle] enable blackhole in endsky
