@@ -28,10 +28,10 @@
 #define NL_NIGHT_MOONLIGHT_COL vec3(0.01,0.03,0.2)
 
 /* Torch colors */
-#define NL_OVERWORLD_TORCH_COL  vec3(1.0,0.65,0.38)
-#define NL_UNDERWATER_TORCH_COL vec3(1.0,0.65,0.38)
-#define NL_NETHER_TORCH_COL     vec3(1.0,0.65,0.38)
-#define NL_END_TORCH_COL        vec3(1.0,0.65,0.38)
+#define NL_OVERWORLD_TORCH_COL  vec3(1.0,0.62,0.35)
+#define NL_UNDERWATER_TORCH_COL vec3(1.0,0.62,0.35)
+#define NL_NETHER_TORCH_COL     vec3(1.0,0.62,0.35)
+#define NL_END_TORCH_COL        vec3(1.0,0.62,0.35)
 
 /* Fog */
 #define NL_FOG 1.0                // [toggle] 0.1 subtle ~ 1.0 blend with sky completely
