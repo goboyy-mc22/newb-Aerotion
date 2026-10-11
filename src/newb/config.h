@@ -64,7 +64,7 @@
 #define NL_RAIN_ZENITH_COL   vec3(0.25,0.25,0.25)*0.75
 #define NL_RAIN_HORIZON_COL  vec3(0.5,0.5,0.5)*0.75
 
-#define NL_END_ZENITH_COL    vec3(0.005,0.000,0.005)
+#define NL_END_ZENITH_COL    vec3(0.0,0.0,0.0)
 #define NL_END_HORIZON_COL   vec3(0.0,0.0,0.0)
 
 /* blackhole at the end */
