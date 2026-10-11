@@ -166,7 +166,7 @@ vec4 renderFastVanillaClouds(vec2 uv, highp float t, float fade, vec3 zenith, ve
   // tinted by the sky so day/night and reduced opacity blend toward the sky color
   vec3 base = zenith + horizon;
   base += dot(base, vec3(0.3, 0.4, 0.3)); // lit, slightly brighter than the sky
-  base *= 1.0 - 0.6*rain;
+  base *= 1.0 - 0.8*rain;
   vec3 ccol = base * mix(NL_VCLOUD_SIDECOL, NL_VCLOUD_BOTTOMCOL, b);
 
   return vec4(ccol, a * fade * NL_VCLOUD_VISIBLE);
