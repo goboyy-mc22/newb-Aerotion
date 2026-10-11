@@ -116,11 +116,11 @@
 #define NL_CLOUD_TYPE 4 // 0:vanilla, 1:soft, 2:rounded, 3:realistic, 4:fast vanilla (blocky)
 
 /* Fast vanilla cloud settings (type 4) */
-#define NL_VCLOUD_STEPS 6                        // layers
+#define NL_VCLOUD_STEPS 5                        // layers
 #define NL_VCLOUD_SIDECOL vec3(1.0,1.0,1.0)      // side color
 #define NL_VCLOUD_BOTTOMCOL vec3(0.75,0.75,0.75) // bottom color
 #define NL_VCLOUD_SPEED 0.45                     // 0.0 static ~ 1.0 fast
-#define NL_VCLOUD_CELL 17.0                      // size of one cloud block (blocks), bigger = larger clouds
+#define NL_VCLOUD_CELL 40.0                      // size of one cloud block (blocks), bigger = larger clouds
 #define NL_VCLOUD_VISIBLE 0.5                   // 0.0 - 1.0 visibility of cloud
 #define NL_VCLOUD_FADE vec2(0.2, 0.9)            // horizon fade (start, end): 0.0 horizon ~ 1.0 zenith
 
