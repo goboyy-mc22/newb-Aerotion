@@ -12,7 +12,6 @@
 
 /* Lighting */
 #define NL_SUNLIGHT_INTENSITY   4.0  // 1.0 weak ~ 5.0 bright
-#define NL_MOON_BRIGHTNESS 0.3   // 0.0 dark ~ 1.0 same as before
 #define NL_TORCHLIGHT_INTENSITY 1.5 // 0.5 weak ~ 3.0 bright
 #define NL_SHADOW_INTENSITY     1.0  // 0.0 no shadow ~ 1.0 strong shadow
 #define NL_MIN_LIGHTING_BOOST   0.5  // 1.0 minimal lighting boost for dark areas ~ 3.0 brighter dark areas
@@ -29,7 +28,7 @@
 /* Sun/moon light color */
 #define NL_DAWN_SUNLIGHT_COL   vec3(1.0,0.6,0.2)
 #define NL_NOON_SUNLIGHT_COL   vec3(1.0,0.75,0.75)
-#define NL_NIGHT_MOONLIGHT_COL vec3(0.004,0.009,0.055)
+#define NL_NIGHT_MOONLIGHT_COL vec3(0.004,0.009,0.085)
 
 /* Torch colors */
 #define NL_OVERWORLD_TORCH_COL  vec3(1.0,0.58,0.35)
@@ -113,16 +112,7 @@
 #define NL_UNDERWATER_TINT vec3(0.4,0.8,1.0) // fog tint color when underwater
 
 /* Cloud type */
-#define NL_CLOUD_TYPE 4 // 0:vanilla, 1:soft, 2:rounded, 3:realistic, 4:fast vanilla (blocky)
-
-/* Fast vanilla cloud settings (type 4) */
-#define NL_VCLOUD_STEPS 5                        // layers
-#define NL_VCLOUD_SIDECOL vec3(1.0,1.0,1.0)      // side color
-#define NL_VCLOUD_BOTTOMCOL vec3(0.75,0.75,0.75) // bottom color
-#define NL_VCLOUD_SPEED 0.45                     // 0.0 static ~ 1.0 fast
-#define NL_VCLOUD_CELL 40.0                      // size of one cloud block (blocks), bigger = larger clouds
-#define NL_VCLOUD_VISIBLE 0.5                   // 0.0 - 1.0 visibility of cloud
-#define NL_VCLOUD_FADE vec2(0.2, 0.9)            // horizon fade (start, end): 0.0 horizon ~ 1.0 zenith
+#define NL_CLOUD_TYPE 0 // 0:vanilla, 1:soft, 2:rounded, 3:realistic
 
 /* Vanilla cloud settings - make sure to remove clouds.png when using this */
 #define NL_CLOUD0_THICKNESS 2.1      // 0.5 slim ~ 8.0 fat
