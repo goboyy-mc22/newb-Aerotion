@@ -281,15 +281,15 @@ vec3 endstreaks(vec3 horizonCol,vec3 zenithCol,vec3 viewDir,float t) {
   vec3 sky = mix(zenithCol,horizonCol,f*f);
 
   float body = streaks*(1.0-2.0*streaks);
-  sky += (0.2*body+0.0*g*g+h*h)*vec3(0.6,0.15,0.7);
+  sky += (0.2*body+0.0*g*g+h*h)*vec3(1.0,0.2,1.0);
 
   float bloom = smoothstep(0.0,1.0,streaks);
-  bloom = pow(bloom,1.65);
+  bloom = pow(bloom,2.0);
 
-  sky += vec3(0.35,0.05,0.45)*bloom*0.35;
+  sky += vec3(1.0,0.2,1.0)*bloom*0.5;
 
   float light = smoothstep(0.0,1.0,streaks);
-  sky += vec3(0.5,0.5,0.5)*light*0.2;
+  //sky += vec3(0.5,0.5,0.5)*light*0.2;
 
   sky += 0.1*body*spectrum(sin(1.0*viewDir.x*viewDir.y+skyTime));
 
