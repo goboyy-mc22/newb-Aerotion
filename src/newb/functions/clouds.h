@@ -151,16 +151,16 @@ float vcRand(highp vec2 n) {
 // returns cloud color (rgb) and coverage (a), alpha-blended over the sky
 // clouds are anchored in the world: the view ray is intersected with horizontal
 // slices at a fixed world height, so they stay put and get closer when approached.
-// vDir: normalized camera-relative view direction, camPos: world camera position
-float vcCell(highp vec3 vDir, highp vec3 camPos, highp float slice, highp float drift) {
-  highp float h = slice - camPos.y;   // slice height relative to camera
+// vDir: normalized camera-relative view direction, camXZ: world camera xz,
+// cloudH: height of the cloud layer relative to the camera (from the cloud mesh, like type 0)
+float vcCell(highp vec3 vDir, highp vec2 camXZ, highp float h, highp float drift) {
   highp float tt = h / vDir.y;        // distance along ray to that slice
   if (tt <= 0.0) { return 0.0; }      // slice is behind the view ray
-  highp vec2 uv = (camPos.xz + vDir.xz*tt) / NL_VCLOUD_CELL;
+  highp vec2 uv = (camXZ + vDir.xz*tt) / NL_VCLOUD_CELL;
   return step(0.7, vcRand(floor(uv + drift)));
 }
 
-vec4 renderFastVanillaClouds(highp vec3 vDir, highp vec3 camPos, highp float t, float fade, vec3 zenith, vec3 horizon, float rain) {
+vec4 renderFastVanillaClouds(highp vec3 vDir, highp vec2 camXZ, highp float cloudH, highp float t, float fade, vec3 zenith, vec3 horizon, float rain) {
   float a = 0.0;
   highp float drift = t * NL_VCLOUD_SPEED * 0.01;
   highp vec3 d = vDir;
@@ -169,11 +169,11 @@ vec4 renderFastVanillaClouds(highp vec3 vDir, highp vec3 camPos, highp float t, 
 
   // layers (vertical slices through the cloud slab)
   for (int i = 0; i < NL_VCLOUD_STEPS; i++) {
-    a = mix(a, 1.0, vcCell(d, camPos, NL_VCLOUD_HEIGHT + dh*float(i), drift));
+    a = mix(a, 1.0, vcCell(d, camXZ, cloudH + dh*float(i), drift));
   }
 
   // cloud coloring (side / bottom)
-  float b = vcCell(d, camPos, NL_VCLOUD_HEIGHT, drift);
+  float b = vcCell(d, camXZ, cloudH, drift);
   // tinted by the sky so day/night and reduced opacity blend toward the sky color
   vec3 base = zenith + horizon;
   base += dot(base, vec3(0.3, 0.4, 0.3)); // lit, slightly brighter than the sky

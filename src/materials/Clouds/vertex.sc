@@ -114,12 +114,17 @@ void main() {
     #else
       float h = model[1][3];
     #endif
+    float cloudH = h; // cloud layer height relative to camera (same source as the type 0 cloud mesh)
     h = clamp(0.002*h, 0.0, 1.0);
 
     worldPos = mul(u_invViewProj, apos).xyz;
 
     v_dayFactor = env.dayFactor;
-    v_color0 = vec4(worldPos, h*h);
+    #if NL_CLOUD_TYPE == 4
+      v_color0 = vec4(worldPos, cloudH);
+    #else
+      v_color0 = vec4(worldPos, h*h);
+    #endif
     v_color1 = vec4(skycol.zenith, rain);
     v_color2 = vec4(skycol.horizonEdge, ViewPositionAndTime.w);
     gl_Position = apos;
