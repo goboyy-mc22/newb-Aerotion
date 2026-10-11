@@ -108,14 +108,14 @@ void main() {
     vec2 st = watpos;
     float n = sin(st.x + 3.0*sin(0.5*st.y) + t) * sin(st.y + 3.0*sin(0.5*st.x) - t);
     n = 0.5 + 0.5 * sin(st.x + 2.0*n + 0.2*t) * sin(st.y - 4.0*n + 0.1*t);
-    fade = pow(fade, 1.0 + 4.0 * n);
+    fade = pow(fade, 1.0 + 3.0 * n);
 
     // Textura procedural de espuma
     float foam = fract(238.084 * sin(dot(floor(16.0 * watpos), vec2(1.32, 141.3))));
     foam *= fade;
-    foam = mix(foam, 1.0, fade * fade * fade);
+    foam = mix(foam, 1.0, fade * fade);
 
-    diffuse.rgb = mix(diffuse.rgb, vec3(1.0, 1.0, 1.3)*3.0, foam);
+    diffuse.rgb = mix(diffuse.rgb, vec3(1.0, 1.0, 1.15)*3.0, foam);
   }
 
   if (v_extra.b > 0.9) {
