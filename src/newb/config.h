@@ -192,7 +192,11 @@
 #define NL_MOON_TILT       45.0 // 0.0 no tilt ~ 90.0 tilt of 90 degrees
 
 /* Fake godrays during sunrise/sunset */
-//#define NL_GODRAY 1.5 // [toggle] 0.1 subtle ~ 0.8 strong
+#define NL_GODRAY 1.0          // [toggle] 0.1 faint ~ 1.0 full strength of the shafts
+#define NL_GODRAY_SPACING 13.0 // shafts around the sun (per full turn): 8.0 few wide ~ 24.0 many
+#define NL_GODRAY_EDGE 0.05    // 0.0 wide shafts ~ 0.6 thin shafts
+#define NL_GODRAY_SPREAD 0.10  // how far from the sun the shafts reach: -0.2 almost everywhere ~ 0.8 narrow fan
+#define NL_GODRAY_DARK 0.45    // 0.4 very dark shafts ~ 1.0 invisible
 
 /* Sky reflection */
 //#define NL_GROUND_REFL 0.4       // [toggle] 0.2 slightly reflective ~ 1.0 fully reflect sky

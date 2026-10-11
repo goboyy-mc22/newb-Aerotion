@@ -34,6 +34,14 @@ void main() {
       skyColor += NL_GALAXY_STARS*nlRenderGalaxy(viewDir, env.fogCol, env, v_underwaterRainTimeDay.z);
     #endif
 
+    #ifdef NL_GODRAY
+      if (!env.underwater) {
+        // same dark shafts in the sky so they visibly leave the sun and run down to the terrain
+        float gr = nlRenderGodRayShafts(-viewDir, env.sunDir, v_underwaterRainTimeDay.z, env.fogCol);
+        skyColor *= mix(vec3(1.0, 1.0, 1.0), nlGodRayTint(skyColor), min(NL_GODRAY*gr, 1.0));
+      }
+    #endif
+
     skyColor = colorCorrection(skyColor);
 
     gl_FragColor = vec4(skyColor, 1.0);
