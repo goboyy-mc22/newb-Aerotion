@@ -13,10 +13,10 @@
 /* Lighting */
 #define NL_SUNLIGHT_INTENSITY   3.5  // 1.0 weak ~ 5.0 bright
 #define NL_TORCHLIGHT_INTENSITY 1.0  // 0.5 weak ~ 3.0 bright
-#define NL_SHADOW_INTENSITY     1.0 // 0.0 no shadow ~ 1.0 strong shadow
-#define NL_SKY_AMBIENT          0.25 // 0.0 pitch black shadows ~ 1.0 soft shadows (sky light filling shadowed areas)
-#define NL_SHADOW_DARKNESS      0.85 // 0.0 off ~ 1.0 black outdoor shade (tree/overhang shadows only, caves unaffected)
-#define NL_MIN_LIGHTING_BOOST   0.5  // 1.0 minimal lighting boost for dark areas ~ 3.0 brighter dark areas
+#define NL_SHADOW_INTENSITY     1.0  // 0.0 no shadow ~ 1.0 strong shadow
+#define NL_SKY_AMBIENT          0.35 // 0.0 pitch black shadows ~ 1.0 soft shadows (sky light filling shadowed areas)
+#define NL_SHADOW_DARKNESS      1.0  // 0.0 off ~ 1.0 black outdoor shade (tree/overhang shadows only, caves unaffected)
+#define NL_MIN_LIGHTING_BOOST   0.55  // 1.0 minimal lighting boost for dark areas ~ 3.0 brighter dark areas
 //#define NL_BLINKING_TORCH  // [toggle] flickering light
 //#define NL_CLOUD_SHADOW      // [toggle] cloud shadow (simple clouds only)
 
