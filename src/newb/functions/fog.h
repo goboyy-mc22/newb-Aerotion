@@ -40,26 +40,30 @@ float nlRenderGodRayIntensity(vec3 cPos, vec3 worldPos, float t, vec2 uv1, float
   return vol;
 }
 
-float nlRenderGodRayShafts(vec3 worldPos, vec3 sunDir, float t, float relativeDist, vec3 FOG_COLOR) {
-  // parallel shafts along the sun's azimuth; in perspective they converge exactly at the sun
+// Soft, wide, dark shafts that radiate from the sun (screen-space straight lines through the point under the sun).
+// Returns shaft strength 0..1. viewDir must be normalized.
+float nlRenderGodRayShafts(vec3 viewDir, vec3 sunDir, float t, float relativeDist, vec3 FOG_COLOR) {
   vec2 sd = normalize(sunDir.xz);
-  vec2 perp = vec2(-sd.y, sd.x);
-  float horizLen = max(length(worldPos.xz), 0.001);
-  float s = dot(worldPos.xz, perp);
-  float toward = smoothstep(0.0, 0.5, dot(worldPos.xz, sd)/horizLen);
+  vec2 hv = viewDir.xz;
+  float toward = smoothstep(0.0, 0.5, dot(hv, sd)/max(length(hv), 0.001));
+  float below = smoothstep(0.06, 0.20, -viewDir.y);
 
-  float a = sin(NL_GODRAY_SPACING*s + 0.35*sin(0.7*NL_GODRAY_SPACING*s + 0.02*t));
-  float b = sin(2.3*NL_GODRAY_SPACING*s + 1.7 + 0.03*t);
-  float v = a*0.7 + b*0.3 + 0.15;
+  // u = lateral offset / height: constant along a view ray, so shafts are straight lines converging under the sun
+  float u = dot(hv, vec2(-sd.y, sd.x))/max(-viewDir.y, 0.015);
+  float spread = 1.0 - smoothstep(NL_GODRAY_SPREAD, NL_GODRAY_SPREAD + 1.3, abs(u)); // strongest near the sun
+  float p = 6.2832*NL_GODRAY_SPACING*u;
+  float v = 0.75*cos(p + 0.01*t) + 0.25*cos(0.37*p + 1.3 - 0.007*t);
+  float shaft = smoothstep(NL_GODRAY_EDGE, NL_GODRAY_EDGE + 0.5, v);
 
-  // bright core + soft glow
-  float core = smoothstep(NL_GODRAY_WIDTH, NL_GODRAY_WIDTH + 0.06, v);
-  float glow = 0.35*smoothstep(NL_GODRAY_WIDTH - 0.30, NL_GODRAY_WIDTH, v);
-  float ray = clamp(core + glow, 0.0, 1.0)*toward*smoothstep(0.02, 0.25, relativeDist);
+  float far = 1.0 - smoothstep(0.88, 1.0, relativeDist);
+  float dawn = clamp(3.0*(FOG_COLOR.r - FOG_COLOR.b), 0.0, 1.0);
+  return shaft*spread*toward*below*far*dawn;
+}
 
-  // dawn/dusk mask
-  ray *= clamp(3.0*(FOG_COLOR.r - FOG_COLOR.b), 0.0, 1.0);
-  return ray;
+// multiplier applied to the final color inside a shaft: darkens and saturates the fog/dawn color
+vec3 nlGodRayTint(vec3 fogColor) {
+  vec3 n = fogColor/max(max(max(fogColor.r, fogColor.g), fogColor.b), 0.001);
+  return NL_GODRAY_DARK*mix(vec3(1.0, 1.0, 1.0), n, 0.75);
 }
 
 #endif

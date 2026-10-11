@@ -134,10 +134,9 @@ void main() {
 
   #ifdef NL_GODRAY
     if (!env.underwater) {
-      // laser-like godray shafts, tinted by the dawn/sunlight color
-      float gr = nlRenderGodRayShafts(v_wpos, env.sunDir, ViewPositionAndTime.w, length(v_wpos)/FogAndDistanceControl.z, FogColor.rgb);
-      vec3 beam = 0.5*v_fog.rgb + NL_GODRAY_BRIGHT*sunLightTint(env.dayFactor, env.rainFactor);
-      diffuse.rgb = mix(diffuse.rgb, beam, min(NL_GODRAY*gr, 1.0));
+      // dark dawn-tinted shafts radiating from the sun
+      float gr = nlRenderGodRayShafts(normalize(v_wpos), env.sunDir, ViewPositionAndTime.w, length(v_wpos)/FogAndDistanceControl.z, FogColor.rgb);
+      diffuse.rgb *= mix(vec3(1.0, 1.0, 1.0), nlGodRayTint(v_fog.rgb), min(NL_GODRAY*gr, 1.0));
     }
   #endif
 
