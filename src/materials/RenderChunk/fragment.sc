@@ -135,7 +135,7 @@ void main() {
   #ifdef NL_GODRAY
     if (!env.underwater) {
       // dark dawn-tinted shafts radiating from the sun
-      float gr = nlRenderGodRayShafts(normalize(v_wpos), env.sunDir, ViewPositionAndTime.w, length(v_wpos)/FogAndDistanceControl.z, FogColor.rgb);
+      float gr = nlRenderGodRayShafts(normalize(v_wpos), env.sunDir, ViewPositionAndTime.w, FogColor.rgb);
       diffuse.rgb *= mix(vec3(1.0, 1.0, 1.0), nlGodRayTint(v_fog.rgb), min(NL_GODRAY*gr, 1.0));
     }
   #endif

@@ -42,7 +42,7 @@ float nlRenderGodRayIntensity(vec3 cPos, vec3 worldPos, float t, vec2 uv1, float
 
 // Soft, wide, dark shafts radiating from the sun's position (straight lines through the sun on screen).
 // Returns shaft strength 0..1. viewDir must be normalized.
-float nlRenderGodRayShafts(vec3 viewDir, vec3 sunDir, float t, float relativeDist, vec3 FOG_COLOR) {
+float nlRenderGodRayShafts(vec3 viewDir, vec3 sunDir, float t, vec3 FOG_COLOR) {
   float sd = dot(viewDir, sunDir);
   float toward = smoothstep(NL_GODRAY_SPREAD, NL_GODRAY_SPREAD + 0.5, sd);
 
@@ -51,15 +51,16 @@ float nlRenderGodRayShafts(vec3 viewDir, vec3 sunDir, float t, float relativeDis
   vec3 tp = cross(sunDir, rt);
   vec3 q = viewDir - sunDir*sd;
   float a = atan2(dot(q, tp), dot(q, rt));
+  float downward = smoothstep(0.15, 0.65, -sin(a)); // keep the fan pointing down, like shadows cast on the land
 
   float p = NL_GODRAY_SPACING*a;
   float v = 0.75*cos(p + 0.01*t) + 0.25*cos(0.37*p + 1.3 - 0.007*t);
   float shaft = smoothstep(NL_GODRAY_EDGE, NL_GODRAY_EDGE + 0.5, v);
 
   float nearSun = smoothstep(0.02, 0.2, length(q)); // melt into the glow at the sun itself
-  float far = 1.0 - smoothstep(0.88, 1.0, relativeDist);
+  float belowSun = smoothstep(0.0, 0.08, sunDir.y - viewDir.y); // shafts fall from the sun downward
   float dawn = clamp(3.0*(FOG_COLOR.r - FOG_COLOR.b), 0.0, 1.0);
-  return shaft*toward*nearSun*far*dawn;
+  return shaft*toward*nearSun*belowSun*downward*dawn;
 }
 
 // multiplier applied to the final color inside a shaft: darkens and saturates the fog/dawn color
