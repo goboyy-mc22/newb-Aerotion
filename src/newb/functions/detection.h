@@ -15,8 +15,15 @@ struct nl_environment {
 };
 
 bool detectEnd(vec3 FOG_COLOR) {
-  // custom fog color set in biomes_client.json to help in detection
-  return FOG_COLOR.r==FOG_COLOR.b && (FOG_COLOR.r-FOG_COLOR.g>0.24 || (FOG_COLOR.g==0.0 && FOG_COLOR.r>0.1));
+  // custom fog color set in the_end_fog_setting.json to help in detection
+  // exact match (compared in 8-bit units) with the air fog_color of that file
+  vec3 d = abs(FOG_COLOR*255.0 - NL_END_FOG_COL);
+  bool exactMatch = d.x < 0.6 && d.y < 0.6 && d.z < 0.6;
+
+  // legacy signature (r==b and g==0 or r-g>0.24), for old fog files
+  bool legacy = FOG_COLOR.r==FOG_COLOR.b && (FOG_COLOR.r-FOG_COLOR.g>0.24 || (FOG_COLOR.g==0.0 && FOG_COLOR.r>0.1));
+
+  return exactMatch || legacy;
 }
 
 bool detectNether(vec3 FOG_COLOR, vec2 FOG_CONTROL) {
@@ -37,7 +44,7 @@ bool detectNether(vec3 FOG_COLOR, vec2 FOG_CONTROL) {
 }
 
 bool detectUnderwater(vec3 FOG_COLOR, vec2 FOG_CONTROL) {
-  return FOG_CONTROL.x==0.0 && FOG_CONTROL.y<0.8 && (FOG_COLOR.b>FOG_COLOR.r || FOG_COLOR.g>FOG_COLOR.r);
+  return !detectEnd(FOG_COLOR) && FOG_CONTROL.x==0.0 && FOG_CONTROL.y<0.8 && (FOG_COLOR.b>FOG_COLOR.r || FOG_COLOR.g>FOG_COLOR.r);
 }
 
 float detectRain(vec3 FOG_CONTROL) {

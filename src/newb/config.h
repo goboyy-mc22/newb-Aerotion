@@ -18,6 +18,9 @@
 //#define NL_BLINKING_TORCH  // [toggle] flickering light
 //#define NL_CLOUD_SHADOW      // [toggle] cloud shadow (simple clouds only)
 
+/* The End detection: must equal the air fog_color in assets/fogs/the_end_fog_setting.json (#302044 = 48,32,68) */
+#define NL_END_FOG_COL vec3(48.0,32.0,68.0) // 0-255 per channel
+
 /* Ambient light for nether/end */
 #define NL_NETHER_AMBIENT vec3(3.0,2.16,1.89)
 #define NL_END_AMBIENT    vec3(1.98,1.25,2.3)
