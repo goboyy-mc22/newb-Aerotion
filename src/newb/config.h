@@ -182,10 +182,10 @@
 #define NL_MOON_TILT       0.0 // 0.0 no tilt ~ 90.0 tilt of 90 degrees
 
 /* Sun/Moon bloom: white glow that follows the (square) sun/moon texture */
-#define NL_SUN_BLOOM  3.2       // [toggle] 0.5 faint ~ 3.0 strong, comment out = old round glow. Sun only, the moon keeps the round glow
+#define NL_SUN_BLOOM  1.0      // [toggle] 0.5 faint ~ 3.0 strong, comment out = old round glow. Sun only, the moon keeps the round glow
 #define NL_SUN_BLOOM_TINT 1.0   // 0.0 always white ~ 1.0 takes the dawn/dusk sky color
-#define NL_BLOOM_SHAPE 2.5      // 2.0 round ~ 6.0 rounded square ~ 12.0 square
-#define NL_BLOOM_RANGE 2.4      // 1.0 normal ~ 2.5 very wide bloom
+#define NL_BLOOM_SHAPE 7.0      // 2.0 round ~ 6.0 rounded square ~ 12.0 square
+#define NL_BLOOM_RANGE 1.1      // 1.0 normal ~ 2.5 very wide bloom
 #define NL_SUNMOON_UNIT 0.03    // half size of the sun/moon quad per unit of size, raise if bloom is smaller than the sun
 
 /* Fake godrays during sunrise/sunset */
