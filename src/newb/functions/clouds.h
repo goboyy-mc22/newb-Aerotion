@@ -142,35 +142,6 @@ vec4 renderClouds(vec2 p, float t, float rain, vec3 horizonCol, vec3 zenithCol, 
   return col;
 }
 
-// fast vanilla clouds (type 4), ported from shader editor code
-// side/bottom colors are passed in (type 0 coloring), time comes from the engine
-vec4 fastvanillaClouds(vec2 uv, vec3 sky, float fade, float time, vec3 sideCol, vec3 bottomCol) {
-  float a = 0.0;
-  float isTime = (time) * 0.01;
-  vec4 col;
-  uv *= NL_CLOUD4_SIZE; // bigger = more clouds
-
-  //layers
-  for (int i = 0; i < NL_CLOUD4_STEPS; i++) {
-    uv /= 1.007;
-    float c = step(0.7, rand(floor(uv + isTime)));
-    a = mix(a, 1.0, c);
-  }
-
-  //cloud coloring
-  vec2 b = vec2_splat(step(0.7, rand(floor(uv + isTime))));
-  vec3 ccol = sideCol; //side
-  ccol = mix(ccol, bottomCol, b.x); //bottom
-
-  //mix
-  float n = a;
-  col.rgb = sky;
-  col.rgb = mix(col.rgb, ccol, n*fade);
-  col.a = n*fade; // alpha for blending over the real sky
-
-  return col;
-}
-
 // aurora is rendered on clouds layer
 #ifdef NL_AURORA
 vec4 renderAurora(vec3 p, float t, float rain, float dayFactor) {
