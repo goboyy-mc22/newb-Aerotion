@@ -154,8 +154,9 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   #ifdef NL_SUN_BLOOM
     if (isSkyPlane) {
       float bloom = NL_SUN_BLOOM*sunMoonBloom(viewDir, env.sunDir, NL_SUN_SIZE*NL_SUNMOON_UNIT);
-      // white at day, takes the sky hue at dawn/dusk
-      vec3 hue = skyCol.horizon/max(max(skyCol.horizon.r, max(skyCol.horizon.g, skyCol.horizon.b)), 0.001);
+      // same size and brightness at all times, only the color follows the sky hue at dawn/dusk
+      vec3 hc = max(skyCol.horizon, vec3_splat(0.001));
+      vec3 hue = min(hc/min(hc.r, min(hc.g, hc.b)), vec3_splat(2.5)); // every channel >= 1, so the core stays as bright as white
       vec3 bloomCol = mix(vec3_splat(1.0), hue, clamp(dawnFactor*dawnFactor*NL_SUN_BLOOM_TINT, 0.0, 1.0));
       sky += bloomCol*bloom*mask*(1.0-0.9*env.rainFactor);
     }
