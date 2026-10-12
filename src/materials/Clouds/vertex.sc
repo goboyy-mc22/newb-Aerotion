@@ -120,11 +120,7 @@ void main() {
     worldPos = mul(u_invViewProj, apos).xyz;
 
     v_dayFactor = env.dayFactor;
-    #if NL_CLOUD_TYPE == 4
-      v_color0 = vec4(worldPos, cloudH);
-    #else
-      v_color0 = vec4(worldPos, h*h);
-    #endif
+ 
     v_color1 = vec4(skycol.zenith, rain);
     v_color2 = vec4(skycol.horizonEdge, ViewPositionAndTime.w);
     gl_Position = apos;
