@@ -50,25 +50,6 @@ void main() {
       #endif
 
       color.a *= smoothstep(0.0, 0.7, vDir.y);
-    #elif NL_CLOUD_TYPE == 4
-      // coloring same as type 0 (zenith + horizon)
-      vec3 baseCol = v_color1.rgb + v_color2.rgb;
-      vec3 sideCol = baseCol + dot(baseCol, vec3(0.3,0.4,0.3)); // type 0 top (y=1)
-      vec3 bottomCol = baseCol;                                 // type 0 bottom (y=0)
-      sideCol *= 1.0 - 0.8*v_color1.w;
-      bottomCol *= 1.0 - 0.8*v_color1.w;
-
-      vec3 p = vDir;                // view direction
-      p.y = max(p.y, 0.001);
-      // fixed position: where the view ray hits the cloud layer in the world
-      // (v_color0.w = cloud layer height relative to the camera, camera xz = world position)
-      float cloudH = v_color0.w;
-      vec2 cp = (CameraPosition.xz + p.xz/p.y*cloudH)/NL_CLOUD4_CELL;
-      float b = smoothstep(0.2, 0.9, p.y)*step(0.0, cloudH); // fade (no clouds when above the layer)
-
-      vec4 vanilla = fastvanillaClouds(cp, vec3_splat(0.0), b, v_color2.w, sideCol, bottomCol);
-      color.rgb = vanilla.rgb/max(vanilla.a, 0.0001); // back to straight cloud color
-      color.a = vanilla.a*NL_CLOUD4_VISIBLE;
     #endif
 
     color.rgb = colorCorrection(color.rgb);
