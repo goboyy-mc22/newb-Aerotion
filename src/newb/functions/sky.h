@@ -84,27 +84,18 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   vec2 g = clamp(0.5 - 0.5*vec2(dot(env.sunDir, viewDir), dot(env.moonDir, viewDir)), 0.0, 1.0);
   vec2 g1 = 1.0-mix(sqrt(g), g, env.rainFactor);
   vec2 g2 = g1*g1;
-  vec2 g4 = g2*g2;
-  vec2 g8 = g4*g4;
-  // sun/moon glow size: separate falloff so the dawn spread above is unchanged
-  vec2 gs = 1.0 - mix(pow(g, vec2_splat(NL_SUN_GLOW_FALLOFF)), g, env.rainFactor);
-  vec2 gs2 = gs*gs;
-  vec2 gs4 = gs2*gs2;
-  vec2 gs8 = gs4*gs4;
-  float mg8 = (gs8.x+gs8.y)*mask*(1.0-0.9*env.rainFactor);
 
   float vh = 1.0 - viewDir.y*viewDir.y;
   float vh2 = vh*vh;
   vh2 = mix(vh2, mix(1.0, vh2*vh2, NL_SKY_VOID_FACTOR), step(viewDir.y, 0.0));
-  vh2 = mix(vh2, 1.0, mg8);
   float vh4 = vh2*vh2;
 
   float rainMask = 1.0 - 0.5*env.rainFactor;
   float gradient1 = vh4*vh4;
   float gradient2 = 0.8*gradient1 + 0.2*vh2;
   gradient1 *= gradient1;
-  gradient1 = mix(gradient1*gradient1, 1.0, mg8)*rainMask;
-  gradient2 = mix(gradient2, 1.0, mg8)*rainMask;
+  gradient1 = gradient1*gradient1*rainMask;
+  gradient2 = gradient2*rainMask;
 
   float dawnFactor = 1.0-env.dayFactor*env.dayFactor;
   
@@ -126,14 +117,8 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   sky = mix(skyCol.zenith, sky, dawnGradient2*df);
 
   sky *= 0.7+0.7*gradient2;
-  sky *= (1.0 + (2.0*mg8 + 7.0*mg8*mg8)*mask)*mix(1.0, mask, NL_SKY_VOID_DARKNESS);
+  sky *= mix(1.0, mask, NL_SKY_VOID_DARKNESS);
 
-  if (!isSkyPlane) {
-    float source = max(0.0, (mg8-0.22)/0.78);
-    source *= source;
-    source *= source;
-    sky *= 1.0 + 15.0*source*(1.0-env.rainFactor);
-  }
 
   #ifdef NL_RAINBOW
     if (!env.underwater) {
