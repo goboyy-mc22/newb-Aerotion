@@ -86,10 +86,10 @@ float sunMoonBloom(vec3 viewDir, vec3 dir, float hs) {
   vec3 r = length(cr) > 0.001 ? normalize(cr) : vec3(1.0, 0.0, 0.0);
   vec3 u = cross(dir, r);
   vec2 q = vec2(dot(viewDir, r), dot(viewDir, u))/(cd*hs);
-  // p-norm (p=6) distance: rounded square, 1.0 = edge of the sun texture
-  vec2 q2 = q*q;
-  vec2 q6 = q2*q2*q2;
-  float d = pow(q6.x + q6.y, 1.0/6.0);
+  // p-norm distance: NL_BLOOM_SHAPE 2.0 = round, 6.0 = rounded square, higher = square
+  // NL_BLOOM_RANGE stretches the bloom outward (1.0 = fitted to the reference)
+  vec2 qa = pow(abs(q) + 1e-6, vec2_splat(NL_BLOOM_SHAPE));
+  float d = pow(qa.x + qa.y, 1.0/NL_BLOOM_SHAPE)/NL_BLOOM_RANGE;
   float b = pow(max(d, 0.8), -1.67);
   return b*(1.0 - smoothstep(2.7, 5.45, d));
 }
