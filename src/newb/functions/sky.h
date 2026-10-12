@@ -92,6 +92,10 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   vec2 gs4 = gs2*gs2;
   vec2 gs8 = gs4*gs4;
   float mg8 = (gs8.x+gs8.y)*mask*(1.0-0.9*env.rainFactor);
+  // no sun/moon glow in the sky itself (reflections, water and entity fog still use it)
+  if (isSkyPlane) {
+    mg8 = 0.0;
+  }
 
   float vh = 1.0 - viewDir.y*viewDir.y;
   float vh2 = vh*vh;
