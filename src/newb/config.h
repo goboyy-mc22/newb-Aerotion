@@ -26,7 +26,7 @@
 #define NL_END_AMBIENT    vec3(1.98,1.25,2.3)
 
 /* Sun/moon light color */
-#define NL_DAWN_SUNLIGHT_COL   vec3(1.0,0.6,0.2)
+#define NL_DAWN_SUNLIGHT_COL   vec3(1.0,0.76,0.40)
 #define NL_NOON_SUNLIGHT_COL   vec3(1.0,0.75,0.75)
 #define NL_NIGHT_MOONLIGHT_COL vec3(0.004,0.009,0.085)
 
