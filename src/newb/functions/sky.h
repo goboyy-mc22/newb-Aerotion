@@ -180,7 +180,7 @@ vec3 nlRenderEndFog(nl_skycolor skycol, vec3 viewDir) {
   vec3 dir = normalize(viewDir);
   float grad = 0.5 + 0.5*dir.y;
 
-  return mix(skycol.zenith, skycol.horizon, pow(1.0 - grad, 1.35));
+  return mix(NL_END_TERRAIN_FOG_ZENITH, NL_END_TERRAIN_FOG_HORIZON, pow(1.0 - grad, 1.35));
 }
 
 vec3 nlRenderSky(nl_skycolor skycol, nl_environment env, vec3 viewDir, float t, bool isSkyPlane) {

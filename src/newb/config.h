@@ -69,6 +69,8 @@
 
 #define NL_END_ZENITH_COL    vec3(0.0,0.0,0.0)
 #define NL_END_HORIZON_COL   vec3(0.0,0.0,0.0)
+#define NL_END_TERRAIN_FOG_ZENITH  vec3(0.10,0.06,0.16) // End terrain fog color (looking up), black = darkest
+#define NL_END_TERRAIN_FOG_HORIZON vec3(0.17,0.10,0.28) // End terrain fog color (horizon/down)
 
 /* blackhole at the end */
 #define NL_BLACKHOLE                         // [toggle] enable blackhole in endsky
