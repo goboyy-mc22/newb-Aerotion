@@ -105,8 +105,8 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   vec2 g8 = g4*g4;
   float mg8 = (g8.x+g8.y)*mask*(1.0-0.9*env.rainFactor);
   #ifdef NL_SUN_BLOOM
-    // sky plane uses the square bloom below instead of the round glow (reflections keep the old one)
-    if (isSkyPlane) { mg8 = 0.0; }
+    // sky plane: the sun uses the square bloom below, only the moon keeps the round glow
+    if (isSkyPlane) { mg8 = g8.y*mask*(1.0-0.9*env.rainFactor); }
   #endif
 
   float vh = 1.0 - viewDir.y*viewDir.y;
@@ -153,9 +153,11 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
 
   #ifdef NL_SUN_BLOOM
     if (isSkyPlane) {
-      float bloom = NL_SUN_BLOOM*sunMoonBloom(viewDir, env.sunDir, NL_SUN_SIZE*NL_SUNMOON_UNIT)
-                  + NL_MOON_BLOOM*sunMoonBloom(viewDir, env.moonDir, NL_MOON_SIZE*NL_SUNMOON_UNIT);
-      sky += vec3_splat(bloom*mask*(1.0-0.9*env.rainFactor));
+      float bloom = NL_SUN_BLOOM*sunMoonBloom(viewDir, env.sunDir, NL_SUN_SIZE*NL_SUNMOON_UNIT);
+      // white at day, takes the sky hue at dawn/dusk
+      vec3 hue = skyCol.horizon/max(max(skyCol.horizon.r, max(skyCol.horizon.g, skyCol.horizon.b)), 0.001);
+      vec3 bloomCol = mix(vec3_splat(1.0), hue, clamp(dawnFactor*dawnFactor*NL_SUN_BLOOM_TINT, 0.0, 1.0));
+      sky += bloomCol*bloom*mask*(1.0-0.9*env.rainFactor);
     }
   #endif
 
