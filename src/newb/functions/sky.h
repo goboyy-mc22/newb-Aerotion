@@ -86,12 +86,7 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   vec2 g2 = g1*g1;
   vec2 g4 = g2*g2;
   vec2 g8 = g4*g4;
-  // sun/moon glow size: separate falloff so the dawn spread above is unchanged
-  vec2 gs = 1.0 - mix(pow(g, vec2_splat(NL_SUN_GLOW_FALLOFF)), g, env.rainFactor);
-  vec2 gs2 = gs*gs;
-  vec2 gs4 = gs2*gs2;
-  vec2 gs8 = gs4*gs4;
-  float mg8 = (gs8.x+gs8.y)*mask*(1.0-0.9*env.rainFactor);
+  float mg8 = (g8.x+g8.y)*mask*(1.0-0.9*env.rainFactor);
 
   float vh = 1.0 - viewDir.y*viewDir.y;
   float vh2 = vh*vh;
