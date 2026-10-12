@@ -77,6 +77,23 @@ nl_skycolor nlSkyColors(nl_environment env) {
 }
 
 
+// square-ish white bloom around the sun/moon quad (vanilla texture).
+// dir = sun/moon direction, hs = half size of the quad in tangent units (matches SunMoon/vertex.sc)
+float sunMoonBloom(vec3 viewDir, vec3 dir, float hs) {
+  float cd = dot(viewDir, dir);
+  if (cd < 0.05) { return 0.0; }
+  vec3 cr = cross(vec3(0.0, 1.0, 0.0), dir);
+  vec3 r = length(cr) > 0.001 ? normalize(cr) : vec3(1.0, 0.0, 0.0);
+  vec3 u = cross(dir, r);
+  vec2 q = vec2(dot(viewDir, r), dot(viewDir, u))/(cd*hs);
+  // p-norm (p=6) distance: rounded square, 1.0 = edge of the sun texture
+  vec2 q2 = q*q;
+  vec2 q6 = q2*q2*q2;
+  float d = pow(q6.x + q6.y, 1.0/6.0);
+  float b = pow(max(d, 0.8), -1.67);
+  return b*(1.0 - smoothstep(2.7, 5.45, d));
+}
+
 vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bool isSkyPlane) {
   float avy = abs(viewDir.y);
   float mask = 0.5 + (0.5*viewDir.y/(0.4 + avy));
@@ -87,6 +104,10 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   vec2 g4 = g2*g2;
   vec2 g8 = g4*g4;
   float mg8 = (g8.x+g8.y)*mask*(1.0-0.9*env.rainFactor);
+  #ifdef NL_SUN_BLOOM
+    // sky plane uses the square bloom below instead of the round glow (reflections keep the old one)
+    if (isSkyPlane) { mg8 = 0.0; }
+  #endif
 
   float vh = 1.0 - viewDir.y*viewDir.y;
   float vh2 = vh*vh;
@@ -129,6 +150,14 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
     source *= source;
     sky *= 1.0 + 15.0*source*(1.0-env.rainFactor);
   }
+
+  #ifdef NL_SUN_BLOOM
+    if (isSkyPlane) {
+      float bloom = NL_SUN_BLOOM*sunMoonBloom(viewDir, env.sunDir, NL_SUN_SIZE*NL_SUNMOON_UNIT)
+                  + NL_MOON_BLOOM*sunMoonBloom(viewDir, env.moonDir, NL_MOON_SIZE*NL_SUNMOON_UNIT);
+      sky += vec3_splat(bloom*mask*(1.0-0.9*env.rainFactor));
+    }
+  #endif
 
   #ifdef NL_RAINBOW
     if (!env.underwater) {

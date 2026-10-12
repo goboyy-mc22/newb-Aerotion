@@ -181,6 +181,11 @@
 #define NL_SUN_TILT        0.0 // 0.0 no tilt ~ 90.0 tilt of 90 degrees
 #define NL_MOON_TILT       0.0 // 0.0 no tilt ~ 90.0 tilt of 90 degrees
 
+/* Sun/Moon bloom: white glow that follows the (square) sun/moon texture */
+#define NL_SUN_BLOOM  1.8       // [toggle] 0.5 faint ~ 3.0 strong, comment out = old round glow
+#define NL_MOON_BLOOM 0.9       // moon bloom strength
+#define NL_SUNMOON_UNIT 0.03    // half size of the sun/moon quad per unit of size, raise if bloom is smaller than the sun
+
 /* Fake godrays during sunrise/sunset */
 //#define NL_GODRAY 1.5     // [toggle] 0.1 faint ~ 1.0 full strength of the shafts
 
