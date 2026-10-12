@@ -155,6 +155,7 @@
 #define NL_CLOUD4_STEPS 5     // layers
 #define NL_CLOUD4_SPEED 0.45  // speed (kept from the original code, which does not use it)
 #define NL_CLOUD4_SIZE 2.0    // bigger = more clouds
+#define NL_CLOUD4_CELL 64.0   // clouds stay fixed in the world; size ~ same as before when cloud height above you is ~ this value, bigger = larger clouds
 #define NL_CLOUD4_VISIBLE 0.5 // 0.0 invisible ~ 1.0 opaque
 
 /* Aurora settings */
