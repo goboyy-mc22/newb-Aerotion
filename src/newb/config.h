@@ -11,10 +11,10 @@
 #define NL_TINT_HIGH vec3(1.0,1.0,1.0) // color tint for light tone
 
 /* Lighting */
-#define NL_SUNLIGHT_INTENSITY   3.5  // 1.0 weak ~ 5.0 bright
+#define NL_SUNLIGHT_INTENSITY   3.75  // 1.0 weak ~ 5.0 bright
 #define NL_TORCHLIGHT_INTENSITY 1.5 // 0.5 weak ~ 3.0 bright
 #define NL_SHADOW_INTENSITY     1.0  // 0.0 no shadow ~ 1.0 strong shadow
-#define NL_MIN_LIGHTING_BOOST   0.3  // 1.0 minimal lighting boost for dark areas ~ 3.0 brighter dark areas
+#define NL_MIN_LIGHTING_BOOST   0.5  // 1.0 minimal lighting boost for dark areas ~ 3.0 brighter dark areas
 //#define NL_BLINKING_TORCH  // [toggle] flickering light
 //#define NL_CLOUD_SHADOW      // [toggle] cloud shadow (simple clouds only)
 
@@ -102,21 +102,21 @@
 #define NL_WATER_TEX_OPACITY 0.0  // 0.0 plain water ~ 1.0 vanilla water texture
 #define NL_WATER_WAVE             // [toggle] wave effect
 //#define NL_WATER_REFL_MASK      // [toggle] fake water reflection mask
-#define NL_WATER_TINT vec3(0.0,0.1,0.7)
+#define NL_WATER_TINT vec3(0.0,0.1,0.9)
 
 /* Underwater */
 #define NL_UNDERWATER_BRIGHTNESS 1.8        // 0.0 dark ~ 3.0 bright
 #define NL_CAUSTIC_INTENSITY 1.9             // 0.5 weak ~ 5.0 bright
 #define NL_UNDERWATER_WAVE 0.05               // [toggle] 0.02 subtle ~ 0.6 trippy
 #define NL_UNDERWATER_STREAKS 1.5            // [toggle] 0.8 subtle - 2.0 bright streaks from top
-#define NL_UNDERWATER_TINT vec3(0.4,0.8,1.0) // fog tint color when underwater
+#define NL_UNDERWATER_TINT vec3(0.4,0.75,1.0) // fog tint color when underwater
 
 /* Cloud type */
 #define NL_CLOUD_TYPE 0 // 0:vanilla, 1:soft, 2:rounded, 3:realistic
 
 /* Vanilla cloud settings - make sure to remove clouds.png when using this */
-#define NL_CLOUD0_THICKNESS 3.5     // 0.5 slim ~ 8.0 fat
-#define NL_CLOUD0_RAIN_THICKNESS 5.2 // 0.5 slim ~ 8.0 fat
+#define NL_CLOUD0_THICKNES 1.1     // 0.5 slim ~ 8.0 fat
+#define NL_CLOUD0_RAIN_THICKNESS 2.8 // 0.5 slim ~ 8.0 fat
 #define NL_CLOUD0_OPACITY 1.0       // 0.0 invisible ~ 1.0 opaque
 //#define NL_CLOUD0_MULTILAYER         // [toggle] extra cloud layer
 
