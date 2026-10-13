@@ -112,7 +112,7 @@
 #define NL_UNDERWATER_TINT vec3(0.4,0.8,1.0) // fog tint color when underwater
 
 /* Cloud type */
-#define NL_CLOUD_TYPE 0 // 0:vanilla, 1:soft, 2:rounded, 3:realistic, 4:fast vanilla
+#define NL_CLOUD_TYPE 4 // 0:vanilla, 1:soft, 2:rounded, 3:realistic, 4:fast vanilla
 
 /* Vanilla cloud settings - make sure to remove clouds.png when using this */
 #define NL_CLOUD0_THICKNESS 2.1      // 0.5 slim ~ 8.0 fat
