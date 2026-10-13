@@ -157,12 +157,18 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
 
   #ifdef NL_SUN_BLOOM
     if (isSkyPlane) {
+      // the bloom is only visible when the sun is: hide it when the sun is below the horizon (in the void it
+      // would shine through terrain and water via the fog color), underwater, and in rain (clear weather = unchanged)
+      float bloomVis = smoothstep(-0.10, 0.0, env.sunDir.y);
+      bloomVis *= 1.0 - smoothstep(0.0, 0.6, env.rainFactor);
+      bloomVis *= env.underwater ? 0.0 : 1.0;
+
       float bloom = NL_SUN_BLOOM*sunMoonBloom(viewDir, env.sunDir, NL_SUN_SIZE*NL_SUNMOON_UNIT, dawnFactor*dawnFactor);
       // noon is the same as always, at dawn/dusk the color follows the sky hue and the bloom is thinner
       vec3 hc = max(skyCol.horizon, vec3_splat(0.001));
       vec3 hue = min(hc/min(hc.r, min(hc.g, hc.b)), vec3_splat(2.5)); // every channel >= 1, so the core stays as bright as white
       vec3 bloomCol = mix(vec3_splat(1.0), hue, clamp(dawnFactor*dawnFactor*NL_SUN_BLOOM_TINT, 0.0, 1.0));
-      sky += bloomCol*bloom*mask*(1.0-0.9*env.rainFactor);
+      sky += bloomCol*bloom*mask*bloomVis;
     }
   #endif
 
