@@ -50,8 +50,9 @@ void main() {
       pos.y *= (NL_CLOUD0_THICKNESS + rain*(NL_CLOUD0_RAIN_THICKNESS - NL_CLOUD0_THICKNESS));
       worldPos = mul(model, vec4(pos, 1.0)).xyz;
 
-      float cloudFadeY = smoothstep(0.0, 1.0, a_position.y);
-      color.rgb = skycol.horizonEdge;
+      float cloudFadeY = smoothstep(0.0, 1.0, a_position.y)
+      color.rgb = skycol.zenith + skycol.horizonEdge;
+      color.rgb += dot(color.rgb, vec3(0.3,0.4,0.3))*a_position.y;
       color.rgb *= 1.0 - 0.6*rain;
       color.rgb = colorCorrection(color.rgb);
       color.a = NL_CLOUD0_OPACITY * (1.0 - cloudFadeY) * fog_fade(worldPos.xyz);
