@@ -142,6 +142,35 @@ vec4 renderClouds(vec2 p, float t, float rain, vec3 horizonCol, vec3 zenithCol, 
   return col;
 }
 
+// fast vanilla-like clouds (type 4): stacked blocky random layers
+float cloud4Rand(highp vec2 n) {
+  return fract(sin(dot(n, vec2(12.9898, 4.1414))) * 43758.5453);
+}
+
+vec4 renderCloudsFastVanilla(vec2 uv, float t, float rain, vec3 horizonCol, vec3 zenithCol) {
+  float a = 0.0;
+  float c = 0.0;
+  float isTime = t * NL_CLOUD4_SPEED;
+  uv *= NL_CLOUD4_SIZE;
+
+  // layers
+  for (int i = 0; i < NL_CLOUD4_STEPS; i++) {
+    uv /= 1.007;
+    c = step(0.7, cloud4Rand(floor(uv + isTime)));
+    a = mix(a, 1.0, c);
+  }
+
+  // coloring: zenith + horizon like type 0, last layer hit = bottom shade
+  vec3 sideCol = zenithCol + horizonCol;
+  vec3 bottomCol = sideCol * NL_CLOUD4_BOTTOM_SHADE;
+
+  vec4 col;
+  col.rgb = mix(sideCol, bottomCol, c);
+  col.rgb *= 1.0 - 0.8*rain;
+  col.a = a * NL_CLOUD4_VISIBLE;
+  return col;
+}
+
 // aurora is rendered on clouds layer
 #ifdef NL_AURORA
 vec4 renderAurora(vec3 p, float t, float rain, float dayFactor) {
