@@ -88,10 +88,17 @@ float sunMoonBloom(vec3 viewDir, vec3 dir, float hs) {
   vec2 q = vec2(dot(viewDir, r), dot(viewDir, u))/(cd*hs);
   // p-norm distance: NL_BLOOM_SHAPE 2.0 = round, 6.0 = rounded square, higher = square
   // NL_BLOOM_RANGE stretches the bloom outward (1.0 = fitted to the reference)
-  vec2 qa = pow(abs(q) + 1e-6, vec2_splat(NL_BLOOM_SHAPE));
-  float d = pow(qa.x + qa.y, 1.0/NL_BLOOM_SHAPE)/NL_BLOOM_RANGE;
+  vec2 aq = abs(q) + 1e-6;
+  vec2 qa = pow(aq, vec2_splat(NL_BLOOM_SHAPE));
+  float dSquare = pow(qa.x + qa.y, 1.0/NL_BLOOM_SHAPE);
+  // NL_BLOOM_SOFT: square next to the sun, turning round further out, so the outer glow
+  // has no visible corners or stair-step edges (0.0 = old shape)
+  float dRound = length(aq);
+  float d = mix(dSquare, dRound, NL_BLOOM_SOFT*smoothstep(0.9, 3.0, dRound))/NL_BLOOM_RANGE;
   float b = pow(max(d, 0.8), -1.67);
-  return b*(1.0 - smoothstep(2.7, 5.45, d));
+  // NL_BLOOM_SOFT also starts the fade-out earlier, so the glow melts away instead of ending abruptly
+  float fadeStart = mix(2.7, 1.8, NL_BLOOM_SOFT);
+  return b*(1.0 - smoothstep(fadeStart, 5.45, d));
 }
 
 vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bool isSkyPlane) {

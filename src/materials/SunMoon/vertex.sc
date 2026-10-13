@@ -1,5 +1,5 @@
 $input a_position, a_texcoord0
-$output v_texcoord0
+$output v_texcoord0, v_isSun
 
 #include <bgfx_shader.sh>
 
@@ -21,6 +21,7 @@ $output v_texcoord0
 
 void main() {
   v_texcoord0 = a_texcoord0;
+  v_isSun = 0.0;
   #ifndef INSTANCING
     vec3 pos = a_position;
     pos.x = -pos.x;
@@ -28,6 +29,7 @@ void main() {
     vec2 dir = mul(u_model[0], vec4(0.0, 0.0, 0.0, 1.0)).xy;
     float st = 2.0*PI*TimeOfDay.x + 0.5*PI;
     bool isSun = dot(vec2(cos(st), sin(st)), dir) > 0.0;
+    v_isSun = isSun ? 1.0 : 0.0;
 
     float dist = 300.0;
     float angle = 0.0;

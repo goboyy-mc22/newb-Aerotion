@@ -179,6 +179,9 @@
 #define NL_SUN_BLOOM_TINT 1.0   // 0.0 always white ~ 1.0 takes the dawn/dusk sky color
 #define NL_BLOOM_SHAPE 9.0      // 2.0 round ~ 6.0 rounded square ~ 12.0 square
 #define NL_BLOOM_RANGE 1.25      // 1.0 normal ~ 2.5 very wide bloom
+#define NL_BLOOM_SOFT 1.0       // 0.0 old hard bloom ~ 1.0 smooth round fade out
+#define NL_SUN_EDGE_SOFT 1.0    // 0.0 sharp pixel edge of the sun ~ 1.0 soft edge that fades into the bloom (sun only)
+#define NL_SUN_EDGE_RADIUS 0.06 // blur reach of the soft sun edge: 0.02 subtle ~ 0.12 very soft
 #define NL_SUNMOON_UNIT 0.03    // half size of the sun/moon quad per unit of size, raise if bloom is smaller than the sun
 
 /* Fake godrays during sunrise/sunset */
