@@ -20,7 +20,7 @@ vec4 nlWater(
   float fractCposY, float camDist, highp float t
 ) {
 
-  vec2 bump = vec2_splat(movingNoise2D(gPos.xz + gPos.yy, NL_WATER_WAVE_SPEED*t, 0.6));
+  vec2 bump = vec2_splat(movingWaterNoise2D(gPos.xz + gPos.yy,NL_WATER_WAVE_SPEED*t,0.45));
 
   vec3 nrm;
   if (fractCposY > 0.0) { // top plane
@@ -66,11 +66,11 @@ vec4 nlWater(
   float fresnel = calculateFresnel(cosR, 0.07);
   float opacity = 1.0-cosR;
 
-  color.rgb *= 0.22*NL_WATER_TINT*(1.0-0.8*fresnel);
+  color.rgb *= 0.2*NL_WATER_TINT*(1.0-0.8*fresnel);
   color.a = mix(COLOR.a*NL_WATER_TRANSPARENCY, 1.0, opacity*opacity);
 
   #ifdef NL_WATER_WAVE
-    if (camDist < 14.0) {
+    if (camDist < 13.0) {
       wPos.y -= 0.5*(bump.x+0.5)*NL_WATER_BUMP;
     }
   #endif
