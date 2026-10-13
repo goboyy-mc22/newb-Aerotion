@@ -201,7 +201,7 @@ vec3 renderEndSky(vec3 horizonCol,vec3 zenithCol,vec3 viewDir,float t) {
   }
     
   float star = starPoint*starChance;
-  sky += starColor*star*1.35;
+  sky += starColor*star*1.45;
 
   return sky;
 }
