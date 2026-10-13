@@ -11,7 +11,7 @@ float nlWindblow(vec3 pos, float t){
   vec2 p = pos.xy/(1.0+pos.z);
   float val = sin(4.0*p.x + 2.0*p.y + 2.0*t + 3.0*p.y*p.x)*sin(p.y*2.0 + 0.2*t);
   val += sin(p.y - p.x + 0.2*t);
-  return 0.25*val*val;
+  return 0.3*val*val;
 }
 
 vec4 nlRefl(
