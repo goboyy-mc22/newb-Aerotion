@@ -89,6 +89,14 @@ float movingNoise2D(vec2 pos, float t, float f) {
   return mix(n0*n0, n1*n1, f);
 }
 
+float movingWaterNoise2D(vec2 pos, float t, float f) {
+  float nf0 = fastVoronoi2(0.085*pos.xy, 7.0);
+  float nf2 = fastVoronoi2(0.028*pos.xy*vec2(0.5,1.0)+0.35*nf0+0.025*t,1.4);
+  float n0 = sin(0.9*nf0*nf0+0.65*pos.x-sin(0.65*pos.y)+0.55*t);
+  float n1 = sin(0.035*(pos.x+pos.y)+5.0*nf2+0.22*t);
+  return mix(n0*n0, n1*n1, f);
+}
+
 vec3 hash33(vec3 p) {
     p = fract(p*vec3(0.1031,0.1030,0.0973));
     p += dot(p,p.yxz+33.33);
