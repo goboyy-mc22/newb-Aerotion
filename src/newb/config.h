@@ -115,7 +115,7 @@
 #define NL_CLOUD_TYPE 0 // 0:vanilla, 1:soft, 2:rounded, 3:realistic
 
 /* Vanilla cloud settings - make sure to remove clouds.png when using this */
-#define NL_CLOUD0_THICKNES 1.1     // 0.5 slim ~ 8.0 fat
+#define NL_CLOUD0_THICKNESS 1.1     // 0.5 slim ~ 8.0 fat
 #define NL_CLOUD0_RAIN_THICKNESS 2.8 // 0.5 slim ~ 8.0 fat
 #define NL_CLOUD0_OPACITY 1.0       // 0.0 invisible ~ 1.0 opaque
 //#define NL_CLOUD0_MULTILAYER         // [toggle] extra cloud layer
