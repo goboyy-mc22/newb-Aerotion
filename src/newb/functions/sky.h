@@ -79,7 +79,8 @@ nl_skycolor nlSkyColors(nl_environment env) {
 
 // square-ish white bloom around the sun/moon quad (vanilla texture).
 // dir = sun/moon direction, hs = half size of the quad in tangent units (matches SunMoon/vertex.sc)
-float sunMoonBloom(vec3 viewDir, vec3 dir, float hs) {
+// dawnW = 0.0 at noon (bloom unchanged) ~ 1.0 at dawn/dusk (thinner bloom, fading out from the sun to its edge)
+float sunMoonBloom(vec3 viewDir, vec3 dir, float hs, float dawnW) {
   float cd = dot(viewDir, dir);
   if (cd < 0.05) { return 0.0; }
   vec3 cr = cross(vec3(0.0, 1.0, 0.0), dir);
@@ -91,7 +92,11 @@ float sunMoonBloom(vec3 viewDir, vec3 dir, float hs) {
   vec2 qa = pow(abs(q) + 1e-6, vec2_splat(NL_BLOOM_SHAPE));
   float d = pow(qa.x + qa.y, 1.0/NL_BLOOM_SHAPE)/NL_BLOOM_RANGE;
   float b = pow(max(d, 0.8), -1.67);
-  return b*(1.0 - smoothstep(2.7, 5.45, d));
+  // fade-out: noon keeps the original cut-off (2.7 ~ 5.45), dawn starts fading right next to the sun
+  // and ends sooner (NL_DAWN_BLOOM_WIDTH), so the glow gets weaker the further it is from the sun
+  float fadeStart = mix(2.7, 0.8, dawnW);
+  float fadeEnd = mix(5.45, mix(1.8, 5.45, NL_DAWN_BLOOM_WIDTH), dawnW);
+  return b*(1.0 - smoothstep(fadeStart, fadeEnd, d));
 }
 
 vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bool isSkyPlane) {
@@ -153,8 +158,8 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
 
   #ifdef NL_SUN_BLOOM
     if (isSkyPlane) {
-      float bloom = NL_SUN_BLOOM*sunMoonBloom(viewDir, env.sunDir, NL_SUN_SIZE*NL_SUNMOON_UNIT);
-      // same size and brightness at all times, only the color follows the sky hue at dawn/dusk
+      float bloom = NL_SUN_BLOOM*sunMoonBloom(viewDir, env.sunDir, NL_SUN_SIZE*NL_SUNMOON_UNIT, dawnFactor*dawnFactor);
+      // noon is the same as always, at dawn/dusk the color follows the sky hue and the bloom is thinner
       vec3 hc = max(skyCol.horizon, vec3_splat(0.001));
       vec3 hue = min(hc/min(hc.r, min(hc.g, hc.b)), vec3_splat(2.5)); // every channel >= 1, so the core stays as bright as white
       vec3 bloomCol = mix(vec3_splat(1.0), hue, clamp(dawnFactor*dawnFactor*NL_SUN_BLOOM_TINT, 0.0, 1.0));
