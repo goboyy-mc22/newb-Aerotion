@@ -50,12 +50,12 @@ void main() {
       pos.y *= (NL_CLOUD0_THICKNESS + rain*(NL_CLOUD0_RAIN_THICKNESS - NL_CLOUD0_THICKNESS));
       worldPos = mul(model, vec4(pos, 1.0)).xyz;
 
-      float cloudAlpha = smoothstep(0.0, 1.0, a_position.y);
+      float cloudGrd = smoothstep(0.0, 1.0, a_position.y);
       color.rgb = skycol.zenith + skycol.horizonEdge;
       color.rgb += dot(color.rgb, vec3(0.3,0.4,0.3))*a_position.y;
       color.rgb *= 1.0 - 0.8*rain;
       color.rgb = colorCorrection(color.rgb);
-      color.a = NL_CLOUD0_OPACITY * (1.0 - cloudAlpha) * fog_fade(worldPos.xyz);
+      color.a = NL_CLOUD0_OPACITY * (1.0 - cloudGrd) * fog_fade(worldPos.xyz);
 
       // clouds.png has two non-overlaping layers:
       // r=unused, g=layers, b=reference, a=unused
@@ -120,7 +120,6 @@ void main() {
 
     worldPos = mul(u_invViewProj, apos).xyz;
 
-    v_color0 = vec4(worldPos, h); // fragment reads view direction (xyz) and height parallax (w)
     v_dayFactor = env.dayFactor;
     v_color1 = vec4(skycol.zenith, rain);
     v_color2 = vec4(skycol.horizonEdge, ViewPositionAndTime.w);
