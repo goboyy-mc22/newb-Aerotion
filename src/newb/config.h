@@ -50,7 +50,7 @@
 /* Sky colors - zenith=top, horizon=bottom */
 #define NL_DAWN_ZENITH_COL   vec3(0.12,0.38,0.90)  // blue at the top
 #define NL_DAWN_HORIZON_COL  vec3(3.5,1.50,0.12)   // orange-red band at the horizon
-#define NL_DAWN_EDGE_COL     vec3(3.4,2.50,0.42 cz)    // yellow-orange core near the sun
+#define NL_DAWN_EDGE_COL     vec3(3.4,2.50,0.42)    // yellow-orange core near the sun
 #define NL_DAWN_SPREAD 1.0       // 0.0 off ~ 1.0 full spread
 #define NL_DAWN_EDGE_SPREAD 1.0  // 0.0 zenith stays blue ~ 1.0 whole sky tinted
 #define NL_DAWN_WIDTH 1.0       // sideways reach: 2.0 tight ~ 0.4 very wide
