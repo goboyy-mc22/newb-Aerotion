@@ -17,22 +17,23 @@ void main() {
 
     // sun only: blur the hard pixel edge of the texture so it fades into the bloom
     // (outside the texture counts as transparent, the moon is left untouched)
-    if (v_isSun > 0.5) {
+    // NL_SUN_SMOOTH 0.0 = original sharp edge, higher = wider and softer fade
+    if (v_isSun > 0.5 && NL_SUN_SMOOTH > 0.0) {
       vec4 acc = vec4(0.0, 0.0, 0.0, 0.0);
       float wsum = 0.0;
-      for (int i = -2; i <= 2; i++) {
-        for (int j = -2; j <= 2; j++) {
+      for (int i = -3; i <= 3; i++) {
+        for (int j = -3; j <= 3; j++) {
           vec2 o = vec2(float(i), float(j));
-          vec2 uv = v_texcoord0 + o*(0.5*NL_SUN_EDGE_RADIUS);
+          vec2 uv = v_texcoord0 + o*(0.06*NL_SUN_SMOOTH);
           float inside = step(0.0, min(uv.x, uv.y))*step(max(uv.x, uv.y), 1.0);
-          float w = exp(-0.35*dot(o, o));
+          float w = exp(-0.2*dot(o, o));
           vec4 s = texture2D(s_SunMoonTexture, clamp(uv, 0.0, 1.0));
           acc += vec4(s.rgb*s.a, s.a)*(inside*w);
           wsum += w;
         }
       }
       vec4 soft = vec4(acc.rgb/max(acc.a, 0.0001), acc.a/wsum);
-      color = mix(color, soft, NL_SUN_EDGE_SOFT);
+      color = mix(color, soft, min(NL_SUN_SMOOTH*4.0, 1.0));
     }
 
     color.rgb *= SunMoonColor.rgb;
