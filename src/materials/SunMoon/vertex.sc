@@ -1,13 +1,16 @@
 $input a_position, a_texcoord0
-$output v_texcoord0
+$output v_texcoord0, v_sunVis
 
 #include <bgfx_shader.sh>
 
 #ifndef INSTANCING
   #include <newb/config.h>
   #include <newb/functions/utils.h>
+  #include <newb/functions/detection.h>
 
   uniform vec4 TimeOfDay;
+  uniform vec4 FogColor;
+  uniform vec4 FogAndDistanceControl;
 
   // world position of a point (p = offset in the quad plane) on the sun/moon path
   vec3 sunMoonPos(vec2 p, float dist, float st, float tilt, float yaw) {
@@ -21,6 +24,7 @@ $output v_texcoord0
 
 void main() {
   v_texcoord0 = a_texcoord0;
+  v_sunVis = 1.0; // 1.0 = fully visible, only the sun is ever hidden below
   #ifndef INSTANCING
     vec3 pos = a_position;
     pos.x = -pos.x;
@@ -55,6 +59,16 @@ void main() {
     vec3 E1 = sunMoonPos(vec2(1.0, 0.0), dist, st, tilt, yaw) - c;
     vec3 E2 = sunMoonPos(vec2(0.0, 1.0), dist, st, tilt, yaw) - c;
     vec3 d  = normalize(c);
+
+    // the sun is only visible when it is really there: hidden when it is below the horizon (void),
+    // underwater, and in rain. Clear day and dawn are unchanged (factor 1.0), the moon is untouched.
+    if (isSun) {
+      float sunVis = smoothstep(-0.10, 0.0, d.y);
+      sunVis *= 1.0 - smoothstep(0.0, 0.6, detectRain(FogAndDistanceControl.xyz));
+      sunVis *= detectUnderwater(FogColor.rgb, FogAndDistanceControl.xy) ? 0.0 : 1.0;
+      v_sunVis = sunVis;
+    }
+
     vec3 cr = cross(vec3(0.0, 1.0, 0.0), d);
     vec3 r  = length(cr) > 0.001 ? normalize(cr) : vec3(1.0, 0.0, 0.0); // screen right
     vec3 u  = cross(d, r);                                              // screen up
