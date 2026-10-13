@@ -112,13 +112,13 @@
 #define NL_UNDERWATER_TINT vec3(0.4,0.8,1.0) // fog tint color when underwater
 
 /* Cloud type */
-#define NL_CLOUD_TYPE 4 // 0:vanilla, 1:soft, 2:rounded, 3:realistic, 4:fast vanilla
+#define NL_CLOUD_TYPE 0 // 0:vanilla, 1:soft, 2:rounded, 3:realistic
 
 /* Vanilla cloud settings - make sure to remove clouds.png when using this */
-#define NL_CLOUD0_THICKNESS 2.5      // 0.5 slim ~ 8.0 fat
-#define NL_CLOUD0_RAIN_THICKNESS 4.4 // 0.5 slim ~ 8.0 fat
-#define NL_CLOUD0_OPACITY 0.6        // 0.0 invisible ~ 1.0 opaque
-#define NL_CLOUD0_MULTILAYER         // [toggle] extra cloud layer
+#define NL_CLOUD0_THICKNESS 3.5     // 0.5 slim ~ 8.0 fat
+#define NL_CLOUD0_RAIN_THICKNESS 5.2 // 0.5 slim ~ 8.0 fat
+#define NL_CLOUD0_OPACITY 1.0       // 0.0 invisible ~ 1.0 opaque
+//#define NL_CLOUD0_MULTILAYER         // [toggle] extra cloud layer
 
 /* Soft cloud settings */
 #define NL_CLOUD1_SCALE vec2(0.016, 0.022) // 0.003 large ~ 0.2 tiny
@@ -150,15 +150,6 @@
 #define NL_CLOUD3_SPEED 0.005            // 0.0 static ~ 4.0 fast moving
 #define NL_CLOUD3_SHADOW 0.9             // 0.1 subtle ~ 1.0 dark
 #define NL_CLOUD3_SHADOW_OFFSET 0.3      // 0.05 minimal ~ 1.0 large
-
-/* Fast vanilla cloud settings - colors follow vanilla (type 0) clouds */
-#define NL_CLOUD4_STEPS 5                // 1 low quality ~ 8 more layers
-#define NL_CLOUD4_SIZE 0.06              // 0.01 large/few clouds ~ 0.3 tiny/many clouds
-#define NL_CLOUD4_SPEED 0.01             // 0.0 static ~ 0.1 fast moving
-#define NL_CLOUD4_VISIBLE 0.5            // 0.0 invisible ~ 1.0 opaque
-#define NL_CLOUD4_FADE vec2(0.2, 0.9)    // horizon fade vec2(start, end), higher = more fade near horizon
-#define NL_CLOUD4_SIDE_HEIGHT 1.0        // 0.0 dark ~ 1.0 bright (type 0 style top lighting)
-#define NL_CLOUD4_BOTTOM_HEIGHT 0.5      // 0.0 dark ~ 1.0 bright (keep lower than side)
 
 /* Aurora settings */
 //#define NL_AURORA 1.2           // [toggle] 0.4 dim ~ 4.0 very bright
