@@ -136,7 +136,7 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
 
   // angular falloff around the sun: exponent 2.0 = original, lower = wider
   float sunFall = mix(g2.x, pow(g1.x, NL_DAWN_WIDTH), sw);
-  float df = mix(1.0, dawnFactor*dawnFactor);
+  float df = dawnFactor*dawnFactor;
 
   // height falloff: exponent on (1 - y^2), 2.0 = tight, lower = reaches higher
   float dawnGradient1 = mix(gradient1, pow(vh, NL_DAWN_HEIGHT), sw);
