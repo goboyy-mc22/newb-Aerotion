@@ -120,6 +120,7 @@ void main() {
 
     worldPos = mul(u_invViewProj, apos).xyz;
 
+    v_color0 = vec4(worldPos, h); // fragment reads view direction (xyz) and height parallax (w)
     v_dayFactor = env.dayFactor;
     v_color1 = vec4(skycol.zenith, rain);
     v_color2 = vec4(skycol.horizonEdge, ViewPositionAndTime.w);
