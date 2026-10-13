@@ -50,6 +50,15 @@ void main() {
       #endif
 
       color.a *= smoothstep(0.0, 0.7, vDir.y);
+    #elif NL_CLOUD_TYPE == 4
+      // cloud mesh position like type 1: v_color0.xyz = plane position, v_color0.w = distance fade
+      color = renderCloudsFastVanilla(v_color0.xz, CameraPosition.xz, v_color2.w, v_color1.w, v_color2.rgb, v_color1.rgb);
+
+      #ifdef NL_AURORA
+        color += renderAurora(cloudPos, v_color2.w, v_color1.w, v_dayFactor)*(1.0-0.95*color.a);
+      #endif
+
+      color.a *= v_color0.a;
     #endif
 
     color.rgb = colorCorrection(color.rgb);

@@ -42,7 +42,7 @@ void main() {
   vec3 pos = a_position;
   vec3 worldPos;
 
-  #if NL_CLOUD_TYPE <= 2
+  #if NL_CLOUD_TYPE <= 2 || NL_CLOUD_TYPE == 4
 
     vec4 color;
 
@@ -94,6 +94,16 @@ void main() {
 
         color.a *= fade;
         color.rgb = colorCorrection(color.rgb);
+      #elif NL_CLOUD_TYPE == 4
+        // make cloud plane spherical (same as type 1)
+        float len = length(worldPos.xz)*0.01;
+        worldPos.y -= len*len*clamp(0.2*worldPos.y, -1.0, 1.0);
+
+        // pattern is rendered per pixel in the fragment shader
+        v_dayFactor = env.dayFactor;
+        v_color1 = vec4(skycol.zenith, rain);
+        v_color2 = vec4(skycol.horizonEdge, ViewPositionAndTime.w);
+        color = vec4(worldPos, fade);
       #else // NL_CLOUD_TYPE 2
         v_dayFactor = env.dayFactor;
         v_color1 = vec4(skycol.zenith, rain);
