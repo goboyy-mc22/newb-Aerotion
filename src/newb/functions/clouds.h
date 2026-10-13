@@ -142,44 +142,6 @@ vec4 renderClouds(vec2 p, float t, float rain, vec3 horizonCol, vec3 zenithCol, 
   return col;
 }
 
-// vanilla (type 0) cloud coloring: zenith + horizon sky colors, brightened toward the top of the cloud
-// h = height inside the cloud, 0.0 bottom ~ 1.0 top (same as a_position.y in type 0 vertex shader)
-// colorCorrection() is applied afterwards in the fragment shader, same as type 0
-vec3 cloudColorVanilla(vec3 horizonCol, vec3 zenithCol, float rain, float h) {
-  vec3 col = zenithCol + horizonCol;
-  col += dot(col, vec3(0.3,0.4,0.3))*h;
-  col *= 1.0 - 0.8*rain;
-  return col;
-}
-
-// fast vanilla clouds (type 4): stacked blocky random layers
-float cloud4Rand(highp vec2 n) {
-  return fract(sin(dot(n, vec2(12.9898, 4.1414))) * 43758.5453);
-}
-
-vec4 renderCloudsFastVanilla(vec2 uv, highp float t, float rain, vec3 horizonCol, vec3 zenithCol) {
-  float a = 0.0;
-  float c = 0.0;
-  float isTime = t * NL_CLOUD4_SPEED;
-  uv *= NL_CLOUD4_SIZE; // bigger = more clouds
-
-  // layers
-  for (int i = 0; i < NL_CLOUD4_STEPS; i++) {
-    uv /= 1.007;
-    c = step(0.7, cloud4Rand(floor(uv + isTime)));
-    a = mix(a, 1.0, c);
-  }
-
-  // coloring: same as type 0, side = lit part, bottom = last layer hit
-  vec3 sideCol = cloudColorVanilla(horizonCol, zenithCol, rain, NL_CLOUD4_SIDE_HEIGHT);
-  vec3 bottomCol = cloudColorVanilla(horizonCol, zenithCol, rain, NL_CLOUD4_BOTTOM_HEIGHT);
-
-  vec4 col;
-  col.rgb = mix(sideCol, bottomCol, c);
-  col.a = a * NL_CLOUD4_VISIBLE;
-  return col;
-}
-
 // aurora is rendered on clouds layer
 #ifdef NL_AURORA
 vec4 renderAurora(vec3 p, float t, float rain, float dayFactor) {
