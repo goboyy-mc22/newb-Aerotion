@@ -143,7 +143,18 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   float dawnGradient2 = mix(gradient2, vh, ew);
 
   vec3 sky = mix(skyCol.horizon, skyCol.horizonEdge, dawnGradient1*df*df);
-  sky = mix(skyCol.zenith, sky, dawnGradient2*df);
+  float skyT = dawnGradient2*df; // 0.0 = zenith ~ 1.0 = horizon/sun side
+  vec3 skyPlain = mix(skyCol.zenith, sky, skyT);
+
+  #ifdef NL_DAWN_LAVENDER
+    // dawn only (dw is 0 at noon, so noon is unchanged): zenith -> pink lavender -> golden horizon,
+    // the zenith color itself stays the same
+    vec3 skyLav = mix(skyCol.zenith, NL_DAWN_LAVENDER_COL, smoothstep(0.0, NL_DAWN_LAVENDER_POS, skyT));
+    skyLav = mix(skyLav, sky, smoothstep(NL_DAWN_LAVENDER_POS, 1.0, skyT));
+    sky = mix(skyPlain, skyLav, clamp(NL_DAWN_LAVENDER*dw, 0.0, 1.0)*(1.0-env.rainFactor));
+  #else
+    sky = skyPlain;
+  #endif
 
   sky *= 0.7+0.7*gradient2;
   sky *= (1.0 + (2.0*mg8 + 7.0*mg8*mg8)*mask)*mix(1.0, mask, NL_SKY_VOID_DARKNESS);

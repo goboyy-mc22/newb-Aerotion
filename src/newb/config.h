@@ -26,7 +26,7 @@
 #define NL_END_AMBIENT    vec3(1.98,1.25,2.3)
 
 /* Sun/moon light color */
-#define NL_DAWN_SUNLIGHT_COL   vec3(1.0,0.76,0.40)
+#define NL_DAWN_SUNLIGHT_COL   vec3(1.0,0.74,0.32)
 #define NL_NOON_SUNLIGHT_COL   vec3(1.0,0.75,0.7)
 #define NL_NIGHT_MOONLIGHT_COL vec3(0.002,0.0045,0.042)
 
@@ -49,8 +49,11 @@
 
 /* Sky colors - zenith=top, horizon=bottom */
 #define NL_DAWN_ZENITH_COL   vec3(0.12,0.38,0.90)  // blue at the top
-#define NL_DAWN_HORIZON_COL  vec3(3.4,0.70,0.12)   // orange-red band at the horizon
-#define NL_DAWN_EDGE_COL     vec3(3.0,1.9,0.35)    // yellow-orange core near the sun
+#define NL_DAWN_HORIZON_COL  vec3(3.4,1.35,0.16)   // golden band at the horizon
+#define NL_DAWN_EDGE_COL     vec3(3.3,2.4,0.50)    // golden-yellow core near the sun
+#define NL_DAWN_LAVENDER 1.0                       // [toggle] 0.0 off ~ 1.0 full: pink lavender band between the golden horizon and the zenith
+#define NL_DAWN_LAVENDER_COL vec3(1.7,0.85,2.1)    // pink lavender
+#define NL_DAWN_LAVENDER_POS 0.38                  // 0.15 low, close to the zenith ~ 0.8 high, close to the horizon
 #define NL_DAWN_SPREAD 1.0       // 0.0 off ~ 1.0 full spread
 #define NL_DAWN_EDGE_SPREAD 1.0  // 0.0 zenith stays blue ~ 1.0 whole sky tinted
 #define NL_DAWN_WIDTH 1.0       // sideways reach: 2.0 tight ~ 0.4 very wide
