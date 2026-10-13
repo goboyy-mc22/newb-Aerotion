@@ -89,8 +89,8 @@
 //#define NL_GLOW_LEAK 0.6        // [toggle] 0.08 subtle ~ 1.0 100% brightness of NL_GLOW_TEX
 
 /* Waving */
-#define NL_PLANTS_WAVE 0.05    // [toggle] 0.02 gentle ~ 0.4 violent
-#define NL_LANTERN_WAVE 0.16   // [toggle] 0.05 subtle ~ 0.4 large swing
+#define NL_PLANTS_WAVE 0.04    // [toggle] 0.02 gentle ~ 0.4 violent
+#define NL_LANTERN_WAVE 0.15   // [toggle] 0.05 subtle ~ 0.4 large swing
 #define NL_WAVE_SPEED 2.8      // 0.5 slow wave ~ 5.0 very fast wave
 //#define NL_EXTRA_PLANTS_WAVE // [toggle] !dont use! wave using texture coords (1.21.0 vanilla 2048x1024)
 #define NL_WAVE_RANGE 13.0     // 6.0 upto 6 blocks ~ 32.0 upto 32 blocks away (slower)
@@ -112,12 +112,12 @@
 #define NL_UNDERWATER_TINT vec3(0.4,0.8,1.0) // fog tint color when underwater
 
 /* Cloud type */
-#define NL_CLOUD_TYPE 0 // 0:vanilla, 1:soft, 2:rounded, 3:realistic, 4:fast vanilla
+#define NL_CLOUD_TYPE 4 // 0:vanilla, 1:soft, 2:rounded, 3:realistic, 4:fast vanilla
 
 /* Vanilla cloud settings - make sure to remove clouds.png when using this */
-#define NL_CLOUD0_THICKNESS 2.1      // 0.5 slim ~ 8.0 fat
-#define NL_CLOUD0_RAIN_THICKNESS 4.0 // 0.5 slim ~ 8.0 fat
-#define NL_CLOUD0_OPACITY 0.9        // 0.0 invisible ~ 1.0 opaque
+#define NL_CLOUD0_THICKNESS 2.5      // 0.5 slim ~ 8.0 fat
+#define NL_CLOUD0_RAIN_THICKNESS 4.4 // 0.5 slim ~ 8.0 fat
+#define NL_CLOUD0_OPACITY 0.6        // 0.0 invisible ~ 1.0 opaque
 #define NL_CLOUD0_MULTILAYER         // [toggle] extra cloud layer
 
 /* Soft cloud settings */
@@ -184,7 +184,7 @@
 #define NL_MOON_TILT       0.0 // 0.0 no tilt ~ 90.0 tilt of 90 degrees
 
 /* Sun/Moon bloom: white glow that follows the (square) sun/moon texture */
-#define NL_SUN_BLOOM  1.0      // [toggle] 0.5 faint ~ 3.0 strong, comment out = old round glow. Sun only, the moon keeps the round glow
+#define NL_SUN_BLOOM  1.25      // [toggle] 0.5 faint ~ 3.0 strong, comment out = old round glow. Sun only, the moon keeps the round glow
 #define NL_SUN_BLOOM_TINT 1.0   // 0.0 always white ~ 1.0 takes the dawn/dusk sky color
 #define NL_BLOOM_SHAPE 9.0      // 2.0 round ~ 6.0 rounded square ~ 12.0 square
 #define NL_BLOOM_RANGE 1.25      // 1.0 normal ~ 2.5 very wide bloom
