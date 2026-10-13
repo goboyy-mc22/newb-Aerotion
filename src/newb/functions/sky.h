@@ -92,9 +92,11 @@ float sunMoonBloom(vec3 viewDir, vec3 dir, float hs, float dawnW) {
   float d = pow(qa.x + qa.y, 1.0/NL_BLOOM_SHAPE)/NL_BLOOM_RANGE;
   float b = pow(max(d, 0.8), -1.67);
   // fade-out: noon keeps the original cut-off (2.7 ~ 5.45), dawn starts fading right next to the sun
-  // and ends sooner (NL_DAWN_BLOOM_WIDTH), so the glow gets weaker the further it is from the sun
-  float fadeStart = mix(2.7, 0.8, dawnW);
-  float fadeEnd = mix(5.45, mix(1.8, 5.45, NL_DAWN_BLOOM_WIDTH), dawnW);
+  // and ends sooner, so the glow gets weaker the further it is from the sun.
+  // NL_DAWN_BLOOM_WIDTH 0.0 = thin dawn bloom, 1.0 = exactly the noon bloom (same shape, size and fade)
+  float thin = dawnW*(1.0 - NL_DAWN_BLOOM_WIDTH);
+  float fadeStart = mix(2.7, 0.8, thin);
+  float fadeEnd = mix(5.45, 1.8, thin);
   return b*(1.0 - smoothstep(fadeStart, fadeEnd, d));
 }
 
