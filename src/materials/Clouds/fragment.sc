@@ -50,20 +50,6 @@ void main() {
       #endif
 
       color.a *= smoothstep(0.0, 0.7, vDir.y);
-    #elif NL_CLOUD_TYPE == 4
-      vDir.xz *= 0.3 + v_color0.w; // height parallax
-
-      vec2 p = (vDir.xz)/(0.015 + 0.035*abs(vDir.y));
-      p += 0.035*CameraPosition.xz;
-
-      color = renderCloudsFastVanilla(p, v_color2.w, v_color1.w, v_color2.rgb, v_color1.rgb);
-
-      #ifdef NL_AURORA
-        p.xy *= 34.7;
-        color += renderAurora(p.xyy, v_color2.w, v_color1.w, v_dayFactor)*(1.0-0.95*color.a);
-      #endif
-
-      color.a *= smoothstep(NL_CLOUD4_FADE.x, NL_CLOUD4_FADE.y, vDir.y);
     #endif
 
     color.rgb = colorCorrection(color.rgb);
