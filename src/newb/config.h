@@ -14,7 +14,7 @@
 #define NL_SUNLIGHT_INTENSITY   3.75  // 1.0 weak ~ 5.0 bright
 #define NL_TORCHLIGHT_INTENSITY 1.5 // 0.5 weak ~ 3.0 bright
 #define NL_SHADOW_INTENSITY     1.0  // 0.0 no shadow ~ 1.0 strong shadow
-#define NL_MIN_LIGHTING_BOOST   0.5  // 1.0 minimal lighting boost for dark areas ~ 3.0 brighter dark areas
+#define NL_MIN_LIGHTING_BOOST   0.3  // 1.0 minimal lighting boost for dark areas ~ 3.0 brighter dark areas
 //#define NL_BLINKING_TORCH  // [toggle] flickering light
 //#define NL_CLOUD_SHADOW      // [toggle] cloud shadow (simple clouds only)
 
@@ -27,7 +27,7 @@
 
 /* Sun/moon light color */
 #define NL_DAWN_SUNLIGHT_COL   vec3(1.0,0.76,0.40)
-#define NL_NOON_SUNLIGHT_COL   vec3(1.0,0.75,0.75)
+#define NL_NOON_SUNLIGHT_COL   vec3(1.0,0.75,0.7)
 #define NL_NIGHT_MOONLIGHT_COL vec3(0.002,0.0045,0.042)
 
 /* Torch colors */
@@ -40,7 +40,7 @@
 #define NL_FOG 1.0                // [toggle] 0.1 subtle ~ 1.0 blend with sky completely
 #define NL_MIST_DENSITY 1.0      // 0.0 no mist ~ 1.0 misty
 #define NL_RAIN_MIST_OPACITY 1.0 // [toggle] 0.04 very subtle ~ 0.5 thick rain mist blow
-#define NL_CLOUDY_FOG 0.3         // [toggle] 0.0 subtle - 0.8 dense fog clouds
+#define NL_CLOUDY_FOG 0.35         // [toggle] 0.0 subtle - 0.8 dense fog clouds
 
 /* Sky */
 #define NL_SKY_VOID_FACTOR     0.5
@@ -64,8 +64,8 @@
 #define NL_NIGHT_HORIZON_COL vec3(0.004,0.095,0.340)
 #define NL_NIGHT_EDGE_COL    vec3(0.006,0.160,0.520)
 
-#define NL_RAIN_ZENITH_COL   vec3(0.25,0.25,0.25)*0.75
-#define NL_RAIN_HORIZON_COL  vec3(0.5,0.5,0.5)*0.75
+#define NL_RAIN_ZENITH_COL   vec3(0.175,0.175,0.175)
+#define NL_RAIN_HORIZON_COL  vec3(0.35,0.35,0.35)
 
 #define NL_END_ZENITH_COL    vec3(0.0,0.0,0.0)
 #define NL_END_HORIZON_COL   vec3(0.0,0.0,0.0)
@@ -73,7 +73,7 @@
 /* blackhole at the end */
 #define NL_BLACKHOLE                         // [toggle] enable blackhole in endsky
 #define NL_BH_COL_LOW vec3(0.0,0.0,0.0)      // hole color
-#define NL_BH_COL_HIGH vec3(0.2,0.2,0.3)   // spiral ring color
+#define NL_BH_COL_HIGH vec3(0.25,0.21,0.4)   // spiral ring color
 #define NL_BH_DIST 1.9                     // blackhole size: 5.0 tiny - 0.5 massive
 #define NL_BH_SPEED 0.6                      // spiral rotation speed
 
@@ -98,25 +98,25 @@
 /* Water */
 #define NL_WATER_TRANSPARENCY 0.5 // 0.0 transparent ~ 1.0 normal
 #define NL_WATER_BUMP 0.05        // 0.001 plain ~ 0.2 bumpy water
-#define NL_WATER_WAVE_SPEED  0.5  // 0.2 calm ~ 2.0 turbulent
+#define NL_WATER_WAVE_SPEED  0.6  // 0.2 calm ~ 2.0 turbulent
 #define NL_WATER_TEX_OPACITY 0.0  // 0.0 plain water ~ 1.0 vanilla water texture
 #define NL_WATER_WAVE             // [toggle] wave effect
 //#define NL_WATER_REFL_MASK      // [toggle] fake water reflection mask
 #define NL_WATER_TINT vec3(0.0,0.1,0.9)
 
 /* Underwater */
-#define NL_UNDERWATER_BRIGHTNESS 1.8        // 0.0 dark ~ 3.0 bright
+#define NL_UNDERWATER_BRIGHTNESS 2.0        // 0.0 dark ~ 3.0 bright
 #define NL_CAUSTIC_INTENSITY 1.9             // 0.5 weak ~ 5.0 bright
 #define NL_UNDERWATER_WAVE 0.05               // [toggle] 0.02 subtle ~ 0.6 trippy
-#define NL_UNDERWATER_STREAKS 1.5            // [toggle] 0.8 subtle - 2.0 bright streaks from top
+#define NL_UNDERWATER_STREAKS 1.9            // [toggle] 0.8 subtle - 2.0 bright streaks from top
 #define NL_UNDERWATER_TINT vec3(0.4,0.75,1.0) // fog tint color when underwater
 
 /* Cloud type */
 #define NL_CLOUD_TYPE 0 // 0:vanilla, 1:soft, 2:rounded, 3:realistic
 
 /* Vanilla cloud settings - make sure to remove clouds.png when using this */
-#define NL_CLOUD0_THICKNESS 1.1     // 0.5 slim ~ 8.0 fat
-#define NL_CLOUD0_RAIN_THICKNESS 2.8 // 0.5 slim ~ 8.0 fat
+#define NL_CLOUD0_THICKNESS 1.4     // 0.5 slim ~ 8.0 fat
+#define NL_CLOUD0_RAIN_THICKNESS 3.2 // 0.5 slim ~ 8.0 fat
 #define NL_CLOUD0_OPACITY 1.0       // 0.0 invisible ~ 1.0 opaque
 //#define NL_CLOUD0_MULTILAYER         // [toggle] extra cloud layer
 
@@ -179,14 +179,14 @@
 #define NL_SUN_BLOOM_TINT 1.0   // 0.0 always white ~ 1.0 takes the dawn/dusk sky color
 #define NL_BLOOM_SHAPE 9.0      // 2.0 round ~ 6.0 rounded square ~ 12.0 square
 #define NL_BLOOM_RANGE 1.25      // 1.0 normal ~ 2.5 very wide bloom
-#define NL_DAWN_BLOOM_WIDTH 0.5 // 0.0 low (very thin) ~ 1.0 high (as wide as noon). Dawn/dusk only, fades out toward the edge
+#define NL_DAWN_BLOOM_WIDTH 0.8  // 0.0 low (very thin) ~ 1.0 high (as wide as noon). Dawn/dusk only, fades out toward the edge
 #define NL_SUNMOON_UNIT 0.03    // half size of the sun/moon quad per unit of size, raise if bloom is smaller than the sun
 
 /* Fake godrays during sunrise/sunset */
 //#define NL_GODRAY 1.5     // [toggle] 0.1 faint ~ 1.0 full strength of the shafts
 
 /* Sky reflection */
-#define NL_GROUND_REFL 0.0       // [toggle] 0.2 slightly reflective ~ 1.0 fully reflect sky
+//#define NL_GROUND_REFL 0.0       // [toggle] 0.2 slightly reflective ~ 1.0 fully reflect sky
 #define NL_GROUND_RAIN_WETNESS 1.0 // 0.0 no wetness ~ 1.0 fully wet blocks when raining
 #define NL_GROUND_RAIN_PUDDLES 1.0 // 0.0 no puddles ~ 1.0 puddles
 
