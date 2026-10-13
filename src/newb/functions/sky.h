@@ -76,7 +76,6 @@ nl_skycolor nlSkyColors(nl_environment env) {
   return nlOverworldSkyColors(env);
 }
 
-
 // square-ish white bloom around the sun/moon quad (vanilla texture).
 // dir = sun/moon direction, hs = half size of the quad in tangent units (matches SunMoon/vertex.sc)
 // dawnW = 0.0 at noon (bloom unchanged) ~ 1.0 at dawn/dusk (thinner bloom, fading out from the sun to its edge)
@@ -120,7 +119,7 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   vh2 = mix(vh2, 1.0, mg8);
   float vh4 = vh2*vh2;
 
-  float rainMask = 1.0 - 0.5*env.rainFactor;
+  float rainMask = 1.0 - 0.6*env.rainFactor;
   float gradient1 = vh4*vh4;
   float gradient2 = 0.8*gradient1 + 0.2*vh2;
   gradient1 *= gradient1;
