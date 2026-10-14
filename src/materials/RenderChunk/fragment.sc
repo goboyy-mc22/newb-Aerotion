@@ -46,7 +46,7 @@ void main() {
       float ndotl = max(N.y, 0.0); 
       caustic *= ndotl * 0.5;
 
-      vec3 watercol = vec3(0.0, 0.3, 0.5);
+      vec3 watercol = vec3(1.0, 1.3, 1.5);
       vec3 finalColor = watercol + caustic;
 
       diffuse.rgb *= finalColor;
