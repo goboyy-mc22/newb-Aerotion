@@ -186,10 +186,8 @@
 //#define NL_GODRAY 1.5     // [toggle] 0.1 faint ~ 1.0 full strength of the shafts
 
 /* Sky reflection */
-//#define NL_GROUND_REFL 0.0       // [toggle] 0.2 slightly reflective ~ 1.0 fully reflect sky
-#define NL_GROUND_RAIN_WETNESS 1.0 // 0.0 no wetness ~ 1.0 fully wet blocks when raining
+#define NL_GROUND_RAIN_WETNESS 1.0 // [toggle] 0.0 no wetness ~ 1.0 fully wet blocks when raining (rain only)
 #define NL_GROUND_RAIN_PUDDLES 1.0 // 0.0 no puddles ~ 1.0 puddles
-#define NL_GROUND_RAIN_GLOSS 0.3   // 0.0 same as before ~ 0.6 puddles reflect strongly (rain only)
 
 /* Entity (Actor, ItemInHand) */
 #define NL_ENTITY_BRIGHTNESS     0.1 // 0.1 dark ~ 1.6 bright
