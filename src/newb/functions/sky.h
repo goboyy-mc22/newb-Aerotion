@@ -76,28 +76,6 @@ nl_skycolor nlSkyColors(nl_environment env) {
   return nlOverworldSkyColors(env);
 }
 
-// square-ish white bloom around the sun/moon quad (vanilla texture).
-// dir = sun/moon direction, hs = half size of the quad in tangent units (matches SunMoon/vertex.sc)
-// dawnW = 0.0 at noon (bloom unchanged) ~ 1.0 at dawn/dusk (thinner bloom, fading out from the sun to its edge)
-float sunMoonBloom(vec3 viewDir, vec3 dir, float hs, float dawnW) {
-  float cd = dot(viewDir, dir);
-  if (cd < 0.05) { return 0.0; }
-  vec3 cr = cross(vec3(0.0, 1.0, 0.0), dir);
-  vec3 r = length(cr) > 0.001 ? normalize(cr) : vec3(1.0, 0.0, 0.0);
-  vec3 u = cross(dir, r);
-  vec2 q = vec2(dot(viewDir, r), dot(viewDir, u))/(cd*hs);
-  // p-norm distance: NL_BLOOM_SHAPE 2.0 = round, 6.0 = rounded square, higher = square
-  // NL_BLOOM_RANGE stretches the bloom outward (1.0 = fitted to the reference)
-  vec2 qa = pow(abs(q) + 1e-6, vec2_splat(NL_BLOOM_SHAPE));
-  float d = pow(qa.x + qa.y, 1.0/NL_BLOOM_SHAPE)/NL_BLOOM_RANGE;
-  float b = pow(max(d, 0.8), -1.67);
-  // fade-out: noon keeps the original cut-off (2.7 ~ 5.45), dawn starts fading right next to the sun
-  // and ends sooner (NL_DAWN_BLOOM_WIDTH), so the glow gets weaker the further it is from the sun
-  float fadeStart = mix(2.7, 0.8, dawnW);
-  float fadeEnd = mix(5.45, mix(1.8, 5.45, NL_DAWN_BLOOM_WIDTH), dawnW);
-  return b*(1.0 - smoothstep(fadeStart, fadeEnd, d));
-}
-
 vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bool isSkyPlane) {
   float avy = abs(viewDir.y);
   float mask = 0.5 + (0.5*viewDir.y/(0.4 + avy));
@@ -108,10 +86,6 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   vec2 g4 = g2*g2;
   vec2 g8 = g4*g4;
   float mg8 = (g8.x+g8.y)*mask*(1.0-0.9*env.rainFactor);
-  #ifdef NL_SUN_BLOOM
-    // sky plane: the sun uses the square bloom below, only the moon keeps the round glow
-    if (isSkyPlane) { mg8 = g8.y*mask*(1.0-0.9*env.rainFactor); }
-  #endif
 
   float vh = 1.0 - viewDir.y*viewDir.y;
   float vh2 = vh*vh;
@@ -152,19 +126,8 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
     float source = max(0.0, (mg8-0.22)/0.78);
     source *= source;
     source *= source;
-    sky *= 1.0 + 15.0*source*(1.0-env.rainFactor);
+    sky *= 1.0 + 17.0*source*(1.0-env.rainFactor);
   }
-
-  #ifdef NL_SUN_BLOOM
-    if (isSkyPlane) {
-      float bloom = NL_SUN_BLOOM*sunMoonBloom(viewDir, env.sunDir, NL_SUN_SIZE*NL_SUNMOON_UNIT, dawnFactor*dawnFactor);
-      // noon is the same as always, at dawn/dusk the color follows the sky hue and the bloom is thinner
-      vec3 hc = max(skyCol.horizon, vec3_splat(0.001));
-      vec3 hue = min(hc/min(hc.r, min(hc.g, hc.b)), vec3_splat(2.5)); // every channel >= 1, so the core stays as bright as white
-      vec3 bloomCol = mix(vec3_splat(1.0), hue, clamp(dawnFactor*dawnFactor*NL_SUN_BLOOM_TINT, 0.0, 1.0));
-      sky += bloomCol*bloom*mask*(1.0-0.9*env.rainFactor);
-    }
-  #endif
 
   #ifdef NL_RAINBOW
     if (!env.underwater) {
@@ -232,13 +195,13 @@ vec3 nlRenderSky(nl_skycolor skycol, nl_environment env, vec3 viewDir, float t, 
          float a = atan2(viewDir.x, viewDir.z);
          float grad = 0.5 + 0.5*viewDir.y;
          grad *= grad;
-         float spread = (0.5 + 0.5*sin(3.0*a + 0.2*t + 2.0*sin(5.0*a - 0.4*t)));
-         spread *= (0.8 + 0.8*sin(3.0*a - sin(0.5*t)))*grad;
+         float spread = (1.0 + 1.0*sin(3.0*a + 0.2*t + 2.0*sin(5.0*a - 0.4*t)));
+         spread *= (1.0 + 1.0*sin(3.0*a - sin(0.5*t)))*grad;
          spread += (1.0-spread)*grad;
          float streaks = spread*spread;
          streaks *= streaks;
          streaks = (spread + 3.0*grad*grad + 4.0*streaks*streaks);
-         sky += 2.0*streaks*skycol.horizon;
+         sky += 2.2*streaks*skycol.horizon;
        }
     #endif
   }
