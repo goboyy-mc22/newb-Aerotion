@@ -26,7 +26,7 @@
 #define NL_END_AMBIENT    vec3(1.98,1.25,2.3)
 
 /* Sun/moon light color */
-#define NL_DAWN_SUNLIGHT_COL   vec3(1.0,0.74,0.3)
+#define NL_DAWN_SUNLIGHT_COL   vec3(1.0,0.7,0.15)
 #define NL_NOON_SUNLIGHT_COL   vec3(1.0,0.75,0.68)
 #define NL_NIGHT_MOONLIGHT_COL vec3(0.002,0.0045,0.052)
 
@@ -49,12 +49,12 @@
 
 /* Sky colors - zenith=top, horizon=bottom */
 #define NL_DAWN_ZENITH_COL   vec3(0.12,0.38,0.90)  // blue at the top
-#define NL_DAWN_HORIZON_COL  vec3(3.5,1.50,0.12)   // orange-red band at the horizon
-#define NL_DAWN_EDGE_COL     vec3(3.4,2.50,0.42)    // yellow-orange core near the sun
+#define NL_DAWN_HORIZON_COL  vec3(4.5,1.90,0.20)   // orange-red band at the horizon
+#define NL_DAWN_EDGE_COL     vec3(4.6,3.00,0.50)    // yellow-orange core near the sun
 #define NL_DAWN_SPREAD 1.0       // 0.0 off ~ 1.0 full spread
 #define NL_DAWN_EDGE_SPREAD 1.0  // 0.0 zenith stays blue ~ 1.0 whole sky tinted
 #define NL_DAWN_WIDTH 1.0       // sideways reach: 2.0 tight ~ 0.4 very wide
-#define NL_DAWN_HEIGHT 0.7      // upward reach: 2.0 low ~ 0.7 very high
+#define NL_DAWN_HEIGHT 0.9      // upward reach: 2.0 low ~ 0.7 very high
 
 #define NL_DAY_ZENITH_COL    vec3(0.2,1.2,2.8)
 #define NL_DAY_HORIZON_COL   vec3(0.25,1.6,2.4)
@@ -175,7 +175,7 @@
 #define NL_MOON_TILT       0.0 // 0.0 no tilt ~ 90.0 tilt of 90 degrees
 
 /* Fake godrays during sunrise/sunset */
-//#define NL_GODRAY 1.5     // [toggle] 0.1 faint ~ 1.0 full strength of the shafts
+#define NL_GODRAY 1.5     // [toggle] 0.1 faint ~ 1.0 full strength of the shafts
 
 /* Sky reflection */
 //#define NL_GROUND_REFL 0.0       // [toggle] 0.2 slightly reflective ~ 1.0 fully reflect sky
