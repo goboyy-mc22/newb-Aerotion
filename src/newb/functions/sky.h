@@ -196,8 +196,8 @@ vec3 nlRenderSky(nl_skycolor skycol, nl_environment env, vec3 viewDir, float t, 
          float a = atan2(viewDir.x, viewDir.z);
          float grad = 0.5 + 0.5*viewDir.y;
          grad *= grad;
-         float spread = (1.0 + 1.0*sin(3.0*a + 0.2*t + 2.0*sin(5.0*a - 0.4*t)));
-         spread *= (1.0 + 1.0*sin(3.0*a - sin(0.5*t)))*grad;
+         float spread = (0.6 + 0.6*sin(3.0*a + 0.2*t + 2.0*sin(5.0*a - 0.4*t)));
+         spread *= (0.8 + 0.8*sin(3.0*a - sin(0.5*t)))*grad;
          spread += (1.0-spread)*grad;
          float streaks = spread*spread;
          streaks *= streaks;
