@@ -20,8 +20,8 @@ vec4 nlRefl(
 ) {
   vec4 wetRefl = vec4(0.0,0.0,0.0,0.0);
 
-  // basah dan genangan hanya saat hujan (toggle: NL_GROUND_RAIN_WETNESS)
-  #ifdef NL_GROUND_RAIN_WETNESS
+  // tanah basah + pantulan langit hanya saat hujan; cuaca cerah tidak ada refleksi
+  #ifdef NL_GROUND_REFL
   if (env.rainFactor > 0.0) {
 
     float wetness = lit.y*lit.y;
@@ -33,7 +33,7 @@ vec4 nlRefl(
       float puddles = max(1.0 - NL_GROUND_RAIN_PUDDLES*fastRand(tiledCpos.xz), 0.0);
 
       wetness *= puddles;
-      float reflective = wetness*env.rainFactor*NL_GROUND_RAIN_WETNESS;
+      float reflective = wetness*env.rainFactor*NL_GROUND_REFL;
 
       if (wPos.y < 0.0) {
         viewDir.y = -viewDir.y;
