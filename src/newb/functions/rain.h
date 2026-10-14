@@ -43,6 +43,9 @@ vec4 nlRefl(
         } 
 
         wetness *= puddles;
+        #ifdef NL_GROUND_REFL_RAIN_ONLY
+          reflective *= env.rainFactor;
+        #endif
         reflective = mix(reflective, wetness, env.rainFactor);
       #endif
 
