@@ -75,11 +75,11 @@ void main() {
   float rainShadowMask = mix(1.0, 0.5, env.rainFactor);
   float shadow = smoothstep(0.875, 0.860, pow(v_lightmapUV.y, 2.0));
   shadow = mix(shadow, 0.0, pow(v_lightmapUV.x * 1.2, 6.0));
-  diffuse.rgb *= 1.0 - 0.65 * shadow * rainShadowMask;
+  diffuse.rgb *= 1.0 - 0.68 * shadow * rainShadowMask;
 
   if (v_extra.b <= 0.9) {
     float sideshadow = smoothstep(0.64, 0.62, v_color1.g);
-    diffuse.rgb *= 1.0 - 0.65 * sideshadow * rainShadowMask;
+    diffuse.rgb *= 1.0 - 0.68 * sideshadow * rainShadowMask;
   }
 
   diffuse.rgb += glow;
