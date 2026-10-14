@@ -20,9 +20,9 @@ vec4 nlRefl(
 ) {
   vec4 wetRefl = vec4(0.0,0.0,0.0,0.0);
 
-  // tanah basah + pantulan langit hanya saat hujan; cuaca cerah tidak ada refleksi
+  // tanah basah + pantulan langit hanya saat hujan di overworld (tidak di nether/end)
   #ifdef NL_GROUND_REFL
-  if (env.rainFactor > 0.0) {
+  if (env.rainFactor > 0.0 && !env.end && !env.nether) {
 
     float wetness = lit.y*lit.y;
 
