@@ -33,7 +33,7 @@ vec4 nlRefl(
       float puddles = max(1.0 - NL_GROUND_RAIN_PUDDLES*fastRand(tiledCpos.xz), 0.0);
 
       wetness *= puddles;
-      float reflective = wetness*env.rainFactor*NL_GROUND_REFL;
+      float reflective = wetness*env.rainFactor*NL_GROUND_RAIN_WETNESS*NL_GROUND_REFL;
 
       if (wPos.y < 0.0) {
         viewDir.y = -viewDir.y;
