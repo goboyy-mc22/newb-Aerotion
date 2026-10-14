@@ -81,20 +81,25 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   float mask = 0.5 + (0.5*viewDir.y/(0.4 + avy));
 
   vec2 g = clamp(0.5 - 0.5*vec2(dot(env.sunDir, viewDir), dot(env.moonDir, viewDir)), 0.0, 1.0);
+  vec2 g1 = 1.0-mix(sqrt(g), g, env.rainFactor); // round: also used by the dawn spread (NL_DAWN_WIDTH)
+  vec2 g2 = g1*g1;
+  vec2 gh2 = g2; // falloff of the glow around the sun
   #ifdef NL_SUN_GLOW_SHAPE
     // sun glow follows the square sun texture: shrink the sun's distance along the diagonals of the upright
     // sun quad (same basis as SunMoon/vertex.sc). On the quad axes nothing changes, the moon keeps its round glow.
+    // Only the glow is reshaped, the dawn spread above stays round so NL_DAWN_WIDTH only changes the dawn sky.
     vec3 sunR = cross(vec3(0.0, 1.0, 0.0), env.sunDir);
     sunR = length(sunR) > 0.001 ? normalize(sunR) : vec3(1.0, 0.0, 0.0);
     vec2 sunQ = abs(vec2(dot(viewDir, sunR), dot(viewDir, cross(env.sunDir, sunR)))) + 1e-4;
     sunQ /= max(sunQ.x, sunQ.y); // largest component = 1.0, so pow() cannot underflow
     vec2 sunP = pow(sunQ, vec2_splat(NL_SUN_GLOW_SHAPE));
     float sunShape = pow(sunP.x + sunP.y, 1.0/NL_SUN_GLOW_SHAPE)/length(sunQ); // p-norm / round norm, 1.0 on the axes
-    g.x *= sunShape*sunShape;
+    vec2 gs = g;
+    gs.x *= sunShape*sunShape;
+    vec2 gs1 = 1.0-mix(sqrt(gs), gs, env.rainFactor);
+    gh2 = gs1*gs1;
   #endif
-  vec2 g1 = 1.0-mix(sqrt(g), g, env.rainFactor);
-  vec2 g2 = g1*g1;
-  vec2 g4 = g2*g2;
+  vec2 g4 = gh2*gh2;
   vec2 g8 = g4*g4;
   float mg8 = (g8.x+g8.y)*mask*(1.0-0.9*env.rainFactor);
 
