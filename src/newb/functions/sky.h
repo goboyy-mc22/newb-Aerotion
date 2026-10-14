@@ -105,8 +105,9 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   // dawn spread: same weight as the dawn color blend in nlOverworldSkyColors
   float dw = dawnFactor*dawnFactor*dawnFactor;
   dw *= mix(1.0, dw*dw, step(env.dayFactor, 0.0));
-  float sw = clamp(NL_DAWN_SPREAD*dw, 0.0, 1.0);
-  float ew = clamp(NL_DAWN_EDGE_SPREAD*dw, 0.0, 1.0);
+  // rain brings the sky back to the original shape (dawnGradient1/2 replace the rain-masked gradients)
+  float sw = clamp(NL_DAWN_SPREAD*dw, 0.0, 1.0)*(1.0-env.rainFactor);
+  float ew = clamp(NL_DAWN_EDGE_SPREAD*dw, 0.0, 1.0)*(1.0-env.rainFactor);
 
   // angular falloff around the sun: exponent 2.0 = original, lower = wider
   float sunFall = mix(g2.x, pow(g1.x, NL_DAWN_WIDTH), sw);
