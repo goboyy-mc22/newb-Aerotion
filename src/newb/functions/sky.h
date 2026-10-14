@@ -81,6 +81,17 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   float mask = 0.5 + (0.5*viewDir.y/(0.4 + avy));
 
   vec2 g = clamp(0.5 - 0.5*vec2(dot(env.sunDir, viewDir), dot(env.moonDir, viewDir)), 0.0, 1.0);
+  #ifdef NL_SUN_GLOW_SHAPE
+    // sun glow follows the square sun texture: shrink the sun's distance along the diagonals of the upright
+    // sun quad (same basis as SunMoon/vertex.sc). On the quad axes nothing changes, the moon keeps its round glow.
+    vec3 sunR = cross(vec3(0.0, 1.0, 0.0), env.sunDir);
+    sunR = length(sunR) > 0.001 ? normalize(sunR) : vec3(1.0, 0.0, 0.0);
+    vec2 sunQ = abs(vec2(dot(viewDir, sunR), dot(viewDir, cross(env.sunDir, sunR)))) + 1e-4;
+    sunQ /= max(sunQ.x, sunQ.y); // largest component = 1.0, so pow() cannot underflow
+    vec2 sunP = pow(sunQ, vec2_splat(NL_SUN_GLOW_SHAPE));
+    float sunShape = pow(sunP.x + sunP.y, 1.0/NL_SUN_GLOW_SHAPE)/length(sunQ); // p-norm / round norm, 1.0 on the axes
+    g.x *= sunShape*sunShape;
+  #endif
   vec2 g1 = 1.0-mix(sqrt(g), g, env.rainFactor);
   vec2 g2 = g1*g1;
   vec2 g4 = g2*g2;

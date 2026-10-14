@@ -174,6 +174,9 @@
 #define NL_SUN_TILT        0.0 // 0.0 no tilt ~ 90.0 tilt of 90 degrees
 #define NL_MOON_TILT       0.0 // 0.0 no tilt ~ 90.0 tilt of 90 degrees
 
+/* Sun glow shape: the glow around the sun follows the (square) sun texture */
+#define NL_SUN_GLOW_SHAPE 5.0 // [toggle] 2.0 round ~ 5.0 rounded square ~ 12.0 square. Sun only, the moon keeps the round glow
+
 /* Fake godrays during sunrise/sunset */
 #define NL_GODRAY 1.5     // [toggle] 0.1 faint ~ 1.0 full strength of the shafts
 
