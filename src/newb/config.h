@@ -187,7 +187,6 @@
 
 /* Sky reflection */
 //#define NL_GROUND_REFL 0.0       // [toggle] 0.2 slightly reflective ~ 1.0 fully reflect sky
-#define NL_GROUND_REFL_RAIN_ONLY // [toggle] with NL_GROUND_REFL: ground reflection only appears when raining
 #define NL_GROUND_RAIN_WETNESS 1.0 // 0.0 no wetness ~ 1.0 fully wet blocks when raining
 #define NL_GROUND_RAIN_PUDDLES 1.0 // 0.0 no puddles ~ 1.0 puddles
 
