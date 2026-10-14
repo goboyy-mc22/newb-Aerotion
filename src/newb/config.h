@@ -11,7 +11,7 @@
 #define NL_TINT_HIGH vec3(1.0,1.0,1.0) // color tint for light tone
 
 /* Lighting */
-#define NL_SUNLIGHT_INTENSITY   3.75  // 1.0 weak ~ 5.0 bright
+#define NL_SUNLIGHT_INTENSITY   3.9  // 1.0 weak ~ 5.0 bright
 #define NL_TORCHLIGHT_INTENSITY 1.5 // 0.5 weak ~ 3.0 bright
 #define NL_SHADOW_INTENSITY     1.0  // 0.0 no shadow ~ 1.0 strong shadow
 #define NL_MIN_LIGHTING_BOOST   0.3  // 1.0 minimal lighting boost for dark areas ~ 3.0 brighter dark areas
@@ -26,9 +26,9 @@
 #define NL_END_AMBIENT    vec3(1.98,1.25,2.3)
 
 /* Sun/moon light color */
-#define NL_DAWN_SUNLIGHT_COL   vec3(1.0,0.74,0.32)
-#define NL_NOON_SUNLIGHT_COL   vec3(1.0,0.75,0.7)
-#define NL_NIGHT_MOONLIGHT_COL vec3(0.002,0.0045,0.042)
+#define NL_DAWN_SUNLIGHT_COL   vec3(1.0,0.74,0.3)
+#define NL_NOON_SUNLIGHT_COL   vec3(1.0,0.75,0.68)
+#define NL_NIGHT_MOONLIGHT_COL vec3(0.002,0.0045,0.052)
 
 /* Torch colors */
 #define NL_OVERWORLD_TORCH_COL  vec3(1.0,0.58,0.35)
@@ -40,7 +40,7 @@
 #define NL_FOG 1.0                // [toggle] 0.1 subtle ~ 1.0 blend with sky completely
 #define NL_MIST_DENSITY 1.0      // 0.0 no mist ~ 1.0 misty
 #define NL_RAIN_MIST_OPACITY 1.0 // [toggle] 0.04 very subtle ~ 0.5 thick rain mist blow
-#define NL_CLOUDY_FOG 0.35         // [toggle] 0.0 subtle - 0.8 dense fog clouds
+#define NL_CLOUDY_FOG 0.4         // [toggle] 0.0 subtle - 0.8 dense fog clouds
 
 /* Sky */
 #define NL_SKY_VOID_FACTOR     0.5
@@ -91,7 +91,7 @@
 /* Waving */
 #define NL_PLANTS_WAVE 0.04    // [toggle] 0.02 gentle ~ 0.4 violent
 #define NL_LANTERN_WAVE 0.15   // [toggle] 0.05 subtle ~ 0.4 large swing
-#define NL_WAVE_SPEED 2.8      // 0.5 slow wave ~ 5.0 very fast wave
+#define NL_WAVE_SPEED 2.6      // 0.5 slow wave ~ 5.0 very fast wave
 //#define NL_EXTRA_PLANTS_WAVE // [toggle] !dont use! wave using texture coords (1.21.0 vanilla 2048x1024)
 #define NL_WAVE_RANGE 13.0     // 6.0 upto 6 blocks ~ 32.0 upto 32 blocks away (slower)
 
@@ -108,15 +108,15 @@
 #define NL_UNDERWATER_BRIGHTNESS 2.0        // 0.0 dark ~ 3.0 bright
 #define NL_CAUSTIC_INTENSITY 1.9             // 0.5 weak ~ 5.0 bright
 #define NL_UNDERWATER_WAVE 0.05               // [toggle] 0.02 subtle ~ 0.6 trippy
-#define NL_UNDERWATER_STREAKS 1.9            // [toggle] 0.8 subtle - 2.0 bright streaks from top
-#define NL_UNDERWATER_TINT vec3(0.4,0.75,1.0) // fog tint color when underwater
+#define NL_UNDERWATER_STREAKS 2.0            // [toggle] 0.8 subtle - 2.0 bright streaks from top
+#define NL_UNDERWATER_TINT vec3(0.4,0.7,1.0) // fog tint color when underwater
 
 /* Cloud type */
 #define NL_CLOUD_TYPE 0 // 0:vanilla, 1:soft, 2:rounded, 3:realistic
 
 /* Vanilla cloud settings - make sure to remove clouds.png when using this */
-#define NL_CLOUD0_THICKNESS 1.4     // 0.5 slim ~ 8.0 fat
-#define NL_CLOUD0_RAIN_THICKNESS 3.2 // 0.5 slim ~ 8.0 fat
+#define NL_CLOUD0_THICKNESS 1.5     // 0.5 slim ~ 8.0 fat
+#define NL_CLOUD0_RAIN_THICKNESS 3.3 // 0.5 slim ~ 8.0 fat
 #define NL_CLOUD0_OPACITY 1.0       // 0.0 invisible ~ 1.0 opaque
 //#define NL_CLOUD0_MULTILAYER         // [toggle] extra cloud layer
 
@@ -167,10 +167,10 @@
 /* Sun/Moon */
 #define NL_SUN_SIZE  3.2          // 0.3 tiny ~ 4.0 massive
 #define NL_MOON_SIZE 3.0          // 0.3 tiny ~ 4.0 massive
-#define NL_SUN_PATH_YAW    15.0 //
-#define NL_MOON_PATH_YAW   17.0 //
-#define NL_SUN_PATH_TILT   31.0 //
-#define NL_MOON_PATH_TILT -28.0 //
+#define NL_SUN_PATH_YAW    10.0 //
+#define NL_MOON_PATH_YAW  -10.0 //
+#define NL_SUN_PATH_TILT   15.0 //
+#define NL_MOON_PATH_TILT -15.0 //
 #define NL_SUN_TILT        0.0 // 0.0 no tilt ~ 90.0 tilt of 90 degrees
 #define NL_MOON_TILT       0.0 // 0.0 no tilt ~ 90.0 tilt of 90 degrees
 
@@ -201,7 +201,7 @@
 
 /* Lava effects */
 //#define NL_LAVA_NOISE            // [toggle] darken lava in certain regions
-#define NL_LAVA_NOISE_BUMP 0.2 // [toggle] 0.1 subtle ~ 0.8 massive waves
+#define NL_LAVA_NOISE_BUMP 0.4 // [toggle] 0.1 subtle ~ 0.8 massive waves
 #define NL_LAVA_NOISE_SPEED 0.2  // 0.0 still ~ 0.8 fast
 
 #endif
