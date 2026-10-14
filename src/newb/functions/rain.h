@@ -32,19 +32,19 @@ vec4 nlRefl(
       float cosR = max(viewDir.y, 0.0);
       float puddles = max(1.0 - NL_GROUND_RAIN_PUDDLES*fastRand(tiledCpos.xz), 0.0);
 
-      #ifndef NL_GROUND_REFL
-        wetness *= puddles;
-        float reflective = wetness*env.rainFactor*NL_GROUND_RAIN_WETNESS;
-      #else
-        float reflective = NL_GROUND_REFL;
+      // refleksi permukaan kering: hanya aktif jika NL_GROUND_REFL didefinisikan (> 0.0)
+      float dry = 0.0;
+      #ifdef NL_GROUND_REFL
+        dry = NL_GROUND_REFL;
         if (!env.end && !env.nether) {
           // only multiply with wetness in overworld
-          reflective *= wetness;
-        } 
-
-        wetness *= puddles;
-        reflective = mix(reflective, wetness, env.rainFactor);
+          dry *= wetness;
+        }
       #endif
+
+      // basah + genangan: hanya muncul saat hujan, tidak butuh NL_GROUND_REFL
+      wetness *= puddles;
+      float reflective = mix(dry, wetness*NL_GROUND_RAIN_WETNESS, env.rainFactor);
 
       if (wPos.y < 0.0) {
         viewDir.y = -viewDir.y;
@@ -58,7 +58,9 @@ vec4 nlRefl(
         // torch light
         wetRefl.rgb += torchColor*lit.x*NL_TORCHLIGHT_INTENSITY;
 
-        wetRefl.a = calculateFresnel(cosR, 0.03)*reflective;
+        // genangan hujan memantul lebih kuat dari permukaan kering
+        float r0 = 0.03 + NL_GROUND_RAIN_GLOSS*wetness*env.rainFactor;
+        wetRefl.a = calculateFresnel(cosR, r0)*reflective;
         wetRefl.a *= clamp(2.0-2.0*camDist/endDist, 0.0, 1.0); // fade out before clip
       }
     }
