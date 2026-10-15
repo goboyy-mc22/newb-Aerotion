@@ -176,6 +176,7 @@
 
 /* Sun glow shape: the glow around the sun follows the (square) sun texture */
 #define NL_SUN_GLOW_SHAPE 5.0 // [toggle] 2.0 round ~ 5.0 rounded square ~ 12.0 square. Sun only, the moon keeps the round glow
+#define NL_SUN_GLOW_CORE 0.4 // [toggle] 1.0 original (visible ring at the edge of the core) ~ 0.4 soft core ~ 0.0 no core
 
 /* Fake godrays during sunrise/sunset */
 #define NL_GODRAY 1.5     // [toggle] 0.1 faint ~ 1.0 full strength of the shafts

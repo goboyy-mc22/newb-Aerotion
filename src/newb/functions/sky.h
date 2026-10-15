@@ -101,6 +101,10 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   #endif
   vec2 g4 = gh2*gh2;
   vec2 g8 = g4*g4;
+  #ifdef NL_SUN_GLOW_SHAPE
+    // the sun glow fades smoothly to 0 between 30 and 60 degrees from the sun (sqrt(gs) = sin(angle/2))
+    g8.x *= 1.0 - smoothstep(0.25, 0.5, sqrt(gs.x));
+  #endif
   float mg8 = (g8.x+g8.y)*mask*(1.0-0.9*env.rainFactor);
 
   float vh = 1.0 - viewDir.y*viewDir.y;
@@ -137,7 +141,7 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   sky = mix(skyCol.zenith, sky, dawnGradient2*df);
 
   sky *= 0.8+0.8*gradient2;
-  sky *= (1.0 + (2.0*mg8 + 7.0*mg8*mg8)*mask)*mix(1.0, mask, NL_SKY_VOID_DARKNESS);
+  sky *= (1.0 + (2.0*mg8 + 7.0*NL_SUN_GLOW_CORE*mg8*mg8)*mask)*mix(1.0, mask, NL_SKY_VOID_DARKNESS);
 
   if (!isSkyPlane) {
     float source = max(0.0, (mg8-0.22)/0.78);
