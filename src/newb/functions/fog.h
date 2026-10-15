@@ -15,7 +15,7 @@ float nlRenderFogFade(float relativeDist, vec3 FOG_COLOR, vec2 FOG_CONTROL) {
   #endif
 }
 
-float nlRenderGodRayIntensity(vec3 cPos, vec3 worldPos, float t, vec2 uv1, float relativeDist, vec3 FOG_COLOR) {
+float nlRenderGodRayIntensity(vec3 cPos, vec3 worldPos, float t, vec2 uv1, float relativeDist, float dayFactor) {
   // offset wPos (only works upto 16 blocks)
   vec3 offset = cPos - 16.0*fract(worldPos*0.0625);
   offset = abs(2.0*fract(offset*0.0625)-1.0);
@@ -33,11 +33,15 @@ float nlRenderGodRayIntensity(vec3 cPos, vec3 worldPos, float t, vec2 uv1, float
   vol *= vol*mask*uv1.y*(1.0-mask*mask);
   vol *= relativeDist; // was relativeDist^2: shafts also show closer to the camera
 
-  // dawn/dusk mask
-  vol *= clamp(3.0*(FOG_COLOR.r-FOG_COLOR.b), 0.0, 1.0);
-
   vol = smoothstep(0.0, 0.03, vol); // was 0.1: weaker waves also become full shafts (wider, more shafts)
-  return vol;
+
+  // dawn/dusk mask from the sun height: fades in/out smoothly with time. (The vanilla fog color it replaces changes
+  // abruptly around sunrise and, after the hard smoothstep above, made the godrays pop in like a switch)
+  float dd = 1.0 - dayFactor*dayFactor;
+  dd *= dd*dd;
+  float dawnMask = dd*dd*smoothstep(-0.12, 0.05, dayFactor);
+
+  return vol*dawnMask;
 }
 
 #endif
