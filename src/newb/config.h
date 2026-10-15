@@ -118,7 +118,7 @@
 #define NL_CLOUD0_THICKNESS 1.5     // 0.5 slim ~ 8.0 fat
 #define NL_CLOUD0_RAIN_THICKNESS 3.3 // 0.5 slim ~ 8.0 fat
 #define NL_CLOUD0_OPACITY 1.0       // 0.0 invisible ~ 1.0 opaque
-//#define NL_CLOUD0_MULTILAYER         // [toggle] extra cloud layer
+#define NL_CLOUD0_MULTILAYER         // [toggle] extra cloud layer
 
 /* Soft cloud settings */
 #define NL_CLOUD1_SCALE vec2(0.016, 0.022) // 0.003 large ~ 0.2 tiny
@@ -198,5 +198,56 @@
 //#define NL_LAVA_NOISE            // [toggle] darken lava in certain regions
 #define NL_LAVA_NOISE_BUMP 0.4 // [toggle] 0.1 subtle ~ 0.8 massive waves
 #define NL_LAVA_NOISE_SPEED 0.2  // 0.0 still ~ 0.8 fast
+
+/* LOW subpack: smaller values for small visuals + heavy functions switched off. Colors, lighting, sun glow shape, cloud type 0 and other main visuals are untouched */
+#ifdef LOW
+  // reduced values
+  #undef NL_MIST_DENSITY
+  #define NL_MIST_DENSITY 0.5
+
+  #undef NL_RAIN_MIST_OPACITY
+  #define NL_RAIN_MIST_OPACITY 0.5
+
+  #undef NL_CLOUDY_FOG
+  #define NL_CLOUDY_FOG 0.2
+
+  #undef NL_GLOW_TEX
+  #define NL_GLOW_TEX 2.8
+
+  #undef NL_GLOW_SHIMMER
+  #define NL_GLOW_SHIMMER 0.5
+
+  #undef NL_PLANTS_WAVE
+  #define NL_PLANTS_WAVE 0.025
+
+  #undef NL_LANTERN_WAVE
+  #define NL_LANTERN_WAVE 0.1
+
+  #undef NL_WAVE_RANGE
+  #define NL_WAVE_RANGE 6.0 // distance in blocks
+
+  #undef NL_WATER_BUMP
+  #define NL_WATER_BUMP 0.025
+
+  #undef NL_UNDERWATER_WAVE
+  #define NL_UNDERWATER_WAVE 0.025
+
+  #undef NL_UNDERWATER_STREAKS
+  #define NL_UNDERWATER_STREAKS 1.0
+
+  #undef NL_GROUND_RAIN_WETNESS
+  #define NL_GROUND_RAIN_WETNESS 0.5
+
+  #undef NL_GROUND_RAIN_PUDDLES
+  #define NL_GROUND_RAIN_PUDDLES 0.5
+
+  #undef NL_LAVA_NOISE_BUMP
+  #define NL_LAVA_NOISE_BUMP 0.2
+
+  // heavy functions off (only the ones enabled in the main config)
+  #undef NL_GODRAY
+  #undef NL_WATER_WAVE
+  #undef NL_CLOUD0_MULTILAYER // second layer of type 0 clouds
+#endif
 
 #endif
