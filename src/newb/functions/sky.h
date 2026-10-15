@@ -211,16 +211,21 @@ vec3 nlRenderSky(nl_skycolor skycol, nl_environment env, vec3 viewDir, float t, 
     sky = renderOverworldSky(skycol, env, viewDir, isSkyPlane);
     #ifdef NL_UNDERWATER_STREAKS
        if (env.underwater) {
-         float a = atan2(viewDir.x, viewDir.z);
-         float grad = 0.5 + 0.5*viewDir.y;
-         grad *= grad;
-         float spread = (0.6 + 0.6*sin(3.0*a + 0.2*t + 2.0*sin(5.0*a - 0.4*t)));
-         spread *= (0.8 + 0.8*sin(3.0*a - sin(0.5*t)))*grad;
-         spread += (1.0-spread)*grad;
-         float streaks = spread*spread;
-         streaks *= streaks;
-         streaks = (spread + 3.0*grad*grad + 4.0*streaks*streaks);
-         sky += 2.2*streaks*skycol.horizon;
+         // light rays radiating from the (refracted) sun, softly fading away from it
+         float cs = clamp(dot(viewDir, env.sunDir), -1.0, 1.0);
+         float ang = acos(cs);
+         vec3 rayR = cross(vec3(0.0, 1.0, 0.0), env.sunDir);
+         rayR = length(rayR) > 0.001 ? normalize(rayR) : vec3(1.0, 0.0, 0.0);
+         float a = atan2(dot(viewDir, cross(env.sunDir, rayR)), dot(viewDir, rayR));
+         float spread = 0.5 + 0.5*sin(9.0*a + 0.35*t + 1.6*sin(5.0*a - 0.5*t));
+         spread *= 0.7 + 0.15*sin(19.0*a - 0.7*t + 1.0);
+         float rays = pow(clamp(spread, 0.0, 1.0), 2.2);
+         float fall = exp(-2.1*ang);
+         float core = pow(max(cs, 0.0), 10.0);
+         float up = 0.5 + 0.5*viewDir.y;
+         float sunUp = smoothstep(-0.1, 0.2, env.sunDir.y); // no rays at night
+         float streaks = (0.35*rays*fall + 0.5*core + 0.18*fall)*(0.4 + 0.6*up)*sunUp;
+         sky += NL_UNDERWATER_STREAKS*streaks*vec3(0.55, 1.0, 1.1);
        }
     #endif
   }
