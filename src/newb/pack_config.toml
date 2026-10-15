@@ -26,15 +26,15 @@ credits = '''
 '''
 
 [[subpack]]
-define = "DEFAULT"
-materials = []
-description = '''
-Default
-'''
-
-[[subpack]]
 define = "LOW"
 materials = ["Actor", "ActorGlint", "ActorMultiTexture", "Clouds", "EndSky", "ItemInHandColor", "ItemInHandColorGlint", "ItemInHandTextured", "RenderChunk","Sky", "Stars", "SunMoon", "Weather"]
 description = '''
 Low
+'''
+
+[[subpack]]
+define = "DEFAULT"
+materials = []
+description = '''
+Default
 '''
