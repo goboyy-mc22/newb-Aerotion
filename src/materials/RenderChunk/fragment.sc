@@ -144,8 +144,8 @@ void main() {
         // smooth puddles: strong mirror + darker floor inside, faint sheen outside (0.0 = uniform wet ground)
         vec2 pp = mod(v_position.xz, 256.0);
         float pn = 0.65*puddleNoise(pp*0.6) + 0.35*puddleNoise(pp*1.5 + 17.0);
-        float pud = smoothstep(0.50, 0.66, pn);
-        mask *= mix(1.0, 0.25 + 2.4*pud, NL_GROUND_RAIN_PUDDLES);
+        float pud = smoothstep(0.42, 0.58, pn);
+        mask *= mix(1.0, 0.4 + 3.0*pud, NL_GROUND_RAIN_PUDDLES);
 
         // rain ripples inside puddles: one expanding ring per cell
         vec2 rc = pp*2.2;
@@ -155,7 +155,7 @@ void main() {
         float ring = clamp(1.0 - abs(length(rf) - 0.5*rph)/0.07, 0.0, 1.0)*(1.0 - rph);
         mask += 0.2*ring*pud*env.rainFactor*NL_GROUND_RAIN_PUDDLES;
 
-        diffuse.rgb *= 1.0 - 0.25*pud*env.rainFactor*NL_GROUND_RAIN_PUDDLES;
+        diffuse.rgb *= 1.0 - 0.35*pud*env.rainFactor*NL_GROUND_RAIN_PUDDLES;
       #endif
       mask = min(mask, 1.0);
       diffuse.rgb *= 1.0 - 0.6*mask;
