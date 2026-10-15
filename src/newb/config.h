@@ -89,16 +89,16 @@
 //#define NL_GLOW_LEAK 0.6        // [toggle] 0.08 subtle ~ 1.0 100% brightness of NL_GLOW_TEX
 
 /* Waving */
-#define NL_PLANTS_WAVE 0.04    // [toggle] 0.02 gentle ~ 0.4 violent
-#define NL_LANTERN_WAVE 0.15   // [toggle] 0.05 subtle ~ 0.4 large swing
-#define NL_WAVE_SPEED 2.6      // 0.5 slow wave ~ 5.0 very fast wave
-//#define NL_EXTRA_PLANTS_WAVE // [toggle] !dont use! wave using texture coords (1.21.0 vanilla 2048x1024)
+#define NL_PLANTS_WAVE 0.05    // [toggle] 0.02 gentle ~ 0.4 violent
+#define NL_LANTERN_WAVE 0.16   // [toggle] 0.05 subtle ~ 0.4 large swing
+#define NL_WAVE_SPEED 2.4      // 0.5 slow wave ~ 5.0 very fast wave
+#define NL_EXTRA_PLANTS_WAVE // [toggle] !dont use! wave using texture coords (1.21.0 vanilla 2048x1024)
 #define NL_WAVE_RANGE 13.0     // 6.0 upto 6 blocks ~ 32.0 upto 32 blocks away (slower)
 
 /* Water */
 #define NL_WATER_TRANSPARENCY 0.5 // 0.0 transparent ~ 1.0 normal
 #define NL_WATER_BUMP 0.05        // 0.001 plain ~ 0.2 bumpy water
-#define NL_WATER_WAVE_SPEED  0.6  // 0.2 calm ~ 2.0 turbulent
+#define NL_WATER_WAVE_SPEED  0.7  // 0.2 calm ~ 2.0 turbulent
 #define NL_WATER_TEX_OPACITY 0.0  // 0.0 plain water ~ 1.0 vanilla water texture
 #define NL_WATER_WAVE             // [toggle] wave effect
 //#define NL_WATER_REFL_MASK      // [toggle] fake water reflection mask
@@ -178,7 +178,7 @@
 #define NL_SUN_GLOW_SHAPE 8.0 // [toggle] 2.0 round ~ 5.0 rounded square ~ 12.0 square. Sun only, the moon keeps the round glow
 
 /* Fake godrays during sunrise/sunset */
-#define NL_GODRAY 1.5     // [toggle] 0.1 low - 1.5 strength
+#define NL_GODRAY 1.0     // [toggle] 0.1 low - 1.5 strength
 
 /* Sky reflection */
 //#define NL_GROUND_REFL 0.0       // [toggle] 0.2 slightly reflective ~ 1.0 fully reflect sky
