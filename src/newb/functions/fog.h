@@ -31,12 +31,12 @@ float nlRenderGodRayIntensity(vec3 cPos, vec3 worldPos, float t, vec2 uv1, float
 
   float vol = sin(7.0*u + 1.5*diff)*sin(3.0*u + diff);
   vol *= vol*mask*uv1.y*(1.0-mask*mask);
-  vol *= relativeDist*relativeDist;
+  vol *= relativeDist; // was relativeDist^2: shafts also show closer to the camera
 
   // dawn/dusk mask
   vol *= clamp(3.0*(FOG_COLOR.r-FOG_COLOR.b), 0.0, 1.0);
 
-  vol = smoothstep(0.0, 0.1, vol);
+  vol = smoothstep(0.0, 0.03, vol); // was 0.1: weaker waves also become full shafts (wider, more shafts)
   return vol;
 }
 
