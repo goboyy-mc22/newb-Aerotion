@@ -30,7 +30,7 @@ vec4 nlRefl(
     float endDist = renderDist*0.6;
     if (camDist < endDist) {
       float cosR = max(viewDir.y, 0.0);
-      float puddles = max(1.0 - NL_GROUND_RAIN_PUDDLES*fastRand(tiledCpos.xz), 0.0);
+      float puddles = 1.0; // puddle shapes are drawn per pixel in RenderChunk/fragment.sc (NL_GROUND_RAIN_PUDDLES)
 
       #ifndef NL_GROUND_REFL
         wetness *= puddles;
