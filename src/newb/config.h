@@ -224,7 +224,7 @@
   #define NL_LANTERN_WAVE 0.1
 
   #undef NL_WAVE_RANGE
-  #define NL_WAVE_RANGE 6.0 // distance in blocks
+  #define NL_WAVE_RANGE 8.0 // distance in blocks
 
   #undef NL_WATER_BUMP
   #define NL_WATER_BUMP 0.025
