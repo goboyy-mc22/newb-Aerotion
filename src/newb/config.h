@@ -199,31 +199,69 @@
 #define NL_LAVA_NOISE_BUMP 0.4 // [toggle] 0.1 subtle ~ 0.8 massive waves
 #define NL_LAVA_NOISE_SPEED 0.2  // 0.0 still ~ 0.8 fast
 
-/* LOW subpack: only trims small, costly effects. Colors, lighting, clouds type, fog and other main visuals are untouched */
+/* LOW subpack: smaller values for small visuals + heavy functions switched off. Colors, lighting, cloud type and other main visuals are untouched */
 #ifdef LOW
-  // vertex work
+  // reduced values
+  #undef NL_MIST_DENSITY
+  #define NL_MIST_DENSITY 0.5
+
+  #undef NL_RAIN_MIST_OPACITY
+  #define NL_RAIN_MIST_OPACITY 0.5
+
+  #undef NL_CLOUDY_FOG
+  #define NL_CLOUDY_FOG 0.2
+
+  #undef NL_GLOW_TEX
+  #define NL_GLOW_TEX 2.8
+
+  #undef NL_GLOW_SHIMMER
+  #define NL_GLOW_SHIMMER 0.5
+
+  #undef NL_PLANTS_WAVE
+  #define NL_PLANTS_WAVE 0.025
+
+  #undef NL_LANTERN_WAVE
+  #define NL_LANTERN_WAVE 0.1
+
   #undef NL_WAVE_RANGE
-  #define NL_WAVE_RANGE 6.0          // plants/lanterns only wave up to 6 blocks
-  #undef NL_EXTRA_PLANTS_WAVE
-  #undef NL_WATER_WAVE
+  #define NL_WAVE_RANGE 6.0 // distance in blocks
+
+  #undef NL_WATER_BUMP
+  #define NL_WATER_BUMP 0.025
+
   #undef NL_UNDERWATER_WAVE
-  #undef NL_GODRAY
-  #undef NL_BLINKING_TORCH
-  // sky and fog
-  #undef NL_SUN_GLOW_SHAPE           // round sun glow (no extra shape math)
+  #define NL_UNDERWATER_WAVE 0.025
+
   #undef NL_UNDERWATER_STREAKS
+  #define NL_UNDERWATER_STREAKS 1.0
+
+  #undef NL_GROUND_RAIN_WETNESS
+  #define NL_GROUND_RAIN_WETNESS 0.5
+
+  #undef NL_GROUND_RAIN_PUDDLES
+  #define NL_GROUND_RAIN_PUDDLES 0.5
+
+  #undef NL_LAVA_NOISE_BUMP
+  #define NL_LAVA_NOISE_BUMP 0.2
+
+  #undef NL_CLOUD2_STEPS
+  #define NL_CLOUD2_STEPS 3
+
+  #undef NL_CLOUD2_LAYER2_STEPS
+  #define NL_CLOUD2_LAYER2_STEPS 3
+
+  // heavy functions off
+  #undef NL_GODRAY
+  #undef NL_WATER_WAVE
+  #undef NL_SUN_GLOW_SHAPE // round sun glow
+  #undef NL_EXTRA_PLANTS_WAVE
+  #undef NL_BLINKING_TORCH
   #undef NL_RAINBOW
   #undef NL_AURORA
   #undef NL_CLOUD_AURORA_REFLECTION
-  // clouds
   #undef NL_CLOUD0_MULTILAYER
   #undef NL_CLOUD2_LAYER2
   #undef NL_CLOUD_SHADOW
-  #undef NL_CLOUD2_STEPS
-  #define NL_CLOUD2_STEPS 3
-  #undef NL_CLOUD2_LAYER2_STEPS
-  #define NL_CLOUD2_LAYER2_STEPS 3
-  // misc
   #undef NL_WATER_REFL_MASK
   #undef NL_ENTITY_EDGE_HIGHLIGHT
   #undef NL_WEATHER_SPECK
