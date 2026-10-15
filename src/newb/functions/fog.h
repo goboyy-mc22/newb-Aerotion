@@ -33,13 +33,14 @@ float nlRenderGodRayIntensity(vec3 cPos, vec3 worldPos, float t, vec2 uv1, float
   vol *= vol*mask*uv1.y*(1.0-mask*mask);
   vol *= relativeDist; // was relativeDist^2: shafts also show closer to the camera
 
-  vol = smoothstep(0.0, 0.03, vol); // was 0.1: weaker waves also become full shafts (wider, more shafts)
+  vol = smoothstep(0.0, 0.06, vol); // soft shaft edges (the original was 0.1, 0.03 was too hard)
 
   // dawn/dusk mask from the sun height: fades in/out smoothly with time. (The vanilla fog color it replaces changes
   // abruptly around sunrise and, after the hard smoothstep above, made the godrays pop in like a switch)
   float dd = 1.0 - dayFactor*dayFactor;
   dd *= dd*dd;
-  float dawnMask = dd*dd*smoothstep(-0.12, 0.05, dayFactor);
+  float fadeIn = smoothstep(-0.15, 0.12, dayFactor); // about 1 minute from first glimmer to full strength
+  float dawnMask = dd*dd*fadeIn*fadeIn*(3.0 - 2.0*fadeIn); // eased twice: starts very gently
 
   return vol*dawnMask;
 }
