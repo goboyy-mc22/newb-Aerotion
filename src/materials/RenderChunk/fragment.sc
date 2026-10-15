@@ -39,17 +39,25 @@ void main() {
     abs((2.0 * v_position.y - 15.0) / 16.0 - v_lightmapUV.y) < 0.00002;
 
   if(env.underwater || blockUnderWater){
-      // caustic web: two texture layers drifting in different directions, sharpened, added as cyan-white light
-      float ct = ViewPositionAndTime.w;
-      float c1 = texture2D(s_caustic, v_position.xz*0.08 + vec2(0.020, 0.013)*ct).r;
-      float c2 = texture2D(s_caustic, v_position.xz*0.11 + vec2(-0.016, 0.022)*ct + vec2(0.37, 0.11)).r;
-      float lines = max(c1, 0.75*c2);
-      float web = 0.8*pow(clamp(lines*2.0, 0.0, 1.0), 0.7) + 0.35*clamp(0.5*(c1 + c2), 0.0, 1.0);
-      web *= max(N.y, 0.0);
+      vec2 uv = v_position.xz * 0.15; 
+      uv += vec2(ViewPositionAndTime.w * 0.02, ViewPositionAndTime.w * 0.02); 
+      vec3 caustic = texture2D(s_caustic, uv).rgb;
+
+      float ndotl = max(N.y, 0.0); 
+      caustic *= ndotl * 0.5;
 
       vec3 watercol = vec3(0.0, 0.3, 0.5);
-      diffuse.rgb *= watercol*2.7;
-      diffuse.rgb += web*vec3(0.55, 1.0, 1.0)*0.85;
+      vec3 finalColor = watercol + caustic;
+
+      diffuse.rgb *= finalColor;
+      diffuse.rgb *= 2.7;
+
+      // glow: soft blurred copy of the caustic (4 taps) added as cyan light around the lines
+      vec3 blur = texture2D(s_caustic, uv + vec2(0.018, 0.018)).rgb;
+      blur += texture2D(s_caustic, uv + vec2(-0.018, -0.018)).rgb;
+      blur += texture2D(s_caustic, uv + vec2(0.018, -0.018)).rgb;
+      blur += texture2D(s_caustic, uv + vec2(-0.018, 0.018)).rgb;
+      diffuse.rgb += blur*(0.275*ndotl)*vec3(0.35, 0.8, 1.0) + caustic*vec3(0.5, 0.9, 1.0); // caustic already includes ndotl*0.5
   }
 
   #if defined(SEASONS) && (defined(OPAQUE) || defined(ALPHA_TEST))
