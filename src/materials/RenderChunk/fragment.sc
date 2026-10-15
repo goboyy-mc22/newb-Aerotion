@@ -14,6 +14,19 @@ uniform vec4 FogAndDistanceControl;
 uniform vec4 ViewPositionAndTime;
 uniform vec4 CameraPosition;
 
+// smooth puddle shapes and rain ripples (per pixel, world position wrapped to keep sin() precise)
+float puddleHash(vec2 p) {
+  return fract(37.45*sin(dot(p, vec2(4.36, 8.28))));
+}
+
+float puddleNoise(vec2 p) {
+  vec2 i = floor(p);
+  vec2 f = fract(p);
+  f = f*f*(3.0 - 2.0*f);
+  return mix(mix(puddleHash(i), puddleHash(i + vec2(1.0, 0.0)), f.x),
+             mix(puddleHash(i + vec2(0.0, 1.0)), puddleHash(i + vec2(1.0, 1.0)), f.x), f.y);
+}
+
 void main() {
   #if defined(DEPTH_ONLY_OPAQUE) || defined(DEPTH_ONLY) || defined(INSTANCING)
     gl_FragColor = vec4(1.0,1.0,1.0,1.0);
@@ -127,6 +140,24 @@ void main() {
     float dy = abs(dFdy(v_extra.g));
     if (dy < 0.0002) {
       float mask = v_refl.a*(clamp(v_extra.r*10.0,8.2,8.8)-7.8);
+      #ifdef NL_GROUND_RAIN_PUDDLES
+        // smooth puddles: strong mirror + darker floor inside, faint sheen outside (0.0 = uniform wet ground)
+        vec2 pp = mod(v_position.xz, 256.0);
+        float pn = 0.65*puddleNoise(pp*0.6) + 0.35*puddleNoise(pp*1.5 + 17.0);
+        float pud = smoothstep(0.42, 0.58, pn);
+        mask *= mix(1.0, 0.4 + 3.0*pud, NL_GROUND_RAIN_PUDDLES);
+
+        // rain ripples inside puddles: one expanding ring per cell
+        vec2 rc = pp*2.2;
+        vec2 rcell = floor(rc);
+        vec2 rf = fract(rc) - 0.5 + (vec2(puddleHash(rcell + 3.0), puddleHash(rcell + 7.0)) - 0.5)*0.4;
+        float rph = fract(0.6*ViewPositionAndTime.w + puddleHash(rcell));
+        float ring = clamp(1.0 - abs(length(rf) - 0.5*rph)/0.07, 0.0, 1.0)*(1.0 - rph);
+        mask += 0.2*ring*pud*env.rainFactor*NL_GROUND_RAIN_PUDDLES;
+
+        diffuse.rgb *= 1.0 - 0.35*pud*env.rainFactor*NL_GROUND_RAIN_PUDDLES;
+      #endif
+      mask = min(mask, 1.0);
       diffuse.rgb *= 1.0 - 0.6*mask;
       diffuse.rgb += v_refl.rgb*mask;
     }
