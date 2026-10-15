@@ -118,7 +118,7 @@
 #define NL_CLOUD0_THICKNESS 1.5     // 0.5 slim ~ 8.0 fat
 #define NL_CLOUD0_RAIN_THICKNESS 3.3 // 0.5 slim ~ 8.0 fat
 #define NL_CLOUD0_OPACITY 1.0       // 0.0 invisible ~ 1.0 opaque
-//#define NL_CLOUD0_MULTILAYER         // [toggle] extra cloud layer
+#define NL_CLOUD0_MULTILAYER         // [toggle] extra cloud layer
 
 /* Soft cloud settings */
 #define NL_CLOUD1_SCALE vec2(0.016, 0.022) // 0.003 large ~ 0.2 tiny
@@ -199,7 +199,7 @@
 #define NL_LAVA_NOISE_BUMP 0.4 // [toggle] 0.1 subtle ~ 0.8 massive waves
 #define NL_LAVA_NOISE_SPEED 0.2  // 0.0 still ~ 0.8 fast
 
-/* LOW subpack: smaller values for small visuals + heavy functions switched off. Colors, lighting, cloud type and other main visuals are untouched */
+/* LOW subpack: smaller values for small visuals + heavy functions switched off. Colors, lighting, sun glow shape, cloud type 0 and other main visuals are untouched */
 #ifdef LOW
   // reduced values
   #undef NL_MIST_DENSITY
@@ -244,28 +244,10 @@
   #undef NL_LAVA_NOISE_BUMP
   #define NL_LAVA_NOISE_BUMP 0.2
 
-  #undef NL_CLOUD2_STEPS
-  #define NL_CLOUD2_STEPS 3
-
-  #undef NL_CLOUD2_LAYER2_STEPS
-  #define NL_CLOUD2_LAYER2_STEPS 3
-
-  // heavy functions off
+  // heavy functions off (only the ones enabled in the main config)
   #undef NL_GODRAY
   #undef NL_WATER_WAVE
-  #undef NL_SUN_GLOW_SHAPE // round sun glow
-  #undef NL_EXTRA_PLANTS_WAVE
-  #undef NL_BLINKING_TORCH
-  #undef NL_RAINBOW
-  #undef NL_AURORA
-  #undef NL_CLOUD_AURORA_REFLECTION
-  #undef NL_CLOUD0_MULTILAYER
-  #undef NL_CLOUD2_LAYER2
-  #undef NL_CLOUD_SHADOW
-  #undef NL_WATER_REFL_MASK
-  #undef NL_ENTITY_EDGE_HIGHLIGHT
-  #undef NL_WEATHER_SPECK
-  #undef NL_LAVA_NOISE
+  #undef NL_CLOUD0_MULTILAYER // second layer of type 0 clouds
 #endif
 
 #endif
