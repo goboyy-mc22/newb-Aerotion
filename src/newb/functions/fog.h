@@ -30,7 +30,7 @@ float nlRenderGodRayIntensity(vec3 cPos, vec3 worldPos, float t, vec2 uv1, float
   float mask = nrmof.x*nrmof.x;
 
   float vol = sin(7.0*u + 1.5*diff)*sin(3.0*u + diff);
-  vol *= vol*1.25*mask*uv1.y*(1.0-mask*mask);
+  vol *= vol*mask*uv1.y*(1.0-mask*mask);
   vol *= relativeDist*relativeDist;
 
   // dawn/dusk mask
