@@ -30,6 +30,20 @@ void main() {
 
     skyColor = colorCorrection(skyColor);
 
+    #ifdef NL_DEBUG_DAWN
+      // DIAGNOSTIC (do not merge): the whole sky becomes one flat color, watch how it changes around sunrise
+      //   R = OLD godray mask, from the vanilla fog color:   clamp(3*(FogColor.r - FogColor.b), 0, 1)
+      //   G = NEW godray mask, from the sun height (smooth)
+      //   B = vanilla fog brightness
+      // If R (or B) jumps within a second while G stays smooth, the vanilla fog color is the switch.
+      float dbgDd = 1.0 - env.dayFactor*env.dayFactor;
+      dbgDd *= dbgDd*dbgDd;
+      float dbgFade = smoothstep(-0.15, 0.12, env.dayFactor);
+      float dbgNew = dbgDd*dbgDd*dbgFade*dbgFade*(3.0 - 2.0*dbgFade);
+      float dbgOld = clamp(3.0*(FogColor.r - FogColor.b), 0.0, 1.0);
+      skyColor = vec3(dbgOld, dbgNew, dot(FogColor.rgb, vec3_splat(0.33)));
+    #endif
+
     gl_FragColor = vec4(skyColor, 1.0);
   #else
     gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);
