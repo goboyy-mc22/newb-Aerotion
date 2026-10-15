@@ -28,6 +28,12 @@ void main() {
 
     vec3 skyColor = nlRenderSky(skycol, env, -viewDir, v_underwaterRainTimeDay.z, true);
 
+    #ifdef NL_SUN_HALO
+      if (!env.underwater) {
+        skyColor += nlSunHalo(skycol, env, -viewDir);
+      }
+    #endif
+
     skyColor = colorCorrection(skyColor);
 
     gl_FragColor = vec4(skyColor, 1.0);

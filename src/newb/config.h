@@ -180,6 +180,11 @@
 /* Fake godrays during sunrise/sunset */
 #define NL_GODRAY 1.5     // [toggle] 0.1 faint ~ 1.0 full strength of the shafts
 
+/* Sun halo fade: soft glow around the sun that fades to 0 at its edge. Only adds light, sky dome only
+   (no effect on fog, reflections, actors or lighting) */
+#define NL_SUN_HALO 0.9          // [toggle] 0.3 faint ~ 1.5 strong
+#define NL_SUN_HALO_RADIUS 40.0  // degrees from the sun where the halo reaches 0: 20.0 tight ~ 60.0 wide
+
 /* Sky reflection */
 //#define NL_GROUND_REFL 0.0       // [toggle] 0.2 slightly reflective ~ 1.0 fully reflect sky
 #define NL_GROUND_RAIN_WETNESS 1.0 // 0.0 no wetness ~ 1.0 fully wet blocks when raining

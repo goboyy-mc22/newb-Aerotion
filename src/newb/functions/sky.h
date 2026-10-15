@@ -226,6 +226,31 @@ vec3 nlRenderSky(nl_skycolor skycol, nl_environment env, vec3 viewDir, float t, 
   return sky;
 }
 
+// Soft ADDITIVE halo around the sun that fades to 0 at NL_SUN_HALO_RADIUS. It only adds light, and it is only
+// called from Sky/fragment.sc (sky dome), so fog, reflections, actors and block lighting are not touched.
+// viewDir = the same direction that is passed to nlRenderSky().
+vec3 nlSunHalo(nl_skycolor skycol, nl_environment env, vec3 viewDir) {
+  viewDir.y = -viewDir.y;
+  float g = clamp(0.5 - 0.5*dot(env.sunDir, viewDir), 0.0, 1.0);
+  #ifdef NL_SUN_GLOW_SHAPE
+    // same rounded square as the sun glow in renderOverworldSky
+    vec3 haloR = cross(vec3(0.0, 1.0, 0.0), env.sunDir);
+    haloR = length(haloR) > 0.001 ? normalize(haloR) : vec3(1.0, 0.0, 0.0);
+    vec2 haloQ = abs(vec2(dot(viewDir, haloR), dot(viewDir, cross(env.sunDir, haloR)))) + 1e-4;
+    haloQ /= max(haloQ.x, haloQ.y);
+    vec2 haloP = pow(haloQ, vec2_splat(NL_SUN_GLOW_SHAPE));
+    float haloShape = pow(haloP.x + haloP.y, 1.0/NL_SUN_GLOW_SHAPE)/length(haloQ);
+    g *= haloShape*haloShape;
+  #endif
+  // 1.0 at the sun, 0.0 at NL_SUN_HALO_RADIUS (degrees), smooth in between
+  float fade = 1.0 - smoothstep(0.0, sin(0.5*degToRad(NL_SUN_HALO_RADIUS)), sqrt(g));
+  float mask = 0.5 + (0.5*viewDir.y/(0.4 + abs(viewDir.y)));
+  float sunUp = smoothstep(-0.12, 0.08, env.sunDir.y); // no halo once the sun is well below the horizon
+  vec3 edge = skycol.horizonEdge;
+  vec3 col = edge/max(max(edge.r, edge.g), max(edge.b, 0.001)); // hue of the sky edge colour, brightness 1.0
+  return col*(NL_SUN_HALO*fade*fade*mask*sunUp*(1.0-0.9*env.rainFactor));
+}
+
 vec4 renderBlackhole(vec3 viewdir,float t) {
     t *= NL_BH_SPEED;
     
