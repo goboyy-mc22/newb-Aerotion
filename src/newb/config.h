@@ -199,7 +199,6 @@
 #define NL_LAVA_NOISE_BUMP 0.4 // [toggle] 0.1 subtle ~ 0.8 massive waves
 #define NL_LAVA_NOISE_SPEED 0.2  // 0.0 still ~ 0.8 fast
 
-/* LOW subpack: smaller values for small visuals + heavy functions switched off. Colors, lighting, sun glow shape, cloud type 0 and other main visuals are untouched */
 #ifdef LOW
   // reduced values
   #undef NL_MIST_DENSITY
@@ -247,7 +246,6 @@
   // heavy functions off (only the ones enabled in the main config)
   #undef NL_GODRAY
   #undef NL_WATER_WAVE
-  #undef NL_CLOUD0_MULTILAYER // second layer of type 0 clouds
 #endif
 
 #endif
