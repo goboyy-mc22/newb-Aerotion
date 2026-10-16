@@ -234,18 +234,14 @@
   #undef NL_UNDERWATER_STREAKS
   #define NL_UNDERWATER_STREAKS 0.5
 
-  #undef NL_GROUND_RAIN_WETNESS
-  #define NL_GROUND_RAIN_WETNESS 0.5
-
-  #undef NL_GROUND_RAIN_PUDDLES
-  #define NL_GROUND_RAIN_PUDDLES 0.5
-
   #undef NL_LAVA_NOISE_BUMP
   #define NL_LAVA_NOISE_BUMP 0.2
 
   // heavy functions off (only the ones enabled in the main config)
   #undef NL_GODRAY
   #undef NL_WATER_WAVE
+  #undef NL_GROUND_RAIN_WETNESS
+  #undef NL_GROUND_RAIN_PUDDLES
 #endif
 
 #endif
