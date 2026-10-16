@@ -136,8 +136,8 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   vec3 sky = mix(skyCol.horizon, skyCol.horizonEdge, dawnGradient1*df*df);
   sky = mix(skyCol.zenith, sky, dawnGradient2*df);
 
-  // weaker gradient at night (0.5+0.5 instead of 0.8+0.8); same night switch as nlOverworldSkyColors
-  float nightMask = step(env.dayFactor, 0.0);
+  // weaker gradient at night (0.5+0.5 instead of 0.8+0.8); eased night mask
+  float nightMask = 1.0 - smoothstep(-0.12, 0.25, env.dayFactor); // eases in/out around sunrise and sunset (a step() here made the sky jump)
   sky *= mix(0.8+0.8*gradient2, 0.5+0.5*gradient2, nightMask);
   //sky *= (1.0 + (2.0*mg8 + 7.0*mg8*mg8)*mask)*mix(1.0, mask, NL_SKY_VOID_DARKNESS);
 
