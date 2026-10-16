@@ -177,6 +177,9 @@
 /* Sun glow shape: the glow around the sun follows the (square) sun texture */
 #define NL_SUN_GLOW_SHAPE 6.0 // [toggle] 2.0 round ~ 5.0 rounded square ~ 12.0 square. Sun only, the moon keeps the round glow
 
+/* DIAGNOSTIC: turns the sky into flat debug colors (see Sky/fragment.sc). Debug branch only, never merge */
+#define NL_DEBUG_DAWN
+
 /* Fake godrays during sunrise/sunset */
 #define NL_GODRAY 1.0     // [toggle] 0.1 low - 1.5 strength
 
