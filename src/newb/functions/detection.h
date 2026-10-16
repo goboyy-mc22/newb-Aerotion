@@ -57,6 +57,15 @@ float detectRain(vec3 FOG_CONTROL) {
   return val*val*(3.0 - 2.0*val);
 }
 
+// rain detection from the fog distance control can read a partial value (a false "light rain") at times, e.g. around
+// sunrise, which suddenly shrinks/dims the sun halo and tints the sky and lighting. Real rain turns the vanilla fog
+// color grey (r ~ b), while clear dawn (orange, r > b) and clear day (blue, b > r) fog is clearly colored, so a
+// colored fog cancels the rain value.
+float detectRainChecked(vec3 FOG_CONTROL, vec3 FOG_COLOR) {
+  float grey = 1.0 - smoothstep(0.08, 0.25, abs(FOG_COLOR.r - FOG_COLOR.b));
+  return detectRain(FOG_CONTROL)*grey;
+}
+
 float detectDayFactor(vec3 FOG_COLOR) {
   return min(dot(FOG_COLOR, vec3(0.5,0.7,0.5)), 1.0);
 }
@@ -84,7 +93,7 @@ nl_environment nlDetectEnvironment(float TIME_OF_DAY, vec3 FOG_COLOR, vec3 FOG_C
   env.end = detectEnd(FOG_COLOR);
   env.nether = detectNether(FOG_COLOR, FOG_CONTROL.xy);
   env.underwater = detectUnderwater(FOG_COLOR, FOG_CONTROL.xy);
-  env.rainFactor = detectRain(FOG_CONTROL.xyz);
+  env.rainFactor = detectRainChecked(FOG_CONTROL.xyz, FOG_COLOR);
   env.fogCol = FOG_COLOR;
   env = calculateSunParams(env, TIME_OF_DAY);
   return env;

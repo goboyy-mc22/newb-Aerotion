@@ -64,7 +64,7 @@ void main() {
     // underwater, and in rain. Clear day and dawn are unchanged (factor 1.0), the moon is untouched.
     if (isSun) {
       float sunVis = smoothstep(-0.10, 0.0, d.y);
-      sunVis *= 1.0 - smoothstep(0.0, 0.6, detectRain(FogAndDistanceControl.xyz));
+      sunVis *= 1.0 - smoothstep(0.0, 0.6, detectRainChecked(FogAndDistanceControl.xyz, FogColor.rgb));
       sunVis *= detectUnderwater(FogColor.rgb, FogAndDistanceControl.xy) ? 0.0 : 1.0;
       v_sunVis = sunVis;
     }
