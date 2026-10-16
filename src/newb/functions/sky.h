@@ -48,9 +48,11 @@ nl_skycolor nlOverworldSkyColors(nl_environment env) {
   float dawnFactor = 1.0-env.dayFactor*env.dayFactor;
   dawnFactor *= dawnFactor*dawnFactor;
   dawnFactor *= mix(1.0, dawnFactor*dawnFactor, nightFactor);
-  s.zenith = mix(s.zenith, NL_DAWN_ZENITH_COL, dawnFactor);
-  s.horizon = mix(s.horizon, NL_DAWN_HORIZON_COL, dawnFactor);
-  s.horizonEdge = mix(s.horizonEdge, NL_DAWN_EDGE_COL, dawnFactor);
+  // in rain the dawn colors turn into the plain day colors: no bright dawn band under the clouds, and no jump at
+  // sunrise either (the dawn blend still bridges the night/day switch)
+  s.zenith = mix(s.zenith, mix(NL_DAWN_ZENITH_COL, NL_DAY_ZENITH_COL, env.rainFactor), dawnFactor);
+  s.horizon = mix(s.horizon, mix(NL_DAWN_HORIZON_COL, NL_DAY_HORIZON_COL, env.rainFactor), dawnFactor);
+  s.horizonEdge = mix(s.horizonEdge, mix(NL_DAWN_EDGE_COL, NL_DAY_EDGE_COL, env.rainFactor), dawnFactor);
 
   float zh = dot(s.zenith, vec3_splat(0.33));
   float hh = dot(s.horizon, vec3_splat(0.33));
@@ -127,7 +129,7 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
 
   // angular falloff around the sun: exponent 2.0 = original, lower = wider
   float sunFall = mix(g2.x, pow(g1.x, NL_DAWN_WIDTH), sw);
-  float df = mix(1.0, sunFall, dawnFactor*dawnFactor);
+  float df = mix(1.0, sunFall, dawnFactor*dawnFactor*(1.0-env.rainFactor)); // no dawn falloff around the sun in rain
 
   // height falloff: exponent on (1 - y^2), 2.0 = tight, lower = reaches higher
   float dawnGradient1 = mix(gradient1, pow(vh, NL_DAWN_HEIGHT), sw);
