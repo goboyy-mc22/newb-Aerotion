@@ -20,6 +20,11 @@ vec4 nlRefl(
 ) {
   vec4 wetRefl = vec4(0.0,0.0,0.0,0.0);
 
+  // no wet ground underwater: the fog values there look like rain to detectRain(), which darkened blocks in dark patches
+  if (env.underwater) {
+    return wetRefl;
+  }
+
   #ifndef NL_GROUND_REFL
   if (env.rainFactor > 0.0) {
   #endif
