@@ -33,14 +33,13 @@ float nlRenderGodRayIntensity(vec3 cPos, vec3 worldPos, float t, vec2 uv1, float
   vol *= vol*mask*uv1.y*(1.0-mask*mask);
   vol *= relativeDist; // was relativeDist^2: shafts also show closer to the camera
 
-  vol = smoothstep(0.0, 0.06, vol); // soft shaft edges (the original was 0.1, 0.03 was too hard)
-
-  // dawn/dusk mask from the vanilla fog color (reddish only at sunrise/sunset, so no godrays from the moon)
+  // dawn/dusk mask
   vol *= clamp(3.0*(FOG_COLOR.r-FOG_COLOR.b), 0.0, 1.0);
 
-  // no dawn light through rainy skies
-  vol *= 1.0 - rainFactor;
+  // no dawn light at all in rainy skies (fully gone well before full rain)
+  vol *= 1.0 - smoothstep(0.0, 0.3, rainFactor);
 
+  vol = smoothstep(0.0, 0.03, vol); // was 0.1: weaker waves also become full shafts (wider, more shafts)
   return vol;
 }
 
