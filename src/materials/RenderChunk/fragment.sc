@@ -140,7 +140,7 @@ void main() {
     float dy = abs(dFdy(v_extra.g));
     if (dy < 0.0002) {
       float mask = v_refl.a*(clamp(v_extra.r*10.0,8.2,8.8)-7.8);
-      #ifdef NL_GROUND_RAIN_PUDDLES
+      #if defined(NL_GROUND_RAIN_PUDDLES) && !defined(LOW) // LOW subpack keeps the original per-block wet ground
         // smooth puddles: strong mirror + darker floor inside, faint sheen outside (0.0 = uniform wet ground)
         vec2 pp = mod(v_position.xz, 256.0);
         float pn = 0.65*puddleNoise(pp*0.6) + 0.35*puddleNoise(pp*1.5 + 17.0);
