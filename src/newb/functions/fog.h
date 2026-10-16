@@ -40,7 +40,7 @@ float nlRenderGodRayIntensity(vec3 cPos, vec3 worldPos, float t, vec2 uv1, float
   vol *= 1.0 - smoothstep(0.0, 0.3, rainFactor);
 
   vol = smoothstep(0.0, 0.03, vol); // was 0.1: weaker waves also become full shafts (wider, more shafts)
-  return vol;
+  return 0.7*vol; // shafts never fully replace the surface with the sky color (was 1.0)
 }
 
 #endif
