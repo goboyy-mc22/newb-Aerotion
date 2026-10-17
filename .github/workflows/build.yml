@@ -37,11 +37,11 @@ jobs:
     - run: pip install -r requirements.txt
     - run: |
         .\build.bat setup
-        .\build.bat pack -p windows -v ${{ inputs.subversion }} --no-zip
-    - uses: actions/upload-artifact@v4
+        .\build.bat pack -p windows -v ${{ inputs.subversion }}
+    - uses: actions/upload-artifact@v7
       with:
-        name: newb-x-windows
-        path: ./build/pack-windows
+        path: ./build/*.mcpack
+        archive: false
   android:
     runs-on: ubuntu-latest
     if:  ${{ (github.event.inputs.platform == 'Android') || (github.event.inputs.platform == 'All') }}
@@ -59,11 +59,11 @@ jobs:
     - run: pip install -r requirements.txt
     - run: |
         ./build.sh setup
-        ./build.sh pack -p android -v ${{ inputs.subversion }} --no-zip
-    - uses: actions/upload-artifact@v4
+        ./build.sh pack -p android -v ${{ inputs.subversion }}
+    - uses: actions/upload-artifact@v7
       with:
-        name: newb-x-android
-        path: ./build/pack-android
+        path: ./build/*.mcpack
+        archive: false
   ios:
     runs-on: ubuntu-latest
     if:  ${{ (github.event.inputs.platform == 'iOS') || (github.event.inputs.platform == 'All') }}
@@ -83,11 +83,11 @@ jobs:
     - run: pip install -r requirements.txt
     - run: |
         ./build.sh setup
-        ./build.sh pack -p ios -v ${{ inputs.subversion }} --no-zip
-    - uses: actions/upload-artifact@v4
+        ./build.sh pack -p ios -v ${{ inputs.subversion }}
+    - uses: actions/upload-artifact@v7
       with:
-        name: newb-x-ios
-        path: ./build/pack-ios
+        path: ./build/*.mcpack
+        archive: false
   multiplatform:
     runs-on: windows-2022
     if:  ${{ (github.event.inputs.platform == 'Multi-platform') || (github.event.inputs.platform == 'All')}}
@@ -105,8 +105,8 @@ jobs:
     - run: pip install -r requirements.txt
     - run: |
         .\build.bat setup
-        .\build.bat pack -p multiplatform -v ${{ inputs.subversion }} --no-zip
-    - uses: actions/upload-artifact@v4
+        .\build.bat pack -p multiplatform -v ${{ inputs.subversion }}
+    - uses: actions/upload-artifact@v7
       with:
-        name: newb-x-multiplatform
-        path: ./build/pack-multiplatform
+        path: ./build/*.mcpack
+        archive: false
