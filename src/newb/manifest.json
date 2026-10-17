@@ -1,0 +1,54 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Newb Aerotion",
+    "description": "§c Compatible with Android, iOS, Windows, and Linux platforms \n§7- Newb variant modified by Goboyy22.\nv1.0\n§3https://newb-shader.devendrn.com/\n",
+    "uuid": "00e8cb64-6d1f-4790-b404-b1026b6476d4",
+    "version": [
+      0,
+      1,
+      0
+    ],
+    "min_engine_version": [
+      1,
+      26,
+      50
+    ]
+  },
+  "modules": [
+    {
+      "type": "resources",
+      "uuid": "873502ab-881d-49a8-9df7-bd3c822b69ad",
+      "version": [
+        0,
+        1,
+        0
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "label",
+      "text": "§l§9Newb Aerotion v1.0§r\n\nA Newb variant modified by Goboyy22.\n\nNewb Aerotion will make your gaming experience more enjoyable, with a better appearance with vibrant nuances, beautiful skies, balanced coloring with a very beautiful sunset/sunrise sky.\n\nRecommended Settings\n\nGraphics: §aFancy§r\nSmooth Lighting: §aON§r\nClouds: §aON§r\nBrightness: §a50 - 90§r\n\n§cNote: Clouds must be turned OFF when using Simple Graphics.§r"
+    }
+  ],
+  "subpacks": [
+    {
+      "folder_name": "low",
+      "name": "§aLow§r\n\nlighter, some effects are turned off or made smaller.",
+      "memory_tier": 1
+    },
+    {
+      "folder_name": "default",
+      "name": "§cDefault§r\n\nDefault display with full effects (may be heavy on low end devices).",
+      "memory_tier": 1
+    }
+  ],
+  "metadata": {
+    "authors": [
+      "Goboyy22",
+      "devendrn"
+    ],
+    "url": "https://newb-shader.devendrn.com/"
+  }
+}
