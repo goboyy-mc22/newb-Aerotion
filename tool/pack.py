@@ -141,8 +141,8 @@ def run(args):
     console.print("~ Build target", style="bold")
     console.print("  [dim]profile :", "[cyan]" + args.p)
 
-    pack_acr_name = "".join(filter(str.isupper, pack_name)).lower()
-    pack_acr_name = f"{pack_acr_name}-{pack_version}-{profile}"
+    # eg: "Newb Aerotion v1.0 [multiplatform].mcpack"
+    pack_archive_name = f"{pack_name} v{pack_version} [{profile}]"
     pack_dir = os.path.join('build', 'pack-' + args.p)
     mats_dir = os.path.join(pack_dir, 'renderer', 'materials')
 
@@ -203,7 +203,7 @@ def run(args):
             f.write(pack_credits)
 
     if not args.no_zip:
-        pack_archive = os.path.join('build', pack_acr_name + '.mcpack')
+        pack_archive = os.path.join('build', pack_archive_name + '.mcpack')
         console.print("\n~ [bold]Archive pack\n ", pack_archive)
         shutil.make_archive(pack_dir, 'zip', pack_dir)
         os.rename(pack_dir + '.zip', pack_archive)
