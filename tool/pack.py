@@ -5,7 +5,7 @@ import tomllib
 from importlib import import_module, metadata
 from rich.console import Console
 from rich.status import Status
-from util import print_styled_error, get_materials_path, create_pack_manifest, check_conf, SHADERC_PATH
+from util import print_styled_error, get_materials_path, check_conf, SHADERC_PATH
 from lazurite.compiler.macro_define import MacroDefine
 from lazurite import util
 
@@ -164,7 +164,6 @@ def run(args):
 
     pack_description = pack_description.replace("%w", patch_warning).replace("%v", "v" + pack_version + "-" + args.p)
     pack_config['description'] = pack_description
-    pack_manifest = create_pack_manifest(pack_config)
 
     console.print("\n~ Build materials", style="bold")
 
@@ -188,18 +187,10 @@ def run(args):
         if mats:
             _build(status, args.p, subpack_name, mats, subpack_mats_path)
 
-        pack_manifest['subpacks'].append(
-            {
-                'folder_name': subpack_name,
-                'name': subpack['description'].rstrip(),
-                'memory_tier': 1
-            }
-        )
-
     status.stop()
 
-    with open(os.path.join(pack_dir, 'manifest.json'), 'w') as f:
-        json.dump(pack_manifest, f, indent=2)
+    # manifest.json is copied as-is from src/newb/manifest.json (not generated)
+    shutil.copyfile(os.path.join('src', 'newb', 'manifest.json'), os.path.join(pack_dir, 'manifest.json'))
 
     pack_copyright: str = pack_config['info']['copyright']
     pack_copyright = pack_copyright.replace("%a", pack_authors)
